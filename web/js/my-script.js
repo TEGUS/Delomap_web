@@ -9,11 +9,9 @@ $(function () {
                 print: 'Imprimer'
             }
         },
-        processing: true,
-        serverSide: true,
         "ajax": {
          "url": Routing.generate('list_tps'),
-         "type": "GET"
+         "type": "POST"
         },
         dom: 'Bfrtip',
         responsive: true,
@@ -32,7 +30,7 @@ $(function () {
         $('#block-form-type-prestation').removeClass('hidden');
     });
     //click sur le bouton editer TP
-    $('#table-type-prestation .edit').click(function () {
+    $('#table-type-prestation').on("click", ".edit", function () {
 
         var nom;
         var description;
@@ -56,7 +54,7 @@ $(function () {
         $('#block-form-type-prestation').removeClass('hidden');
     });
     //click sur le bouton supprimer TP
-    $('#table-type-prestation .remove').click(function () {
+    $('#table-type-prestation').on("click", ".remove", function () {
         console.log('ici');
         swal({
             title: "Attention !",
