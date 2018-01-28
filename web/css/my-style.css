@@ -1,0 +1,38 @@
+.login-page {
+    background: url(../images/img_biya.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.input-group .input-group-addon .material-icons {
+      font-size: 18px;
+      color: #673AB7; }
+
+.titre {
+  font-weight: bold;
+    font-family: serif;
+    box-shadow: 4px 4px 4px #673AB7;
+}
+
+.fa-primary {
+    color: #FFA534;
+}
+
+.fa-red {
+    color: #FB404B;
+}
+
+.space-button {
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.card .header {
+    height: 70px;
+}
+
+.card .header .right-side {
+    text-align: right;
+}

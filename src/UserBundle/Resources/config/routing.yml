@@ -1,0 +1,11 @@
+user_homepage:
+    path:     /nn
+    defaults: { _controller: UserBundle:Default:index }
+
+admin_registration:
+    path:  /register/admin
+    defaults: { _controller: UserBundle:RegistrationAdmin:register }
+
+agent_registration:
+    path:  /register/agent
+    defaults: { _controller: UserBundle:RegistrationAgent:register }

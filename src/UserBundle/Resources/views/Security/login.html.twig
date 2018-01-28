@@ -1,0 +1,116 @@
+{#{% extends "@FOSUser/layout.html.twig" %}#}
+
+{#{% block fos_user_content %}#}
+    {#{{ include('@FOSUser/Security/login_content.html.twig') }}#}
+{#{% endblock fos_user_content %}#}
+
+{% extends "::base.html.twig" %}
+
+{% block title %} {{ parent() }} - Connexion {% endblock %}
+
+{% block css %}
+    {{ parent() }}
+
+    <link href="{{ asset('css/my-style.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block top_front %}
+
+    {% block fos_user_content %}
+        {% trans_default_domain 'FOSUserBundle' %}
+        <body class="login-page">
+        <div class="login-box">
+            {#<div class="logo">#}
+                {#<a href="javascript:void(0);"><b class="titre">DELOMAP</b></a>#}
+            {#</div>#}
+            <div class="card">
+                <div class="body">
+                    <h3 class="page-header text-center">Connexion</h3>
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    <form action="{{ path("fos_user_security_check") }}" method="post">
+                        {#<div class="msg">Bien vouloir vous authentifier</div>#}
+                        {% if csrf_token %}
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                        {% endif %}
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">person</i>
+                            </span>
+                            <div class="form-line">
+                                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}"
+                                       placeholder="{{ 'security.login.username'|trans }}" required autofocus>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">lock</i>
+                            </span>
+                            <div class="form-line">
+                                <input type="password" id="password" name="_password" class="form-control" name="password"
+                                       placeholder="{{ 'security.login.password'|trans }}" required>
+                            </div>
+                        </div>
+                        {#<div class="input-group">#}
+                            {#<input type="checkbox" id="remember_me" name="_remember_me" value="on" />#}
+                            {#<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>#}
+                        {#</div>#}
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4">
+                                <button class="btn btn-flat btn-lg bg-pink waves-effect" type="submit">Connexion</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </body>
+
+        {#{% block fos_user_content %}#}
+        {#{{ include('@FOSUser/Security/login_content.html.twig') }}#}
+
+        {#<div class="container">#}
+        {#{% trans_default_domain 'FOSUserBundle' %}#}
+
+        {#<div class="row" style="margin-top: 20%">#}
+        {#<div class="col-md-4 col-md-offset-4">#}
+        {#<h3 class="page-header text-center">Connexion</h3>#}
+        {#{% if error %}#}
+        {#<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+        {#{% endif %}#}
+
+        {#<form action="{{ path("fos_user_security_check") }}" method="post">#}
+        {#{% if csrf_token %}#}
+        {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />#}
+        {#{% endif %}#}
+
+        {#<div class="form-group">#}
+        {#<label for="username" class="control-label">{{ 'security.login.username'|trans }}</label>#}
+        {#<div class="">#}
+        {#<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control"/>#}
+        {#</div>#}
+        {#</div>#}
+
+        {#<div class="form-group">#}
+        {#<label for="password" class="control-label">{{ 'security.login.password'|trans }}</label>#}
+        {#<div class="">#}
+        {#<input type="password" id="password" name="_password" required="required" class="form-control"/>#}
+        {#</div>#}
+        {#</div>#}
+
+        {#<input type="checkbox" id="remember_me" name="_remember_me" value="on" />#}
+        {#<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>#}
+
+        {#<div class="form-group">#}
+        {#<input type="submit" id="_submit" name="_submit" value="Se connecter" class="btn btn-primary"/>#}
+        {#</div>#}
+        {#</form>#}
+        {#</div>#}
+        {#</div>#}
+
+        {#</div>#}
+        {#{% endblock fos_user_content %}#}
+
+    {% endblock %}
+{% endblock %}

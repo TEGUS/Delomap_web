@@ -1,0 +1,55 @@
+#fos_user
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: UserBundle\Entity\User
+    service:
+        mailer: fos_user.mailer.twig_swift
+        user_manager: pugx_user_manager
+    registration:
+        form:
+            type: UserBundle\Form\Type\RegistrationType
+        confirmation:
+            enabled: true
+            template:   FOSUserBundle:Registration:email.txt.twig
+            from_email:
+                address: symcassus@gmail.com
+                sender_name: SymfonyAppTest_NoReply
+    resetting:
+        email:
+            template:   FOSUserBundle:Resetting:email.txt.twig
+            from_email:
+                address: symcassus@gmail.com
+                sender_name: SymfonyAppTest_NoReply
+    from_email:
+        address: symcassus@gmail.com
+        sender_name: SymfonyAppTest_NoReply
+
+#pugx_multi_user
+pugx_multi_user:
+  users:
+    admin:
+        entity: 
+          class: UserBundle\Entity\Admin
+#          factory: 
+        registration:
+          form: 
+            type: UserBundle\Form\Type\RegistrationAdminFormType
+            name: fos_user_registration_form
+            validation_groups:  [Registration, Default]
+          template: UserBundle:Registration:admin.form.html.twig
+        profile:
+          form:
+            type: UserBundle\Form\Type\ProfileAdminFormType
+            name: fos_user_profile_form
+            validation_groups:  [Profile, Default] 
+    agent:
+        entity: 
+          class: UserBundle\Entity\Agent
+        registration:
+          form: 
+            type: UserBundle\Form\Type\RegistrationAgentFormType
+          template: UserBundle:Registration:agent.form.html.twig
+        profile:
+          form: 
+            type: UserBundle\Form\Type\ProfileAgentFormType

@@ -1,0 +1,18 @@
+{% extends "UserBundle::layout.html.twig" %}
+
+
+{% block fos_user_content %}
+
+    <div class="container">
+        {% trans_default_domain 'FOSUserBundle' %}
+
+        <div class="row" style="margin-top: 20%">
+            <div class="col-md-4 col-md-offset-4">
+                {{ include('UserBundle:Form:form_register_content_agent.html.twig') }}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock fos_user_content %}
+

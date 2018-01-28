@@ -1,0 +1,58 @@
+<!-- Page Loader -->
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
+        </div>
+        <input type="text" placeholder="START TYPING...">
+        <div class="close-search">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <!-- #END# Search Bar -->
+    <!-- Top Bar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <a class="navbar-brand" href="{{ path('homepage') }}">DELOMAP</a>
+            </div>
+            {#<div class="collapse navbar-collapse" id="navbar-collapse">#}
+                {#<ul class="nav navbar-nav navbar-right">#}
+                    {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
+                        {#<li class="dropdown">#}
+                            {#<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#}
+                                {#<img src="{{ asset('bundles/app/img/avatar-1.png') }}" class="img-circle" style="height: 25px;" />#}
+                                {#{{ app.user.username }} <span class="caret"></span>#}
+
+                            {#</a>#}
+                            {#<ul class="dropdown-menu">#}
+                                {#<li><a href="{{ path('user_dashboard') }}">Tableau de bord</a></li>#}
+                                {#<li><a href="{{ path('fos_user_profile_show') }}">Mon compte</a></li>#}
+                                {#<li role="separator" class="divider"></li>#}
+                                {#<li>#}
+                                    {#<a href="{{ path('fos_user_security_logout') }}">#}
+                                        {#<i class="fa fa-sign-out"></i>#}
+                                        {#{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}#}
+                                    {#</a>#}
+                                {#</li>#}
+                            {#</ul>#}
+                        {#</li>#}
+                    {#{% else %}#}
+                        {#<li>#}
+                            {#<a href="{{ path('fos_user_security_login') }}">Se connecter</a>#}
+                        {#</li>#}
+                        {#<li>#}
+                            {#<a href="#" data-toggle="modal" data-target="#myModal">S'inscrire</a>#}
+                        {#</li>#}
+                    {#{% endif %}#}
+                {#</ul>#}
+            {#</div>#}
+        </div>
+    </nav>
+    <!-- #Top Bar -->
