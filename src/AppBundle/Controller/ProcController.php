@@ -2,24 +2,23 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\TP;
+use AppBundle\Entity\Proc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class TPController extends Controller
+class ProcController extends Controller
 {
     /**
-     * @Route("/tps", name="index_tps")
+     * @Route("/procs", name="index_procs")
      */
     public function indexTpsAction()
     {
-        return $this->render('AppBundle:TP:tp.html.twig');
+        return $this->render('AppBundle:Proc:proc.html.twig');
     }
 
-
-    public function getRepository($entity = 'TP')
+    public function getRepository($entity = 'Proc')
     {
         return $this->getEm()->getRepository("AppBundle:" . $entity);
     }
@@ -30,14 +29,14 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/tps", options = { "expose" = true }, name="list_tps")
+     * @Route("/api/procs", options = { "expose" = true }, name="list_procs")
      */
-    public function listTPsAction()
+    public function listProcsAction()
     {
-        $tps = $this->getRepository()->listAll();
+        $procs = $this->getRepository()->listAll();
         $datas = [];
 
-        foreach ($tps as $sample_data) {
+        foreach ($procs as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
@@ -60,18 +59,18 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/add/tp", options = { "expose" = true }, name="add_tp")
+     * @Route("/api/add/proc", options = { "expose" = true }, name="add_proc")
      */
-    public function addTPAction(Request $request)
+    public function addProcAction(Request $request)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $tp = new TP();
-        $tp->setLibelle($libelle);
-        $tp->setDescription($description);
+        $proc = new Proc();
+        $proc->setLibelle($libelle);
+        $proc->setDescription($description);
 
         $em = $this->getEm();
-        $em->persist($tp);
+        $em->persist($proc);
         $em->flush();
 
         return new JsonResponse([
@@ -80,17 +79,17 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/update/tp/{tp}", options = { "expose" = true }, name="update_tp")
+     * @Route("/api/update/proc/{proc}", options = { "expose" = true }, name="update_proc")
      */
-    public function updateTPAction(Request $request, TP $tp)
+    public function updateProcAction(Request $request, Proc $proc)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $tp->setLibelle($libelle);
-        $tp->setDescription($description);
+        $proc->setLibelle($libelle);
+        $proc->setDescription($description);
 
         $em = $this->getEm();
-        $em->merge($tp);
+        $em->merge($proc);
         $em->flush();
 
         return new JsonResponse([
@@ -99,12 +98,12 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/delete/tp/{tp}", options = { "expose" = true }, name="delete_tp")
+     * @Route("/api/delete/proc/{proc}", options = { "expose" = true }, name="delete_proc")
      */
-    public function deleteTPAction(Request $request, TP $tp)
+    public function deleteProcAction(Request $request, Proc $proc)
     {
         $em = $this->getEm();
-        $em->remove($tp);
+        $em->remove($proc);
         $em->flush();
 
         return new JsonResponse([

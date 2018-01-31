@@ -24,6 +24,13 @@ class Projet
     /**
      * @var string
      *
+     * @ORM\Column(name="libelle", type="string", length=255, nullable=false)
+     */
+    private $libelle;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="montant", type="string", length=255, nullable=true)
      */
     private $montant;
@@ -485,5 +492,29 @@ class Projet
     public function getTp()
     {
         return $this->tp;
+    }
+
+    /**
+     * Set libelle
+     *
+     * @param string $libelle
+     *
+     * @return Projet
+     */
+    public function setLibelle($libelle)
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    /**
+     * Get libelle
+     *
+     * @return string
+     */
+    public function getLibelle()
+    {
+        return $this->libelle;
     }
 }

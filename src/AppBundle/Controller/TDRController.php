@@ -2,24 +2,23 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\TP;
+use AppBundle\Entity\TDR;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class TPController extends Controller
+class TDRController extends Controller
 {
     /**
-     * @Route("/tps", name="index_tps")
+     * @Route("/tdrs", name="index_tdrs")
      */
     public function indexTpsAction()
     {
-        return $this->render('AppBundle:TP:tp.html.twig');
+        return $this->render('AppBundle:TDR:tdr.html.twig');
     }
 
-
-    public function getRepository($entity = 'TP')
+    public function getRepository($entity = 'TDR')
     {
         return $this->getEm()->getRepository("AppBundle:" . $entity);
     }
@@ -30,18 +29,19 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/tps", options = { "expose" = true }, name="list_tps")
+     * @Route("/api/tdrs", options = { "expose" = true }, name="list_tdrs")
      */
-    public function listTPsAction()
+    public function listTDRsAction()
     {
-        $tps = $this->getRepository()->listAll();
+        $tdrs = $this->getRepository()->listAll();
         $datas = [];
 
-        foreach ($tps as $sample_data) {
+        foreach ($tdrs as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
+            $temp[] = $sample_data->getTp()->getLibelle();
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
@@ -60,18 +60,20 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/add/tp", options = { "expose" = true }, name="add_tp")
+     * @Route("/api/add/tdr", options = { "expose" = true }, name="add_tdr")
      */
-    public function addTPAction(Request $request)
+    public function addTDRAction(Request $request)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $tp = new TP();
-        $tp->setLibelle($libelle);
-        $tp->setDescription($description);
+        $tp = $request->request->get('tp');
+        $tdr = new TDR();
+        $tdr->setLibelle($libelle);
+        $tdr->setDescription($description);
+        $tdr->setTp($this->getRepository('TP')->find($tp));
 
         $em = $this->getEm();
-        $em->persist($tp);
+        $em->persist($tdr);
         $em->flush();
 
         return new JsonResponse([
@@ -80,17 +82,20 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/update/tp/{tp}", options = { "expose" = true }, name="update_tp")
+     * @Route("/api/update/tdr/{tdr}", options = { "expose" = true }, name="update_tdr")
      */
-    public function updateTPAction(Request $request, TP $tp)
+    public function updateTDRAction(Request $request, TDR $tdr)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $tp->setLibelle($libelle);
-        $tp->setDescription($description);
+        $tp = $request->request->get('tp');
+
+        $tdr->setLibelle($libelle);
+        $tdr->setDescription($description);
+        $tdr->setTp($this->getRepository('TP')->find($tp));
 
         $em = $this->getEm();
-        $em->merge($tp);
+        $em->merge($tdr);
         $em->flush();
 
         return new JsonResponse([
@@ -99,12 +104,12 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/delete/tp/{tp}", options = { "expose" = true }, name="delete_tp")
+     * @Route("/api/delete/tdr/{tdr}", options = { "expose" = true }, name="delete_tdr")
      */
-    public function deleteTPAction(Request $request, TP $tp)
+    public function deleteTDRAction(Request $request, TDR $tdr)
     {
         $em = $this->getEm();
-        $em->remove($tp);
+        $em->remove($tdr);
         $em->flush();
 
         return new JsonResponse([

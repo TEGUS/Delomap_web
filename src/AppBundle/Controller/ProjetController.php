@@ -2,24 +2,29 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\TP;
+use AppBundle\Entity\Projet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class TPController extends Controller
+class ProjetController extends Controller
 {
+    //    Retoune User
+    public function getUser()
+    {
+        return $this->get('security.token_storage')->getToken()->getUser();
+    }
+
     /**
-     * @Route("/tps", name="index_tps")
+     * @Route("/projets", name="index_projets")
      */
     public function indexTpsAction()
     {
-        return $this->render('AppBundle:TP:tp.html.twig');
+        return $this->render('AppBundle:Projet:projet.html.twig');
     }
 
-
-    public function getRepository($entity = 'TP')
+    public function getRepository($entity = 'Projet')
     {
         return $this->getEm()->getRepository("AppBundle:" . $entity);
     }
@@ -30,14 +35,14 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/tps", options = { "expose" = true }, name="list_tps")
+     * @Route("/api/projets", options = { "expose" = true }, name="list_projets")
      */
-    public function listTPsAction()
+    public function listProjetsAction()
     {
-        $tps = $this->getRepository()->listAll();
+        $projets = $this->getRepository()->listAll();
         $datas = [];
 
-        foreach ($tps as $sample_data) {
+        foreach ($projets as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
@@ -60,18 +65,22 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/add/tp", options = { "expose" = true }, name="add_tp")
+     * @Route("/api/add/projet", options = { "expose" = true }, name="add_projet")
      */
-    public function addTPAction(Request $request)
+    public function addProjetAction(Request $request)
     {
+        $em = $this->getEm();
+
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $tp = new TP();
-        $tp->setLibelle($libelle);
-        $tp->setDescription($description);
+        $tp = $request->request->get('tp');
 
-        $em = $this->getEm();
-        $em->persist($tp);
+        $projet = new Projet();
+        $projet->setLibelle($libelle);
+        $projet->setDescription($description);
+        $projet->setTp($this->getRepository('TP')->find($tp));
+
+        $em->persist($projet);
         $em->flush();
 
         return new JsonResponse([
@@ -80,17 +89,20 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/update/tp/{tp}", options = { "expose" = true }, name="update_tp")
+     * @Route("/api/update/projet/{projet}", options = { "expose" = true }, name="update_projet")
      */
-    public function updateTPAction(Request $request, TP $tp)
+    public function updateProjetAction(Request $request, Projet $projet)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $tp->setLibelle($libelle);
-        $tp->setDescription($description);
+        $tp = $request->request->get('tp');
+
+        $projet->setLibelle($libelle);
+        $projet->setDescription($description);
+        $projet->setTp($this->getRepository('TP')->find($tp));
 
         $em = $this->getEm();
-        $em->merge($tp);
+        $em->merge($projet);
         $em->flush();
 
         return new JsonResponse([
@@ -99,12 +111,12 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/delete/tp/{tp}", options = { "expose" = true }, name="delete_tp")
+     * @Route("/api/delete/projet/{projet}", options = { "expose" = true }, name="delete_projet")
      */
-    public function deleteTPAction(Request $request, TP $tp)
+    public function deleteProjetAction(Request $request, Projet $projet)
     {
         $em = $this->getEm();
-        $em->remove($tp);
+        $em->remove($projet);
         $em->flush();
 
         return new JsonResponse([

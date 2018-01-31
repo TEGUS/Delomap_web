@@ -2,24 +2,23 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\TP;
+use AppBundle\Entity\Lot;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class TPController extends Controller
+class LotController extends Controller
 {
     /**
-     * @Route("/tps", name="index_tps")
+     * @Route("/lots", name="index_lots")
      */
     public function indexTpsAction()
     {
-        return $this->render('AppBundle:TP:tp.html.twig');
+        return $this->render('AppBundle:Lot:lot.html.twig');
     }
 
-
-    public function getRepository($entity = 'TP')
+    public function getRepository($entity = 'Lot')
     {
         return $this->getEm()->getRepository("AppBundle:" . $entity);
     }
@@ -30,18 +29,19 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/tps", options = { "expose" = true }, name="list_tps")
+     * @Route("/api/lots", options = { "expose" = true }, name="list_lots")
      */
-    public function listTPsAction()
+    public function listLotsAction()
     {
-        $tps = $this->getRepository()->listAll();
+        $lots = $this->getRepository()->listAll();
         $datas = [];
 
-        foreach ($tps as $sample_data) {
+        foreach ($lots as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
+            $temp[] = $sample_data->getProjet()->getLibelle();
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
@@ -60,18 +60,22 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/add/tp", options = { "expose" = true }, name="add_tp")
+     * @Route("/api/add/lot", options = { "expose" = true }, name="add_lot")
      */
-    public function addTPAction(Request $request)
+    public function addLotAction(Request $request)
     {
+        $em = $this->getEm();
+
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $tp = new TP();
-        $tp->setLibelle($libelle);
-        $tp->setDescription($description);
+        $projet = $request->request->get('projet');
 
-        $em = $this->getEm();
-        $em->persist($tp);
+        $lot = new Lot();
+        $lot->setLibelle($libelle);
+        $lot->setDescription($description);
+        $lot->setProjet($this->getRepository('Projet')->find($projet));
+
+        $em->persist($lot);
         $em->flush();
 
         return new JsonResponse([
@@ -80,17 +84,20 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/update/tp/{tp}", options = { "expose" = true }, name="update_tp")
+     * @Route("/api/update/lot/{lot}", options = { "expose" = true }, name="update_lot")
      */
-    public function updateTPAction(Request $request, TP $tp)
+    public function updateLotAction(Request $request, Lot $lot)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $tp->setLibelle($libelle);
-        $tp->setDescription($description);
+        $projet = $request->request->get('projet');
+
+        $lot->setLibelle($libelle);
+        $lot->setDescription($description);
+        $lot->setProjet($this->getRepository('Projet')->find($projet));
 
         $em = $this->getEm();
-        $em->merge($tp);
+        $em->merge($lot);
         $em->flush();
 
         return new JsonResponse([
@@ -99,12 +106,12 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/delete/tp/{tp}", options = { "expose" = true }, name="delete_tp")
+     * @Route("/api/delete/lot/{lot}", options = { "expose" = true }, name="delete_lot")
      */
-    public function deleteTPAction(Request $request, TP $tp)
+    public function deleteLotAction(Request $request, Lot $lot)
     {
         $em = $this->getEm();
-        $em->remove($tp);
+        $em->remove($lot);
         $em->flush();
 
         return new JsonResponse([

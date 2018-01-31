@@ -3,12 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * DAG
  *
  * @ORM\Table(name="dag")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DAGRepository")
+ * @Vich\Uploadable
  */
 class DAG
 {
@@ -38,13 +41,6 @@ class DAG
     /**
      * @var string
      *
-     * @ORM\Column(name="fichier", type="string", length=255, nullable=true)
-     */
-    private $fichier;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="dalaisTransmission", type="string", length=255, nullable=true)
      */
     private $dalaisTransmission;
@@ -65,6 +61,26 @@ class DAG
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Proc", cascade={"persist"}, inversedBy="dags")
      */
     private $procs;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fichier", type="string", length=255, nullable=true)
+     */
+    private $fichier;
+
+    /**
+     * @Vich\UploadableField(mapping="docs_a_generer", fileNameProperty="fichier")
+     * @var File
+     */
+    private $docFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
 
 
     /**
@@ -271,5 +287,47 @@ class DAG
     public function getProcs()
     {
         return $this->procs;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return DAG
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setDocFile(File $doc = null)
+    {
+        $this->docFile = $doc;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($doc) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getDocFile()
+    {
+        return $this->docFile;
     }
 }
