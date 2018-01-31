@@ -1,7 +1,8 @@
+var table_tp;
 
 $(function () {
     //Exportable table
-    $('#table-type-prestation').DataTable({
+    table_tp = $('#table-type-prestation').DataTable({
         "language": {
             "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
             buttons: {
@@ -10,8 +11,8 @@ $(function () {
             }
         },
         "ajax": {
-         "url": Routing.generate('list_tps'),
-         "type": "POST"
+            "url": Routing.generate('list_tps'),
+            "type": "POST"
         },
         dom: 'Bfrtip',
         responsive: true,
@@ -32,6 +33,7 @@ $(function () {
     //click sur le bouton editer TP
     $('#table-type-prestation').on("click", ".edit", function () {
 
+        var id;
         var nom;
         var description;
 
@@ -39,14 +41,17 @@ $(function () {
 
         var i = 0;
         row.find("td").each(function (cellIndex) {
-            if (i == 1) {
+            if (i === 0) {
+                id = $(this).html();
+            } else if (i === 1) {
                 nom = $(this).html();
-            } else if (i == 2) {
+            } else if (i === 2) {
                 description = $(this).html();
             }
             i++;
         });
 
+        $('#id_tp').val(id);
         $('#form-type-prestation input.nom').val(nom);
         $('#form-type-prestation textarea.description').html(description);
 
@@ -63,6 +68,7 @@ $(function () {
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Oui",
+            cancelButtonText: "Non",
             closeOnConfirm: false
         }, function () {
 
@@ -74,6 +80,62 @@ $(function () {
     $('#block-form-type-prestation .cancel').click(function () {
         $('#block-form-type-prestation').addClass('hidden');
         $('#block-table-type-prestation').removeClass('hidden');
+    });
+
+    //gestion des champs obligatoires sur le formulaire TP
+    $("#form-type-prestation").validate({
+        rules: {
+            name: "required"
+        },
+        messages: {
+            name: "Veuillez entrer un nom"
+        }
+    });
+
+    //click sur le bouton Enregistrer TP
+    $('#block-form-type-prestation .save').click(function () {
+
+        if ($("#form-type-prestation").valid()) {
+            var id = $('#id_tp').val();
+            var url = "";
+            var msg_reussite = "";
+            var msg_echec = "";
+            if (id) {
+                //console.log('modification')
+                url = Routing.generate('update_tp', {'id': id});
+                msg_reussite = "Type de prestation modifiée avec succès";
+                msg_echec = "Problème de modification du nouveau type de prestation";
+            } else {
+                //console.log('enregistrement')
+                url = Routing.generate('add_tp');
+                msg_reussite = "Type de prestation enregistrée avec succès";
+                msg_echec = "Problème d'enregistrement du nouveau type de prestation";
+            }
+
+            $.ajax({
+                'type': 'POST',
+                'url': url,
+                'dataType': 'JSON',
+                'data': {
+                    libelle: $('#nom_tp').val(),
+                    description: $('#description_tp').val()
+                },
+                'success': function (result) {
+                    if (result.data) {
+                        $('#block-form-type-prestation').addClass('hidden');
+                        $('#block-table-type-prestation').removeClass('hidden');
+                        swal("Réussi!", msg_reussite, "success");
+
+                        table_tp.ajax.reload();
+                    } else {
+                        swal("Erreur!", msg_echec, "error");
+                    }
+                },
+                'error': function () {
+                    swal("Erreur!", msg_echec, "error");
+                }
+            });
+        }
     });
 
 });
