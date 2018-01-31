@@ -73,7 +73,7 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/add/tp", options = { "expose" = true }, name="add_tp")
+     * @Route("/api/add/tp", options = {"expose" = true}, name="add_tp")
      */
     public function addTPAction(Request $request)
     {
