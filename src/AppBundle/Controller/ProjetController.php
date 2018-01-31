@@ -19,7 +19,7 @@ class ProjetController extends Controller
     /**
      * @Route("/projets", name="index_projets")
      */
-    public function indexTpsAction()
+    public function indexAction()
     {
         return $this->render('AppBundle:Projet:projet.html.twig');
     }
@@ -35,7 +35,7 @@ class ProjetController extends Controller
     }
 
     /**
-     * @Route("/api/projets", options = { "expose" = true }, name="list_projets")
+     * @Route("/api/datatable/projets", options = { "expose" = true }, name="list_datatable_projets")
      */
     public function listProjetsAction()
     {
@@ -61,6 +61,16 @@ class ProjetController extends Controller
             "recordsTotal" => count($datas),
             "recordsFiltered" => count($datas),
             "data" => $datas
+        ]);
+    }
+
+    /**
+     * @Route("/api/projets", options = {"expose" = true}, name="find_all_projets")
+     */
+    public function findAllAction()
+    {
+        return new JsonResponse([
+            "data" => $this->getRepository()->findAll()
         ]);
     }
 
