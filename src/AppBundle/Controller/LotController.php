@@ -13,7 +13,7 @@ class LotController extends Controller
     /**
      * @Route("/lots", name="index_lots")
      */
-    public function indexTpsAction()
+    public function indexAction()
     {
         return $this->render('AppBundle:Lot:lot.html.twig');
     }
@@ -29,7 +29,7 @@ class LotController extends Controller
     }
 
     /**
-     * @Route("/api/lots", options = { "expose" = true }, name="list_lots")
+     * @Route("/api/datatable/lots", options = { "expose" = true }, name="list_datatable_lots")
      */
     public function listLotsAction()
     {
@@ -56,6 +56,16 @@ class LotController extends Controller
             "recordsTotal" => count($datas),
             "recordsFiltered" => count($datas),
             "data" => $datas
+        ]);
+    }
+
+    /**
+     * @Route("/api/lots", options = {"expose" = true}, name="find_all_lots")
+     */
+    public function findAllAction()
+    {
+        return new JsonResponse([
+            "data" => $this->getRepository()->findAll()
         ]);
     }
 

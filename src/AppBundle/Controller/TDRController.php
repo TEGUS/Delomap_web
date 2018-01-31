@@ -13,7 +13,7 @@ class TDRController extends Controller
     /**
      * @Route("/tdrs", name="index_tdrs")
      */
-    public function indexTpsAction()
+    public function indexAction()
     {
         return $this->render('AppBundle:TDR:tdr.html.twig');
     }
@@ -29,7 +29,7 @@ class TDRController extends Controller
     }
 
     /**
-     * @Route("/api/tdrs", options = { "expose" = true }, name="list_tdrs")
+     * @Route("/api/datatable/tdrs", options = { "expose" = true }, name="list_datatable_tdrs")
      */
     public function listTDRsAction()
     {
@@ -56,6 +56,16 @@ class TDRController extends Controller
             "recordsTotal" => count($datas),
             "recordsFiltered" => count($datas),
             "data" => $datas
+        ]);
+    }
+
+    /**
+     * @Route("/api/tdrs", options = {"expose" = true}, name="find_all_tdrs")
+     */
+    public function findAllAction()
+    {
+        return new JsonResponse([
+            "data" => $this->getRepository()->findAll()
         ]);
     }
 
