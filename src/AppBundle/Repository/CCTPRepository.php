@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class CCTPRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function listAll()
+    {
+        $qb = $this->createQueryBuilder('cctp')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 }
