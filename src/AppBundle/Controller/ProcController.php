@@ -13,7 +13,7 @@ class ProcController extends Controller
     /**
      * @Route("/procs", name="index_procs")
      */
-    public function indexTpsAction()
+    public function indexAction()
     {
         return $this->render('AppBundle:Proc:proc.html.twig');
     }
@@ -29,7 +29,7 @@ class ProcController extends Controller
     }
 
     /**
-     * @Route("/api/procs", options = { "expose" = true }, name="list_procs")
+     * @Route("/api/datatable/procs", options = { "expose" = true }, name="list_datatable_procs")
      */
     public function listProcsAction()
     {
@@ -55,6 +55,16 @@ class ProcController extends Controller
             "recordsTotal" => count($datas),
             "recordsFiltered" => count($datas),
             "data" => $datas
+        ]);
+    }
+
+    /**
+     * @Route("/api/procs", options = {"expose" = true}, name="find_all_procs")
+     */
+    public function findAllAction()
+    {
+        return new JsonResponse([
+            "data" => $this->getRepository()->findAll()
         ]);
     }
 

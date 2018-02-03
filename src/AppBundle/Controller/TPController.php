@@ -13,9 +13,12 @@ class TPController extends Controller
     /**
      * @Route("/tps", name="index_tps")
      */
-    public function indexTpsAction()
+    public function indexAction()
     {
-        return $this->render('AppBundle:TP:tp.html.twig');
+        $file = __DIR__.'/../../../web/uploads/git_memo_fr.pdf';
+        return $this->render('AppBundle:TP:tp.html.twig', [
+            "file" => $file
+        ]);
     }
 
 
@@ -30,9 +33,9 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/tps", options = { "expose" = true }, name="list_tps")
+     * @Route("/api/datatable/tps", options = { "expose" = true }, name="list_datatable_tps")
      */
-    public function listTPsAction()
+    public function listDatatableTPsAction()
     {
         $tps = $this->getRepository()->listAll();
         $datas = [];
@@ -60,7 +63,17 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/add/tp", options = { "expose" = true }, name="add_tp")
+     * @Route("/api/tps", options = {"expose" = true}, name="find_all_tps")
+     */
+    public function findAllAction()
+    {
+        return new JsonResponse([
+            "data" => $this->getRepository()->findAll()
+        ]);
+    }
+
+    /**
+     * @Route("/api/add/tp", options = {"expose" = true}, name="add_tp")
      */
     public function addTPAction(Request $request)
     {
