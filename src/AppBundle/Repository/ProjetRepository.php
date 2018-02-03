@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class ProjetRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function listAll()
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 }
