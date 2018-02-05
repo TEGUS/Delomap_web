@@ -47,6 +47,12 @@ class Contractant
      */
     private $projets;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCreation", type="datetime", unique=true)
+     */
+    private $dateCreation;
 
     /**
      * Get id
@@ -135,6 +141,7 @@ class Contractant
     public function __construct()
     {
         $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dateCreation = new \DateTime('now');
     }
 
     /**
@@ -169,5 +176,29 @@ class Contractant
     public function getProjets()
     {
         return $this->projets;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Contractant
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
     }
 }

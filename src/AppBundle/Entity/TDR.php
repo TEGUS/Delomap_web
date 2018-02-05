@@ -41,6 +41,18 @@ class TDR
      */
     private $tp;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCreation", type="datetime", unique=true)
+     */
+    private $dateCreation;
+
+
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime('now');
+    }
 
     /**
      * Get id
@@ -122,5 +134,29 @@ class TDR
     public function getTp()
     {
         return $this->tp;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return TDR
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
     }
 }

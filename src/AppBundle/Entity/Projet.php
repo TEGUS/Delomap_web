@@ -120,6 +120,13 @@ class Projet
 
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCreationEnBD", type="datetime", unique=true)
+     */
+    private $dateCreationEnBD;
+
+    /**
      * Get id
      *
      * @return int
@@ -352,6 +359,7 @@ class Projet
         $this->lots = new \Doctrine\Common\Collections\ArrayCollection();
         $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tps = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dateCreation = new \DateTime('now');
     }
 
     /**
@@ -516,5 +524,29 @@ class Projet
     public function getLibelle()
     {
         return $this->libelle;
+    }
+
+    /**
+     * Set dateCreationEnBD
+     *
+     * @param \DateTime $dateCreationEnBD
+     *
+     * @return Projet
+     */
+    public function setDateCreationEnBD($dateCreationEnBD)
+    {
+        $this->dateCreationEnBD = $dateCreationEnBD;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreationEnBD
+     *
+     * @return \DateTime
+     */
+    public function getDateCreationEnBD()
+    {
+        return $this->dateCreationEnBD;
     }
 }

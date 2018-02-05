@@ -41,6 +41,17 @@ class Lot
      */
     private $projet;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCreation", type="datetime", unique=true)
+     */
+    private $dateCreation;
+
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime('now');
+    }
 
     /**
      * Get id
@@ -122,5 +133,29 @@ class Lot
     public function getProjet()
     {
         return $this->projet;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Lot
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
     }
 }

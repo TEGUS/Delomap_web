@@ -81,3 +81,5 @@ vich_uploader:
         docs_a_generer:
             uri_prefix:         '%app.path.docs%'
             upload_destination: '%kernel.root_dir%/../web/uploads/docs'
+            namer:
+                service: vich_uploader.namer_origname
