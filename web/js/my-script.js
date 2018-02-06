@@ -1,6 +1,17 @@
 var table_tp;
 
 $(function () {
+
+    if ($('.datepicker').length) {
+        $('.datepicker').bootstrapMaterialDatePicker({
+            format: 'DD MMMM YYYY',
+            clearButton: true,
+            weekStart: 1,
+            time: false,
+            lang : 'fr' 
+        });
+    }
+
     //Exportable table
     table_tp = $('#table-type-prestation').DataTable({
         "language": {
