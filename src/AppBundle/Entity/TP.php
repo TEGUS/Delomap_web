@@ -57,6 +57,13 @@ class TP
 
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCreation", type="datetime", unique=true)
+     */
+    private $dateCreation;
+
+    /**
      * Get id
      *
      * @return int
@@ -122,6 +129,7 @@ class TP
         $this->cctps = new \Doctrine\Common\Collections\ArrayCollection();
         $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
         $this->procs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dateCreation = new \DateTime('now');
     }
 
     /**
@@ -258,5 +266,29 @@ class TP
     public function getProjets()
     {
         return $this->projets;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return TP
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
     }
 }

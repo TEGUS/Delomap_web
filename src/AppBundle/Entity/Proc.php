@@ -46,6 +46,13 @@ class Proc
     private $dags;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCreation", type="datetime", unique=true)
+     */
+    private $dateCreation;
+
+    /**
      * Get id
      *
      * @return int
@@ -109,6 +116,7 @@ class Proc
     {
         $this->tps = new \Doctrine\Common\Collections\ArrayCollection();
         $this->dags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dateCreation = new \DateTime('now');
     }
 
     /**
@@ -177,5 +185,29 @@ class Proc
     public function getDags()
     {
         return $this->dags;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Proc
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
     }
 }

@@ -29,9 +29,9 @@ class DAGController extends Controller
     }
 
     /**
-     * @Route("/api/Dags", options = { "expose" = true }, name="list_dags")
+     * @Route("/api/datatable/dags", options = { "expose" = true }, name="list_datatable_dags")
      */
-    public function listDAGsAction()
+    public function listDatatableDAGsAction()
     {
         $dags = $this->getRepository()->listAll();
         $datas = [];
@@ -39,11 +39,11 @@ class DAGController extends Controller
         foreach ($dags as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
-            $temp[] = $sample_data->getFichier();
+            $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
-            $temp[] = $sample_data->getDelaistransmission();
-            $temp[] = $sample_data->getStatus(); 
-            $temp[] = $sample_data->getTp()->getLibelle();
+            $temp[] = $sample_data->getStatus();
+            $temp[] = $sample_data->getDalaisTransmission();
+			
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
@@ -62,23 +62,29 @@ class DAGController extends Controller
     }
 
     /**
-     * @Route("/api/add/dag", options = { "expose" = true }, name="add_dag")
+     * @Route("/api/dags", options = {"expose" = true}, name="find_all_dags")
+     */
+    public function findAllAction()
+    {
+        return new JsonResponse([
+            "data" => $this->getRepository()->findAll()
+        ]);
+    }
+
+    /**
+     * @Route("/api/add/dag", options = {"expose" = true}, name="add_dag")
      */
     public function addDAGAction(Request $request)
     {
-        $delaistransmission = $request->request->get('delaistransmission');
-        $description = $request->request->get('description');
-        $fichier = $request->request->get('fichier');
         $libelle = $request->request->get('libelle');
+        $description = $request->request->get('description');
         $status = $request->request->get('status');
-       /** $tp = $request->request->get('tp');*/
+        $delaisTransmission = $request->request->get('dalaisTransmission');
         $dag = new DAG();
         $dag->setLibelle($libelle);
         $dag->setDescription($description);
-        $dag->setFichier($fichier);
-        $dag->setDelaistransmission($delaistransmission);
         $dag->setStatus($status);
-        $tdr->setTp($this->getRepository('TP')->find($tp));
+        $dag->setDalaisTransmission($delaisTransmission);
 
         $em = $this->getEm();
         $em->persist($dag);
@@ -99,14 +105,11 @@ class DAGController extends Controller
         $delaistransmission = $request->request->get('delaistransmission');
         $fichier = $request->request->get('fichier');
         $status = $request->request->get('status');
-        $tp = $request->request->get('tp');
 
         $dag->setLibelle($libelle);
         $dag->setDescription($description);
         $dag->setDelaistransmission($delaistransmission);
         $dag->setStatus($status);
-        $dag->setFichier($fichier);
-        $tp->setTp($this->getRepository('TP')->find($tp));
 
         $em = $this->getEm();
         $em->merge($dag);

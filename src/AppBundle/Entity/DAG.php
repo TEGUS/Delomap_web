@@ -3,15 +3,12 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * DAG
  *
  * @ORM\Table(name="dag")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DAGRepository")
- * @Vich\Uploadable
  */
 class DAG
 {
@@ -62,26 +59,17 @@ class DAG
      */
     private $procs;
 
-
     /**
-     * @var string
-     *
-     * @ORM\Column(name="fichier", type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Fichier", mappedBy="dag")
      */
-    private $fichier;
+    private $fichiers;
 
     /**
-     * @Vich\UploadableField(mapping="docs_a_generer", fileNameProperty="fichier")
-     * @var File
-     */
-    private $docFile;
-
-    /**
-     * @ORM\Column(type="datetime")
      * @var \DateTime
+     *
+     * @ORM\Column(name="dateCreation", type="datetime", unique=true)
      */
-    private $updatedAt;
-
+    private $dateCreation;
 
     /**
      * Get id
@@ -219,6 +207,7 @@ class DAG
     {
         $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->procs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dateCreation = new \DateTime('now');
     }
 
     /**
@@ -290,44 +279,60 @@ class DAG
     }
 
     /**
-     * Set updatedAt
+     * Set dateCreation
      *
-     * @param \DateTime $updatedAt
+     * @param \DateTime $dateCreation
      *
      * @return DAG
      */
-    public function setUpdatedAt($updatedAt)
+    public function setDateCreation($dateCreation)
     {
-        $this->updatedAt = $updatedAt;
+        $this->dateCreation = $dateCreation;
 
         return $this;
     }
 
     /**
-     * Get updatedAt
+     * Get dateCreation
      *
      * @return \DateTime
      */
-    public function getUpdatedAt()
+    public function getDateCreation()
     {
-        return $this->updatedAt;
+        return $this->dateCreation;
     }
 
-    public function setDocFile(File $doc = null)
+    /**
+     * Add fichier
+     *
+     * @param \AppBundle\Entity\Fichier $fichier
+     *
+     * @return DAG
+     */
+    public function addFichier(\AppBundle\Entity\Fichier $fichier)
     {
-        $this->docFile = $doc;
+        $this->fichiers[] = $fichier;
 
-        // VERY IMPORTANT:
-        // It is required that at least one field changes if you are using Doctrine,
-        // otherwise the event listeners won't be called and the file is lost
-        if ($doc) {
-            // if 'updatedAt' is not defined in your entity, use another property
-            $this->updatedAt = new \DateTime('now');
-        }
+        return $this;
     }
 
-    public function getDocFile()
+    /**
+     * Remove fichier
+     *
+     * @param \AppBundle\Entity\Fichier $fichier
+     */
+    public function removeFichier(\AppBundle\Entity\Fichier $fichier)
     {
-        return $this->docFile;
+        $this->fichiers->removeElement($fichier);
+    }
+
+    /**
+     * Get fichiers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFichiers()
+    {
+        return $this->fichiers;
     }
 }

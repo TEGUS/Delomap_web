@@ -52,7 +52,7 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MENU PRINCIPAL</li>
-                    <li class="active">
+                    <li>
                         <a href="{{ path('homepage') }}">
                             <i class="material-icons">home</i>
                             <span>Accueil</span>
@@ -64,17 +64,17 @@
                             <span>Gestion des projets</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">list</i>
                             <span>Données référentielles</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
+                            <li class="active">
                                 <a href="{{ path('index_tps') }}">Liste des Types de prestation</a>
                             </li>
                             <li>
-                                <a href="pages/ui/animations.html">Termes de référence (TDR)</a>
+                                <a href="{{ path('index_tdrs') }}">Termes de référence (TDR)</a>
                             </li>
                             <li>
                                 <a href="pages/ui/badges.html">CCTP</a>

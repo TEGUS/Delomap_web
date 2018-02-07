@@ -54,6 +54,17 @@ class Document
      */
     private $dag;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCreation", type="datetime", unique=true)
+     */
+    private $dateCreation;
+
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime('now');
+    }
 
     /**
      * Get id
@@ -183,5 +194,29 @@ class Document
     public function getDag()
     {
         return $this->dag;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Document
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
     }
 }

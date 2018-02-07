@@ -41,6 +41,7 @@ class ProcController extends Controller
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
+            $temp[] = $sample_data->getTp()->getLibelle();
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
