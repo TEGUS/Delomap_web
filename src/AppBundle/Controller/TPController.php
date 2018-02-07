@@ -67,9 +67,7 @@ class TPController extends Controller
      */
     public function findAllAction()
     {
-        return new JsonResponse([
-            "data" => $this->getRepository()->findAll()
-        ]);
+        return new JsonResponse($this->getRepository('TP')->findAll());
     }
 
     /**

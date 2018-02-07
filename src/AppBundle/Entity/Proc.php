@@ -46,6 +46,11 @@ class Proc
     private $dags;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Projet", cascade={"persist"}, mappedBy="procs")
+     */
+    private $projets;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
@@ -209,5 +214,39 @@ class Proc
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * Add projet
+     *
+     * @param \AppBundle\Entity\Projet $projet
+     *
+     * @return Proc
+     */
+    public function addProjet(\AppBundle\Entity\Projet $projet)
+    {
+        $this->projets[] = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Remove projet
+     *
+     * @param \AppBundle\Entity\Projet $projet
+     */
+    public function removeProjet(\AppBundle\Entity\Projet $projet)
+    {
+        $this->projets->removeElement($projet);
+    }
+
+    /**
+     * Get projets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjets()
+    {
+        return $this->projets;
     }
 }

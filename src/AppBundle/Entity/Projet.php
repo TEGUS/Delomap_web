@@ -127,6 +127,21 @@ class Projet
     private $dateCreationEnBD;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\TDRSpecific", mappedBy="projet")
+     */
+    private $tdrSpecifics;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CCTPSpecific", mappedBy="projet")
+     */
+    private $cctpSpecifics;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Proc", cascade={"persist"}, inversedBy="projets")
+     */
+    private $procs;
+
+    /**
      * Get id
      *
      * @return int
@@ -548,5 +563,107 @@ class Projet
     public function getDateCreationEnBD()
     {
         return $this->dateCreationEnBD;
+    }
+
+    /**
+     * Add tdrSpecific
+     *
+     * @param \AppBundle\Entity\TDRSpecific $tdrSpecific
+     *
+     * @return Projet
+     */
+    public function addTdrSpecific(\AppBundle\Entity\TDRSpecific $tdrSpecific)
+    {
+        $this->tdrSpecifics[] = $tdrSpecific;
+
+        return $this;
+    }
+
+    /**
+     * Remove tdrSpecific
+     *
+     * @param \AppBundle\Entity\TDRSpecific $tdrSpecific
+     */
+    public function removeTdrSpecific(\AppBundle\Entity\TDRSpecific $tdrSpecific)
+    {
+        $this->tdrSpecifics->removeElement($tdrSpecific);
+    }
+
+    /**
+     * Get tdrSpecifics
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTdrSpecifics()
+    {
+        return $this->tdrSpecifics;
+    }
+
+    /**
+     * Add cctpSpecific
+     *
+     * @param \AppBundle\Entity\CCTPSpecific $cctpSpecific
+     *
+     * @return Projet
+     */
+    public function addCctpSpecific(\AppBundle\Entity\CCTPSpecific $cctpSpecific)
+    {
+        $this->cctpSpecifics[] = $cctpSpecific;
+
+        return $this;
+    }
+
+    /**
+     * Remove cctpSpecific
+     *
+     * @param \AppBundle\Entity\CCTPSpecific $cctpSpecific
+     */
+    public function removeCctpSpecific(\AppBundle\Entity\CCTPSpecific $cctpSpecific)
+    {
+        $this->cctpSpecifics->removeElement($cctpSpecific);
+    }
+
+    /**
+     * Get cctpSpecifics
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCctpSpecifics()
+    {
+        return $this->cctpSpecifics;
+    }
+
+    /**
+     * Add proc
+     *
+     * @param \AppBundle\Entity\Proc $proc
+     *
+     * @return Projet
+     */
+    public function addProc(\AppBundle\Entity\Proc $proc)
+    {
+        $this->procs[] = $proc;
+
+        return $this;
+    }
+
+    /**
+     * Remove proc
+     *
+     * @param \AppBundle\Entity\Proc $proc
+     */
+    public function removeProc(\AppBundle\Entity\Proc $proc)
+    {
+        $this->procs->removeElement($proc);
+    }
+
+    /**
+     * Get procs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProcs()
+    {
+        return $this->procs;
     }
 }

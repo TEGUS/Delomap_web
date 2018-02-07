@@ -42,6 +42,16 @@ class TDR
     private $tp;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\TDRSpecific", mappedBy="tdr")
+     */
+    private $tdrSpecifics;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CCTPSpecific", mappedBy="tdr")
+     */
+    private $cctpSpecifics;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
@@ -158,5 +168,73 @@ class TDR
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * Add tdrSpecific
+     *
+     * @param \AppBundle\Entity\TDRSpecific $tdrSpecific
+     *
+     * @return TDR
+     */
+    public function addTdrSpecific(\AppBundle\Entity\TDRSpecific $tdrSpecific)
+    {
+        $this->tdrSpecifics[] = $tdrSpecific;
+
+        return $this;
+    }
+
+    /**
+     * Remove tdrSpecific
+     *
+     * @param \AppBundle\Entity\TDRSpecific $tdrSpecific
+     */
+    public function removeTdrSpecific(\AppBundle\Entity\TDRSpecific $tdrSpecific)
+    {
+        $this->tdrSpecifics->removeElement($tdrSpecific);
+    }
+
+    /**
+     * Get tdrSpecifics
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTdrSpecifics()
+    {
+        return $this->tdrSpecifics;
+    }
+
+    /**
+     * Add cctpSpecific
+     *
+     * @param \AppBundle\Entity\CCTPSpecific $cctpSpecific
+     *
+     * @return TDR
+     */
+    public function addCctpSpecific(\AppBundle\Entity\CCTPSpecific $cctpSpecific)
+    {
+        $this->cctpSpecifics[] = $cctpSpecific;
+
+        return $this;
+    }
+
+    /**
+     * Remove cctpSpecific
+     *
+     * @param \AppBundle\Entity\CCTPSpecific $cctpSpecific
+     */
+    public function removeCctpSpecific(\AppBundle\Entity\CCTPSpecific $cctpSpecific)
+    {
+        $this->cctpSpecifics->removeElement($cctpSpecific);
+    }
+
+    /**
+     * Get cctpSpecifics
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCctpSpecifics()
+    {
+        return $this->cctpSpecifics;
     }
 }
