@@ -34,14 +34,14 @@ class Fichier
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateCreation", type="datetime", unique=true)
+     * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
      */
     private $dateCreation;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updatedAt", type="datetime", unique=true)
+     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
      */
     private $updatedAt;
 

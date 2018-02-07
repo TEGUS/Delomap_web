@@ -13,11 +13,10 @@ class DAGController extends Controller
     /**
      * @Route("/dags", name="index_dags")
      */
-    public function indexAction()
+    public function indexDagsAction()
     {
         return $this->render('AppBundle:DAG:dag.html.twig');
     }
-
 
     public function getRepository($entity = 'DAG')
     {
@@ -44,6 +43,7 @@ class DAGController extends Controller
             $temp[] = $sample_data->getDescription();
             $temp[] = $sample_data->getStatus();
             $temp[] = $sample_data->getDalaisTransmission();
+			
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
@@ -96,18 +96,19 @@ class DAGController extends Controller
     }
 
     /**
-     * @Route("/api/update/dag/{dag}", options = { "expose" = true }, name="update_dag")
+     * @Route("/api/update/tdr/{dag}", options = { "expose" = true }, name="update_dag")
      */
-    public function updateDAGAction(Request $request, DAG $dag)
+    public function updateDAGAction(Request $request, TDR $dag)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $delaisTransmission = $request->request->get('dalaisTransmission');
+        $delaistransmission = $request->request->get('delaistransmission');
+        $fichier = $request->request->get('fichier');
         $status = $request->request->get('status');
 
         $dag->setLibelle($libelle);
         $dag->setDescription($description);
-        $dag->setDalaisTransmission($delaisTransmission);
+        $dag->setDelaistransmission($delaistransmission);
         $dag->setStatus($status);
 
         $em = $this->getEm();
@@ -120,7 +121,7 @@ class DAGController extends Controller
     }
 
     /**
-     * @Route("/api/delete/dag/{dag}", options = { "expose" = true }, name="delete_dag")
+     * @Route("/api/delete/tdr/{dag}", options = { "expose" = true }, name="delete_dag")
      */
     public function deleteDAGAction(Request $request, DAG $dag)
     {
