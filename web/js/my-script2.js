@@ -29,6 +29,9 @@ $(function (){
         $('#block-form-terme-reference').removeClass('hidden');
     });
     
+    //click recherce tdr
+    $('#select-tdr').searchableOptionList();
+    
 });
 
 

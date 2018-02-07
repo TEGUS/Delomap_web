@@ -2,11 +2,14 @@
 
 {% block body %}
     {{ parent() }}
+
+    {#<iframe src="http://docs.google.com/viewer?url=http://localhost/Delomap_dev/web/uploads/git_memo_fr.pdf&embedded=true" width="600" height="780" style="border: none;"></iframe>#}
+
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
                 <h2>
-                    TYPES DE PRESTATION
+                    LES TYPES DE PROCEDURE
                 </h2>
             </div>
             <!-- Table les types de prestation -->
@@ -15,7 +18,7 @@
                     <div class="card">
                         <div class="header">
                             <h2 class="col-xs-6">
-                                Liste des types de Prestation
+                                Liste des types de Procédure
                             </h2>
                             <div class="col-xs-6 right-side">
                                 <button type="button" class="btn btn-primary waves-effect button-new">Nouveau</button>
@@ -27,16 +30,18 @@
                                     <thead>
                                     <tr>
                                         <th>Code</th>
-                                        <th>Nom de la prestation</th>
-                                        <th>Description</th>
+                                        <th>Nom de la procedure</th>
+                                        <th>Description</th
+                                        <th>Date de Création</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
                                         <th>Code</th>
-                                        <th>Nom de la prestation</th>
+                                        <th>Nom de la procedure</th>
                                         <th>Description</th>
+                                        <th>Date de Création</th>
                                         <th>Actions</th>
                                     </tr>
                                     </tfoot>
@@ -65,38 +70,39 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Nouveau type de prestation
+                                Nouvelle procédure
                             </h2>
                         </div>
                         <div class="body">
                             <form id="form-type-prestation" class="form-horizontal">
+                                <input type="text" name="id" id="id_tp" class="hidden" >
                                 <div class="row clearfix">
                                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="nom_2">Nom * </label>
+                                        <label for="nom">Nom * </label>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" id="nom_2" class="form-control nom" placeholder="Veuillez saisir le nom" required>
+                                                <input type="text" name="nom" id="nom_tp" class="form-control nom" placeholder="Veuillez saisir le nom de la procédure" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="description_2">Description </label>
+                                        <label for="description">Description </label>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <textarea name="description" cols="30" rows="5" class="form-control no-resize description" placeholder="Veuillez saisir une description" ></textarea>
+                                                <textarea name="description" id="description_tp" cols="30" rows="5" class="form-control no-resize description" placeholder="Veuillez saisir une description" ></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                                        <button type="button" class="btn btn-primary m-t-15 waves-effect save">Enregistrer</button>
+                                        <button type="button" class="btn btn-primary m-t-15 waves-effect save"><i class="fa fa-spinner fa-spin hidden"></i> Enregistrer</button>
                                         <button type="button" class="btn btn-default m-t-15 waves-effect cancel">Annuler</button>
                                     </div>
                                 </div>
