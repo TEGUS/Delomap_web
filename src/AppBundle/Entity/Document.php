@@ -57,7 +57,7 @@ class Document
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateCreation", type="datetime", unique=true)
+     * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
      */
     private $dateCreation;
 

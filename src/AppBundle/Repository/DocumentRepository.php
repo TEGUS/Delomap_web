@@ -12,7 +12,7 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
 {
     public function listAll()
     {
-        $qb = $this->createQueryBuilder('v')
+        $qb = $this->createQueryBuilder('document')
             ->getQuery();
 
         return $qb->getResult();

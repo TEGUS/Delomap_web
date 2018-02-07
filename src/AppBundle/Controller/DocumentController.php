@@ -33,7 +33,7 @@ class DocumentController extends Controller
      */
     public function listDocumentsAction()
     {
-        $document = $this->getRepository()->listAll();
+        $documents = $this->getRepository()->listAll();
         $datas = [];
 
         foreach ($documents as $sample_data) {
@@ -64,16 +64,13 @@ class DocumentController extends Controller
      */
     public function addDocumentAction(Request $request)
     {
-        $id = $request->request->get('id');
         $datesave = $request->request->get('datesave');
         $datesignature= $request->request->get('datesignature');
         $dateupload= $request->request->get('dateupload');
-        $document = new DOCUMENT();
-        $document->setId($id);
+        $document = new Document();
         $document->setDatesave($datesave);
         $document->setDatesignature($datesignature);
         $document->setDateupload($dateupload);
-        $document->setTp($this->getRepository('TP')->find($tp));
 
         $em = $this->getEm();
         $em->persist($document);
@@ -85,19 +82,17 @@ class DocumentController extends Controller
     }
 
     /**
-     * @Route("/api/update/tdr/{document}", options = { "expose" = true }, name="update_document")
+     * @Route("/api/update/document/{document}", options = { "expose" = true }, name="update_document")
      */
     public function updateDOCUMENTAction(Request $request, Document $document)
     {
         $datesignature = $request->request->get('datesignature');
         $dateupload = $request->request->get('dateupload');
         $datesave = $request->request->get('datesave');
-        /**$tp = $request->request->get('tp');*/
 
         $document->setDatesignature($datesignature);
         $document->setDateupload($dateupload);
         $document->setDatesave($datesave);
-        $document->setTp($this->getRepository('TP')->find($tp));
 
         $em = $this->getEm();
         $em->merge($document);
@@ -109,9 +104,9 @@ class DocumentController extends Controller
     }
 
     /**
-     * @Route("/api/delete/tdr/{tdr}", options = { "expose" = true }, name="delete_tdr")
+     * @Route("/api/delete/document/{document}", options = { "expose" = true }, name="delete_document")
      */
-    public function deleteDOCUMENTAction(Request $request, DOCUMENT $document)
+    public function deleteDOCUMENTAction(Request $request, Document $document)
     {
         $em = $this->getEm();
         $em->remove($document);

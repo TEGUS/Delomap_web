@@ -96,7 +96,7 @@ class ContractantController extends Controller
         $contractant->setEmail($email);
         $contractant->setNom($nom);
         $contractant->setTel($tel);
-        /**$contractant->setTp($this->getRepository('TP')->find($tp));*/
+        //$contractant->setTp($this->getRepository('TP')->find($tp));*/
 
         $em = $this->getEm();
         $em->merge($contractant);

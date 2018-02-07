@@ -122,7 +122,7 @@ class Projet
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateCreationEnBD", type="datetime", unique=true)
+     * @ORM\Column(name="dateCreationEnBD", type="datetime", nullable=true)
      */
     private $dateCreationEnBD;
 
