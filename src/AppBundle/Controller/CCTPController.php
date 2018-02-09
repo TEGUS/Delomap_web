@@ -2,27 +2,23 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\TP;
+use AppBundle\Entity\CCTP;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class TPController extends Controller
+class CCTPController extends Controller
 {
     /**
-     * @Route("/tps", name="index_tps")
+     * @Route("/cctp", name="index_cctp")
      */
-    public function indexAction()
+    public function indexTpsAction()
     {
-        $file = __DIR__.'/../../../web/uploads/git_memo_fr.pdf';
-        return $this->render('AppBundle:TP:tp.html.twig', [
-            "file" => $file
-        ]);
+        return $this->render('AppBundle:CCTP:cctp.html.twig');
     }
 
-
-    public function getRepository($entity = 'TP')
+    public function getRepository($entity = 'CCTP')
     {
         return $this->getEm()->getRepository("AppBundle:" . $entity);
     }
@@ -33,18 +29,19 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/datatable/tps", options = { "expose" = true }, name="list_datatable_tps")
+     * @Route("/api/cctps", options = { "expose" = true }, name="list_cctp")
      */
-    public function listDatatableTPsAction()
+    public function listCCTPsAction()
     {
-        $tps = $this->getRepository()->listAll();
+        $cctps = $this->getRepository()->listAll();
         $datas = [];
 
-        foreach ($tps as $sample_data) {
+        foreach ($cctps as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
+            $temp[] = $sample_data->getTp()->getLibelle();
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
@@ -63,26 +60,20 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/tps", options = {"expose" = true}, name="find_all_tps")
+     * @Route("/api/add/cctp", options = { "expose" = true }, name="add_cctp")
      */
-    public function findAllAction()
-    {
-        return new JsonResponse($this->getRepository('TP')->findAll());
-    }
-
-    /**
-     * @Route("/api/add/tp", options = {"expose" = true}, name="add_tp")
-     */
-    public function addTPAction(Request $request)
+    public function addCCTPAction(Request $request)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $tp = new TP();
-        $tp->setLibelle($libelle);
-        $tp->setDescription($description);
+        $tp = $request->request->get('tp');
+        $cctp = new CCTP();
+        $cctp->setLibelle($libelle);
+        $cctp->setDescription($description);
+        $cctp->setTp($this->getRepository('TP')->find($tp));
 
         $em = $this->getEm();
-        $em->persist($tp);
+        $em->persist($cctp);
         $em->flush();
 
         return new JsonResponse([
@@ -91,17 +82,25 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/update/tp/{tp}", options = { "expose" = true }, name="update_tp")
+     * @Route("/api/update/cctp/{cctp}", options = { "expose" = true }, name="update_cctp")
      */
-    public function updateTPAction(Request $request, TP $tp)
+    public function updateCCTPAction(Request $request, CCTP $cctp)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $tp->setLibelle($libelle);
-        $tp->setDescription($description);
+        $tp = $request->request->get('tp');
+
+        if ($libelle != null && $libelle != '')
+            $cctp->setLibelle($libelle);
+        
+        if ($description != null && $description != '')
+            $cctp->setDescription($description);
+        
+        if ($tp != null && $tp != '')
+            $cctp->setTp($this->getRepository('TP')->find($tp));
 
         $em = $this->getEm();
-        $em->merge($tp);
+        $em->merge($cctp);
         $em->flush();
 
         return new JsonResponse([
@@ -110,12 +109,12 @@ class TPController extends Controller
     }
 
     /**
-     * @Route("/api/delete/tp/{tp}", options = { "expose" = true }, name="delete_tp")
+     * @Route("/api/delete/cctp/{cctp}", options = {"expose" = true}, name="delete_cctp")
      */
-    public function deleteTPAction(Request $request, TP $tp)
+    public function deleteCCTPAction(Request $request, CCTP $cctp)
     {
         $em = $this->getEm();
-        $em->remove($tp);
+        $em->remove($cctp);
         $em->flush();
 
         return new JsonResponse([

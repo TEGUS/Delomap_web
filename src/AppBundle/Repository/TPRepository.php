@@ -17,4 +17,12 @@ class TPRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getResult();
     }
+
+    public function findAll()
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
 }
