@@ -4,7 +4,8 @@ parameters:
     database_port: 3306
     database_name: delomap_web
     database_user: root
-    database_password: null
+    database_password: root
+    database_driver: pdo_mysql
     mailer_transport: gmail
     mailer_host: smtp.gmail.com
     mailer_user: symcassus@gmail.com
