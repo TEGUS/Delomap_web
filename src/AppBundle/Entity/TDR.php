@@ -61,6 +61,10 @@ class TDR
 
     public function __construct()
     {
+        $this->tdrs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->cctps = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->procs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->dateCreation = new \DateTime('now');
     }
 

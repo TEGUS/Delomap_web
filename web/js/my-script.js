@@ -192,4 +192,11 @@ $(function () {
         }
     });
 
+    $('#form-projet .tdr button').click(function () {
+
+        $('#form-projet .tdr table tbody').append('<tr><td></td><td data-edit-type="date"></td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>');
+        $('.editable-table-projet').editableTableWidget({ editor: $('<textarea>'), preventColumns: [ 3 ] });
+
+    });
+
 });
