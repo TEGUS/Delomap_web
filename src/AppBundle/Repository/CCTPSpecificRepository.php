@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class CCTPSpecificRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function listAll()
+    {
+        $qb = $this->createQueryBuilder('cctp_s')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 }
