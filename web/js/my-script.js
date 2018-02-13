@@ -193,9 +193,10 @@ $(function () {
     });
 
     $('#form-projet .tdr button').click(function () {
-        var tdr = "<select><option>tdr 1</option><option>tdr 2</option></select>";
-        $('#form-projet .tdr table tbody').append('<tr><td>'+tdr+'</td><td></td><td data-edit-type="date"></td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>');
-        $('.editable-table-projet').editableTableWidget({ editor: $('<input>'), preventColumns: [ 1, 3 ] });
+
+        $('#form-projet .tdr table tbody').append('<tr><td></td><td data-edit-type="date"></td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>');
+        $('.editable-table-projet').editableTableWidget({ editor: $('<textarea>'), preventColumns: [ 3 ] });
+
     });
 
 });
