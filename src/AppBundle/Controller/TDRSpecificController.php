@@ -2,23 +2,16 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\TDR;
+use AppBundle\Entity\TDRSpecific;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class TDRController extends Controller
+class TDRSpecificController extends Controller
 {
-    /**
-     * @Route("/tdrs", name="index_tdrs")
-     */
-    public function indexAction()
-    {
-        return $this->render('AppBundle:TDR:tdr.html.twig');
-    }
 
-    public function getRepository($entity = 'TDR')
+    public function getRepository($entity = 'TDRSpecific')
     {
         return $this->getEm()->getRepository("AppBundle:" . $entity);
     }
@@ -61,7 +54,7 @@ class TDRController extends Controller
     }
 
     /**
-     * @Route("/api/tdrs", options = {"expose" = true}, name="find_all_tdrs")
+     * @Route("/api/tdrs_specifics", options = {"expose" = true}, name="find_all_tdrs_specifics")
      */
     public function findAllAction()
     {
@@ -71,17 +64,17 @@ class TDRController extends Controller
     }
 
     /**
-     * @Route("/api/add/tdr", options = { "expose" = true }, name="add_tdr")
+     * @Route("/api/add/tdr_specific", options = { "expose" = true }, name="add_tdr_specific")
      */
-    public function addTDRAction(Request $request)
+    public function addTDRSpecificAction(Request $request)
     {
-        $libelle = $request->request->get('libelle');
-        $description = $request->request->get('description');
-        $tp = $request->request->get('tp');
-        $tdr = new TDR();
-        $tdr->setLibelle($libelle);
-        $tdr->setDescription($description);
-        $tdr->setTp($this->getRepository('TP')->find($tp));
+        $service = $request->request->get('service');
+        $date = $request->request->get('date');
+        $projet = $request->request->get('projet');
+        $tdr = new TDRSpecific();
+        $tdr->setService($service);
+        $tdr->setDate($date);
+        $tdr->setProjet($this->getRepository('Projet')->find($projet));
 
         $em = $this->getEm();
         $em->persist($tdr);
@@ -93,20 +86,20 @@ class TDRController extends Controller
     }
 
     /**
-     * @Route("/api/update/tdr/{tdr}", options = { "expose" = true }, name="update_tdr")
+     * @Route("/api/update/tdr_specific/{tdr_specific}", options = { "expose" = true }, name="update_tdr_specific")
      */
-    public function updateTDRAction(Request $request, TDR $tdr)
+    public function updateTDRSpecificAction(Request $request, TDRSpecific $tdr_specific)
     {
-        $libelle = $request->request->get('libelle');
-        $description = $request->request->get('description');
-        $tp = $request->request->get('tp');
+        $service = $request->request->get('service');
+        $date = $request->request->get('date');
+        $projet = $request->request->get('projet');
 
-        $tdr->setLibelle($libelle);
-        $tdr->setDescription($description);
-        $tdr->setTp($this->getRepository('TP')->find($tp));
+        $tdr->setService($service);
+        $tdr->setDate($date);
+        $tdr->setProjet($this->getRepository('Projet')->find($projet));
 
         $em = $this->getEm();
-        $em->merge($tdr);
+        $em->merge($tdr_specific);
         $em->flush();
 
         return new JsonResponse([
@@ -115,12 +108,12 @@ class TDRController extends Controller
     }
 
     /**
-     * @Route("/api/delete/tdr/{tdr}", options = { "expose" = true }, name="delete_tdr")
+     * @Route("/api/delete/tdr_specific/{tdr_specific}", options = { "expose" = true }, name="delete_tdr_specific")
      */
-    public function deleteTDRAction(Request $request, TDR $tdr)
+    public function deleteTDRSpecificAction(Request $request, TDRSpecific $tdr_specific)
     {
         $em = $this->getEm();
-        $em->remove($tdr);
+        $em->remove($tdr_specific);
         $em->flush();
 
         return new JsonResponse([

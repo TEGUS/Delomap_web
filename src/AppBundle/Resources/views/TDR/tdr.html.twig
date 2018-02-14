@@ -25,31 +25,35 @@
                             <div class="table-responsive">
                                 <table id="table-terme-reference" class="table table-bordered table-striped table-hover dataTable js-exportable">
                                     <thead>
-                                    <tr>
-                                        <th>Code</th>
-                                        <th>Nom du terme de référence</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Nom du terme de référence</th>
+                                            <th>Description</th>
+                                            <th>id prestation</th>
+                                            <th>Prestation Associées</th>
+                                            <th>Actions</th>
+                                        </tr>
                                     </thead>
                                     <tfoot>
-                                    <tr>
-                                        <th>Code</th>
-                                        <th>Nom du terme de référence</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Nom du terme de référence</th>
+                                            <th>Description</th>
+                                            <th>id prestation</th>
+                                            <th>Prestation Associées</th>
+                                            <th>Actions</th>
+                                        </tr>
                                     </tfoot>
                                     {#<tbody>#}
                                     {#<tr>#}
-                                        {#<td>1</td>#}
-                                        {#<td>prestation 1</td>#}
-                                        {#<td>description 1</td>#}
-                                        {#<td>#}
-                                            {#<a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>#}
-                                            {#<span class="space-button"></span>#}
-                                            {#<a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>#}
-                                        {#</td>#}
+                                    {#<td>1</td>#}
+                                    {#<td>prestation 1</td>#}
+                                    {#<td>description 1</td>#}
+                                    {#<td>#}
+                                    {#<a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>#}
+                                    {#<span class="space-button"></span>#}
+                                    {#<a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>#}
+                                    {#</td>#}
                                     {#</tr>#}
                                     {#</tbody>#}
                                 </table>
@@ -70,19 +74,34 @@
                         </div>
                         <div class="body">
                             <form id="form-terme-reference" class="form-horizontal">
-                                <input type="text" name="id" id="id_tp" class="hidden" >
+                                <input type="text" name="id" id="id_tdr" class="hidden" >
                                 <div class="row clearfix">
                                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="nom">Nom * </label>
+                                        <label for="nom">Rechercher le type de prestation * </label>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" name="nom" id="nom_tp" class="form-control nom" placeholder="Veuillez saisir le nom" required>
+                                                <select id="select-tdr" name="tdselect" data-live-search="true">
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                        <label for="nom">Nom de la Référence * </label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="nom" id="nom_tdr" class="form-control nom" placeholder="Veuillez saisir le nom" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row clearfix">
                                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                                         <label for="description">Description </label>
@@ -90,7 +109,7 @@
                                     <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <textarea name="description" id="description_tp" cols="30" rows="5" class="form-control no-resize description" placeholder="Veuillez saisir une description" ></textarea>
+                                                <textarea name="description" id="description_tdr" cols="30" rows="5" class="form-control no-resize description" placeholder="Veuillez saisir une description" ></textarea>
                                             </div>
                                         </div>
                                     </div>

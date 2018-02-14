@@ -36,3 +36,7 @@
 .card .header .right-side {
     text-align: right;
 }
+
+.hide_me {
+    display: none;
+}

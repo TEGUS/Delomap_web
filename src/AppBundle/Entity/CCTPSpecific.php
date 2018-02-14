@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CCTPSpecific
  *
- * @ORM\Table(name="c_c_t_p_specific")
+ * @ORM\Table(name="cctp_Specific")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CCTPSpecificRepository")
  */
 class CCTPSpecific
@@ -43,13 +43,13 @@ class CCTPSpecific
     private $service;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TDR", inversedBy="cctpSpecifics", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CCTP", inversedBy="cctpSpecifics", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $tdr;
+    private $cctp;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Projet", inversedBy="cctpSpecifics", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Projet", inversedBy="cctpSpecific", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $projet;
@@ -143,30 +143,6 @@ class CCTPSpecific
     }
 
     /**
-     * Set tdr
-     *
-     * @param \AppBundle\Entity\TDR $tdr
-     *
-     * @return CCTPSpecific
-     */
-    public function setTdr(\AppBundle\Entity\TDR $tdr)
-    {
-        $this->tdr = $tdr;
-
-        return $this;
-    }
-
-    /**
-     * Get tdr
-     *
-     * @return \AppBundle\Entity\TDR
-     */
-    public function getTdr()
-    {
-        return $this->tdr;
-    }
-
-    /**
      * Set projet
      *
      * @param \AppBundle\Entity\Projet $projet
@@ -188,5 +164,29 @@ class CCTPSpecific
     public function getProjet()
     {
         return $this->projet;
+    }
+
+    /**
+     * Set cctp
+     *
+     * @param \AppBundle\Entity\CCTP $cctp
+     *
+     * @return CCTPSpecific
+     */
+    public function setCctp(\AppBundle\Entity\CCTP $cctp)
+    {
+        $this->cctp = $cctp;
+
+        return $this;
+    }
+
+    /**
+     * Get cctp
+     *
+     * @return \AppBundle\Entity\CCTP
+     */
+    public function getCctp()
+    {
+        return $this->cctp;
     }
 }
