@@ -213,7 +213,7 @@ $(function () {
             $tab.css('width', (100 / tabCount) + '%');
 
             //set button waves effect
-            setButtonWavesEffect(event);
+            //setButtonWavesEffect(event);
         },
         onStepChanging: function (event, currentIndex, newIndex) {
             if (currentIndex > newIndex) { return true; }
@@ -234,7 +234,9 @@ $(function () {
             return form.valid();
         },
         onFinished: function (event, currentIndex) {
-            swal("Good job!", "Submitted!", "success");
+            $('#block-table-projet').addClass('hidden');
+            $('#block-form-projet').removeClass('hidden');
+            swal("Enregistré", "Soumis!", "succès");
         }
     });
     
@@ -251,6 +253,15 @@ $(function () {
             date_fin: "Veuillez entrer la date de fin du projet",
             cout: "Veuillez entrer le coût du projet"
         }
+    });
+
+    //click sur le bouton nouveau TP
+    $('#block-table-projet .button-new').click(function () {
+
+        $('#form-projet input.nom').val('');
+
+        $('#block-table-projet').addClass('hidden');
+        $('#block-form-projet').removeClass('hidden');
     });
 
 });
