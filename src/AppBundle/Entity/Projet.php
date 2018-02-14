@@ -45,6 +45,13 @@ class Projet
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="dateArret", type="date", nullable=true)
+     */
+    private $dateArret;
+
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="dateAttribution", type="date", nullable=true)
      */
     private $dateAttribution;
@@ -665,5 +672,29 @@ class Projet
     public function getProcs()
     {
         return $this->procs;
+    }
+
+    /**
+     * Set dateArret
+     *
+     * @param \DateTime $dateArret
+     *
+     * @return Projet
+     */
+    public function setDateArret($dateArret)
+    {
+        $this->dateArret = $dateArret;
+
+        return $this;
+    }
+
+    /**
+     * Get dateArret
+     *
+     * @return \DateTime
+     */
+    public function getDateArret()
+    {
+        return $this->dateArret;
     }
 }
