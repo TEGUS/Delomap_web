@@ -80,6 +80,8 @@ class DAGController extends Controller
         $description = $request->request->get('description');
         $status = $request->request->get('status');
         $delaisTransmission = $request->request->get('dalaisTransmission');
+        $fichier = $request->request->get('fichier');
+
         $dag = new DAG();
         $dag->setLibelle($libelle);
         $dag->setDescription($description);

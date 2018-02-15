@@ -42,6 +42,7 @@ class ProcController extends Controller
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
             $temp[] = $this->getRepository('TP')->findTPsByIdProc($sample_data->getId());
+            $temp[] = $this->getRepository('DAG')->findTPsByIdProc($sample_data->getId());
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
@@ -150,6 +151,41 @@ class ProcController extends Controller
         ]);
     }
 
+
+    /**
+     * @Route("/api/proc/{proc}/add/dag", options = { "expose" = true }, name="update_proc_add_dag")
+     */
+    public function updateProcAddDAGAction(Request $request, Proc $proc)
+    {
+        $dag = $request->request->get('dag');;
+        $proc->addDag($this->getRepository('DAG')->find($dag));
+
+        $em = $this->getEm();
+        $em->merge($proc);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+
+    /**
+     * @Route("/api/proc/{proc}/remove/dag", options = { "expose" = true }, name="update_proc_remove_dag")
+     */
+    public function updateProcRemoveDAGAction(Request $request, Proc $proc)
+    {
+        $dag = $request->request->get('dag');;
+        $proc->removeDag($this->getRepository('DAG')->find($dag));
+
+        $em = $this->getEm();
+        $em->merge($proc);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
 
 
     /**
