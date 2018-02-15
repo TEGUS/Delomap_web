@@ -103,7 +103,24 @@ class DAGController extends Controller
     public function updateDagAddFichierAction(Request $request, DAG $dag)
     {
         $fichier = $request->request->get('fichier');;
-        $dag->addDag($this->getRepository('DAG')->find($fichier));
+        $dag->addFichier($this->getRepository('Fichier')->find($fichier));
+
+        $em = $this->getEm();
+        $em->merge($dag);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+    /**
+     * @Route("/api/dag/{dag}/remove/fichier", options = { "expose" = true }, name="update_dag_remove_fichier")
+     */
+    public function updateDagRemoveFichierAction(Request $request, DAG $dag)
+    {
+        $fichier = $request->request->get('fichier');;
+        $dag->removeFichier($this->getRepository('Fichier')->find($fichier));
 
         $em = $this->getEm();
         $em->merge($dag);
