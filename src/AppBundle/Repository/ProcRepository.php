@@ -18,6 +18,17 @@ class ProcRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getResult();
     }
 
+    public function findProcByIdTP($id_tp)
+    {
+        $qb = $this->createQueryBuilder('proc')
+            ->join('proc.tps', 'tp')
+            ->where('tp.id = :id')
+            ->setParameter('id', $id_tp)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
     public function findAll()
     {
         $qb = $this->createQueryBuilder('v')
