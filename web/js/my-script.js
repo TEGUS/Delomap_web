@@ -29,6 +29,12 @@ $(function () {
         responsive: true,
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        "columnDefs": [
+            {
+                "targets": [ 0, 3 ],
+                "class": "hide_me"
+            }
         ]
     });
 
