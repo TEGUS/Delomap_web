@@ -12,11 +12,23 @@ class TPRepository extends \Doctrine\ORM\EntityRepository
 {
     public function listAll()
     {
-        $qb = $this->createQueryBuilder('v')
+        $qb = $this->createQueryBuilder('tp')
             ->getQuery();
 
         return $qb->getResult();
     }
+
+    public function findTPsByIdProc($id_proc)
+    {
+        $qb = $this->createQueryBuilder('tp')
+            ->join('tp.procs', 'proc')
+            ->where('proc.id = :id')
+            ->setParameter('id', $id_proc)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
 
     public function findAll()
     {

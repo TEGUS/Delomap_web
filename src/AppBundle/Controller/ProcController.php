@@ -41,7 +41,7 @@ class ProcController extends Controller
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
-            $temp[] = $sample_data->getTp()->getLibelle();
+            $temp[] = $this->getRepository('TP')->findTPsByIdProc($sample_data->getId());
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
@@ -65,7 +65,7 @@ class ProcController extends Controller
     public function findAllAction()
     {
         return new JsonResponse([
-            "data" => $this->getRepository()->findAll()
+            "data" => $this->getRepository()->listAll()
         ]);
     }
 
@@ -76,9 +76,12 @@ class ProcController extends Controller
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
+        $tp = $request->request->get('tp');
+
         $proc = new Proc();
         $proc->setLibelle($libelle);
         $proc->setDescription($description);
+        $proc->addTp($this->getRepository('TP')->find($tp));
 
         $em = $this->getEm();
         $em->persist($proc);
@@ -96,8 +99,11 @@ class ProcController extends Controller
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
+        $tp = $request->request->get('tp');
+
         $proc->setLibelle($libelle);
         $proc->setDescription($description);
+        $proc->addTp($this->getRepository('TP')->find($tp));
 
         $em = $this->getEm();
         $em->merge($proc);
@@ -107,6 +113,44 @@ class ProcController extends Controller
             "data" => true,
         ]);
     }
+
+
+    /**
+     * @Route("/api/proc/{proc}/add/tp", options = { "expose" = true }, name="update_proc_add_tp")
+     */
+    public function updateProcAddTPAction(Request $request, Proc $proc)
+    {
+        $tp = $request->request->get('tp');;
+        $proc->addTp($this->getRepository('TP')->find($tp));
+
+        $em = $this->getEm();
+        $em->merge($proc);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+
+    /**
+     * @Route("/api/proc/{proc}/remove/tp", options = { "expose" = true }, name="update_proc_remove_tp")
+     */
+    public function updateProcRemoveTPAction(Request $request, Proc $proc)
+    {
+        $tp = $request->request->get('tp');;
+        $proc->removeTp($this->getRepository('TP')->find($tp));
+
+        $em = $this->getEm();
+        $em->merge($proc);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+
 
     /**
      * @Route("/api/delete/proc/{proc}", options = { "expose" = true }, name="delete_proc")

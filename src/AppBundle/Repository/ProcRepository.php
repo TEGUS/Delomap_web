@@ -12,9 +12,17 @@ class ProcRepository extends \Doctrine\ORM\EntityRepository
 {
     public function listAll()
     {
-        $qb = $this->createQueryBuilder('v')
+        $qb = $this->createQueryBuilder('p')
             ->getQuery();
 
         return $qb->getResult();
+    }
+
+    public function findAll()
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->getQuery();
+
+        return $qb->getArrayResult();
     }
 }
