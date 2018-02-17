@@ -3,10 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Projet;
+use AppBundle\Entity\TDRSpecific;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\Date;
 
 class ProjetController extends Controller
 {
@@ -93,16 +95,46 @@ class ProjetController extends Controller
     {
         $em = $this->getEm();
 
-        $libelle = $request->request->get('libelle');
-        $description = $request->request->get('description');
+        $libelle = $request->request->get('nom');
+        $dateLancement = $request->request->get('date_deb');
+        $dateArret = $request->request->get('date_fin');
+        $montant = $request->request->get('cout');
         $tp = $request->request->get('tp');
+        $proc = $request->request->get('proc');
+        $tdrs = $request->request->get('tdr');
+        $cctps = $request->request->get('cctp');
 
         $projet = new Projet();
         $projet->setLibelle($libelle);
-        $projet->setDescription($description);
+        $projet->setDateLancement($dateLancement);
+        $projet->setDateArret($dateArret);
+        $projet->setMontant($montant);
         $projet->setTp($this->getRepository('TP')->find($tp));
-
+        $projet->setUser($this->getUser());
+        //Creation du projet
         $em->persist($projet);
+
+        //Ajout de la proccédure choisie
+        $projet->addProc($this->getRepository('Proc')->find($proc));
+
+        //Ajout des TDR Specifiques
+        foreach ($tdrs as $tdr) {
+            $tdrSpecific = new TDRSpecific();
+            $tdrSpecific->setService($tdr['service']);
+            $tdrSpecific->setDate(new Date($tdr['date']));
+            $tdrSpecific->setProjet($projet);
+            $em->persist($tdrSpecific);
+        }
+
+        //Ajout des CCTP Specifiques
+        foreach ($cctps as $cctp) {
+            $cctpSpecific = new TDRSpecific();
+            $cctpSpecific->setService($cctp['service']);
+            $tdrSpecific->setDate(new Date($tdr['date']));
+            $cctpSpecific->setProjet($projet);
+            $em->persist($cctpSpecific);
+        }
+
         $em->flush();
 
         return new JsonResponse([

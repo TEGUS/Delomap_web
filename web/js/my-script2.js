@@ -1,3 +1,5 @@
+var table_proc;
+
 $(function () {
     //Exportation des termes de reference dans le tableau
     $('#table-terme-reference').DataTable({
@@ -219,8 +221,9 @@ $(function () {
     });
     
     
+    
     //Exportation des procedures dans le tableau
-    $('#table-procedure').DataTable({
+    table_proc = $('#table-procedure').DataTable({
         "language": {
             "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
             buttons: {
@@ -239,7 +242,7 @@ $(function () {
         ],
         "columnDefs": [
             {
-                "targets": [ 3 ],
+                "targets": [ 0, 3 ],
                 "class": "hide_me"
             }
         ]
@@ -312,6 +315,91 @@ $(function () {
         $('#block-form-procedure').addClass('hidden');
         $('#block-table-procedure').removeClass('hidden');
     });
+    
+    //click sur le bouton editer TP
+    $('#table-procedure').on("click", ".edit", function () {
+
+        var id;
+        var nom;
+        var description;
+
+        var row = jQuery(this).closest('tr');
+
+        var i = 0;
+        row.find("td").each(function (cellIndex) {
+            if (i === 0) {
+                id = $(this).html();
+            } else if (i === 1) {
+                nom = $(this).html();
+            } else if (i === 2) {
+                description = $(this).html();
+            }
+            i++;
+        });
+
+        $('#id_proc').val(id);
+        $('#form-procedure input.nom').val(nom);
+        $('#form-procedure textarea.description').html(description);
+
+        $('#block-table-procedure').addClass('hidden');
+        $('#block-form-procedure').removeClass('hidden');
+    });
+    //click sur le bouton supprimer TP
+    $('#table-procedure').on("click", ".remove", function () {
+        //console.log('ici');
+
+        var id;
+
+        var row = jQuery(this).closest('tr');
+
+        var i = 0;
+        row.find("td").each(function (cellIndex) {
+            if (i === 0) {
+                id = $(this).html();
+            }
+            i++;
+        });
+
+        swal({
+            title: "Attention !",
+            text: "Voulez-vous vraiment Supprimer cet élément ? ",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Oui",
+            cancelButtonText: "Non",
+            closeOnConfirm: false
+        }, function () {
+
+            $.ajax({
+                'type': 'POST',
+                'url': Routing.generate('delete_proc', { 'proc': id }),
+                'dataType': 'JSON',
+                'data': {
+                },
+                'success': function (result) {
+                    if (result.data) {
+                        swal("Réussi!", "Procédure supprimée avec succès", "success");
+
+                        table_proc.ajax.reload();
+                    } else {
+                        swal("Erreur!", "Erreur lors de la suppression de la procédure", "error");
+                    }
+                },
+                'error': function () {
+                    swal("Erreur!", "Erreur lors de la suppression de la procédure", "error");
+                },
+                'beforeSend': function() {
+                    $('.sweet-alert button.confirm').html("<i class=\"fa fa-spinner fa-spin\"></i> Oui");
+                },
+                'complete': function() {
+                    $('.sweet-alert button.confirm').html("Oui");
+                }
+            });
+        });
+    });
+
+    
     
     //Exportation des DAG dans le tableau
     $('#table-document-genere').DataTable({

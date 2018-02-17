@@ -29,6 +29,12 @@ $(function () {
         responsive: true,
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        "columnDefs": [
+            {
+                "targets": [ 0, 3 ],
+                "class": "hide_me"
+            }
         ]
     });
 
@@ -190,6 +196,78 @@ $(function () {
                 }
             });
         }
+    });
+
+    $('#form-projet .tdr button').click(function () {
+
+        $('#form-projet .tdr table tbody').append('<tr><td></td><td data-edit-type="date"></td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>');
+        $('.editable-table-projet').editableTableWidget({ editor: $('<textarea>'), preventColumns: [ 3 ] });
+
+    });
+
+    var form = $('#form-projet').show();
+    form.steps({
+        headerTag: 'h3',
+        bodyTag: 'fieldset',
+        transitionEffect: 'slideLeft',
+        onInit: function (event, currentIndex) {
+            $.AdminBSB.input.activate();
+
+            //Set tab width
+            var $tab = $(event.currentTarget).find('ul[role="tablist"] li');
+            var tabCount = $tab.length;
+            $tab.css('width', (100 / tabCount) + '%');
+
+            //set button waves effect
+            //setButtonWavesEffect(event);
+        },
+        onStepChanging: function (event, currentIndex, newIndex) {
+            if (currentIndex > newIndex) { return true; }
+
+            if (currentIndex < newIndex) {
+                form.find('.body:eq(' + newIndex + ') label.error').remove();
+                form.find('.body:eq(' + newIndex + ') .error').removeClass('error');
+            }
+
+            form.validate().settings.ignore = ':disabled,:hidden';
+            return form.valid();
+        },
+        onStepChanged: function (event, currentIndex, priorIndex) {
+            setButtonWavesEffect(event);
+        },
+        onFinishing: function (event, currentIndex) {
+            form.validate().settings.ignore = ':disabled';
+            return form.valid();
+        },
+        onFinished: function (event, currentIndex) {
+            $('#block-table-projet').addClass('hidden');
+            $('#block-form-projet').removeClass('hidden');
+            swal("Enregistré", "Soumis!", "succès");
+        }
+    });
+    
+    form.validate({
+        rules: {
+            nom: "required",
+            date_deb: "required",
+            date_fin: "required",
+            cout: "required"
+        },
+        messages: {
+            nom: "Veuillez entrer un nom",
+            date_deb: "Veuillez entrer la date de debut du projet",
+            date_fin: "Veuillez entrer la date de fin du projet",
+            cout: "Veuillez entrer le coût du projet"
+        }
+    });
+
+    //click sur le bouton nouveau TP
+    $('#block-table-projet .button-new').click(function () {
+
+        $('#form-projet input.nom').val('');
+
+        $('#block-table-projet').addClass('hidden');
+        $('#block-form-projet').removeClass('hidden');
     });
 
 });

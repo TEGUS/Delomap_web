@@ -23,12 +23,6 @@ abstract class User extends BaseUser
      */
     protected $id;
 
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
-
     /**
      * @var string
      *
@@ -59,6 +53,20 @@ abstract class User extends BaseUser
      * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Role", cascade={"persist"}, mappedBy="users")
      */
     private $list_roles;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
+     */
+    private $dateCreation;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->dateCreation = new \DateTime('now');
+        // your own logic
+    }
 
     /**
      * Set name

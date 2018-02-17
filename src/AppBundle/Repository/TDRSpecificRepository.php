@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class TDRSpecificRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function listAll()
+    {
+        $qb = $this->createQueryBuilder('tdr_s')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 }

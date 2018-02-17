@@ -12,9 +12,28 @@ class DAGRepository extends \Doctrine\ORM\EntityRepository
 {
     public function listAll()
     {
-        $qb = $this->createQueryBuilder('v')
+        $qb = $this->createQueryBuilder('dag')
             ->getQuery();
 
         return $qb->getResult();
+    }
+
+    public function findAll()
+    {
+        $qb = $this->createQueryBuilder('dag')
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
+    public function findDAGByIdProc($id_proc)
+    {
+        $qb = $this->createQueryBuilder('dag')
+            ->join('dag.procs', 'proc')
+            ->where('proc.id = :id')
+            ->setParameter('id', $id_proc)
+            ->getQuery();
+
+        return $qb->getArrayResult();
     }
 }

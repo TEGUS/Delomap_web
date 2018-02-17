@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints\Date;
 /**
  * TDRSpecific
  *
- * @ORM\Table(name="t_d_r_specific")
+ * @ORM\Table(name="tdr_Specific")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TDRSpecificRepository")
  */
 class TDRSpecific
@@ -45,7 +45,7 @@ class TDRSpecific
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TDR", inversedBy="tdrSpecifics", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $tdr;
 

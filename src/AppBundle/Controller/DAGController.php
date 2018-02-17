@@ -80,6 +80,8 @@ class DAGController extends Controller
         $description = $request->request->get('description');
         $status = $request->request->get('status');
         $delaisTransmission = $request->request->get('dalaisTransmission');
+        $fichier = $request->request->get('fichier');
+
         $dag = new DAG();
         $dag->setLibelle($libelle);
         $dag->setDescription($description);
@@ -96,14 +98,30 @@ class DAGController extends Controller
     }
 
     /**
+     * @Route("/api/dag/{dag}/add/fichier", options = { "expose" = true }, name="update_dag_add_fichier")
+     */
+    public function updateDagAddFichierAction(Request $request, DAG $dag)
+    {
+        $fichier = $request->request->get('fichier');;
+        $dag->addDag($this->getRepository('DAG')->find($fichier));
+
+        $em = $this->getEm();
+        $em->merge($dag);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+    /**
      * @Route("/api/update/tdr/{dag}", options = { "expose" = true }, name="update_dag")
      */
-    public function updateDAGAction(Request $request, TDR $dag)
+    public function updateDAGAction(Request $request, DAG $dag)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
         $delaistransmission = $request->request->get('delaistransmission');
-        $fichier = $request->request->get('fichier');
         $status = $request->request->get('status');
 
         $dag->setLibelle($libelle);

@@ -41,11 +41,13 @@ class ProcController extends Controller
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
-            $temp[] = $sample_data->getTp()->getLibelle();
+            $temp[] = $this->getRepository('DAG')->findDAGByIdProc($sample_data->getId());
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
                 <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+                <span class="space-button"></span>
+                <a href="#" class="add_doc" title="Ajouter un document à générer"><i class="fa fa-plus fa-lg fa-defaultgit "></i></a>
             ';
 
             $datas[] = $temp;
@@ -65,7 +67,7 @@ class ProcController extends Controller
     public function findAllAction()
     {
         return new JsonResponse([
-            "data" => $this->getRepository()->findAll()
+            "data" => $this->getRepository()->listAll()
         ]);
     }
 
@@ -76,6 +78,7 @@ class ProcController extends Controller
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
+
         $proc = new Proc();
         $proc->setLibelle($libelle);
         $proc->setDescription($description);
@@ -96,6 +99,7 @@ class ProcController extends Controller
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
+
         $proc->setLibelle($libelle);
         $proc->setDescription($description);
 
@@ -107,6 +111,79 @@ class ProcController extends Controller
             "data" => true,
         ]);
     }
+
+
+    /**
+     * @Route("/api/proc/{proc}/add/tp", options = { "expose" = true }, name="update_proc_add_tp")
+     */
+    public function updateProcAddTPAction(Request $request, Proc $proc)
+    {
+        $tp = $request->request->get('tp');;
+        $proc->addTp($this->getRepository('TP')->find($tp));
+
+        $em = $this->getEm();
+        $em->merge($proc);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+
+    /**
+     * @Route("/api/proc/{proc}/remove/tp", options = { "expose" = true }, name="update_proc_remove_tp")
+     */
+    public function updateProcRemoveTPAction(Request $request, Proc $proc)
+    {
+        $tp = $request->request->get('tp');;
+        $proc->removeTp($this->getRepository('TP')->find($tp));
+
+        $em = $this->getEm();
+        $em->merge($proc);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+
+    /**
+     * @Route("/api/proc/{proc}/add/dag", options = { "expose" = true }, name="update_proc_add_dag")
+     */
+    public function updateProcAddDAGAction(Request $request, Proc $proc)
+    {
+        $dag = $request->request->get('dag');;
+        $proc->addDag($this->getRepository('DAG')->find($dag));
+
+        $em = $this->getEm();
+        $em->merge($proc);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+
+    /**
+     * @Route("/api/proc/{proc}/remove/dag", options = { "expose" = true }, name="update_proc_remove_dag")
+     */
+    public function updateProcRemoveDAGAction(Request $request, Proc $proc)
+    {
+        $dag = $request->request->get('dag');;
+        $proc->removeDag($this->getRepository('DAG')->find($dag));
+
+        $em = $this->getEm();
+        $em->merge($proc);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
 
     /**
      * @Route("/api/delete/proc/{proc}", options = { "expose" = true }, name="delete_proc")
