@@ -111,6 +111,40 @@
                 </div>
             </div>
             <!-- #END# nouveau type de prestation -->
+            
+            <!-- Ajout document -->
+            <div class="modal fade" id="modal-procedure-doc" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Liste des documents</h4>
+                        </div>
+                        <div class="modal-body">
+                        <div>
+                            <select id="list_docs" data-live-search="true">
+                            </select>
+                            <button type="button" class="btn btn-link waves-effect btn-primary add"><i class="fa fa-spinner fa-spin hidden"></i> Ajouter</button>
+                        </div>
+                            <table id="table-procedure-documents" class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Nom du document</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            <table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# ajout document -->
+
         </div>
     </section>
 {% endblock %}
