@@ -41,13 +41,17 @@ class DAGController extends Controller
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
-            $temp[] = $sample_data->getStatus();
             $temp[] = $sample_data->getDalaisTransmission();
+            $temp[] = $sample_data->getStatus();
 			
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
                 <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+                <span class="space-button"></span>
+                <a href="#" class="view-files" title="Visualiser Fichiers"><i class="fa fa-eye fa-lg"></i></a>
+                <span class="space-button"></span>
+                <a href="#" class="add-files" title="Ajouter Fichier"><i class="fa fa-file fa-lg"></i></a>
             ';
 
             $datas[] = $temp;
@@ -78,9 +82,8 @@ class DAGController extends Controller
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $status = $request->request->get('status');
+        $status = $request->request->get('statut');
         $delaisTransmission = $request->request->get('dalaisTransmission');
-        $fichier = $request->request->get('fichier');
 
         $dag = new DAG();
         $dag->setLibelle($libelle);
@@ -98,31 +101,14 @@ class DAGController extends Controller
     }
 
     /**
-     * @Route("/api/dag/{dag}/add/fichier", options = { "expose" = true }, name="update_dag_add_fichier")
-     */
-    public function updateDagAddFichierAction(Request $request, DAG $dag)
-    {
-        $fichier = $request->request->get('fichier');;
-        $dag->addDag($this->getRepository('DAG')->find($fichier));
-
-        $em = $this->getEm();
-        $em->merge($dag);
-        $em->flush();
-
-        return new JsonResponse([
-            "data" => true,
-        ]);
-    }
-
-    /**
-     * @Route("/api/update/tdr/{dag}", options = { "expose" = true }, name="update_dag")
+     * @Route("/api/update/dag/{dag}", options = { "expose" = true }, name="update_dag")
      */
     public function updateDAGAction(Request $request, DAG $dag)
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
         $delaistransmission = $request->request->get('delaistransmission');
-        $status = $request->request->get('status');
+        $status = $request->request->get('statut');
 
         $dag->setLibelle($libelle);
         $dag->setDescription($description);
@@ -139,12 +125,46 @@ class DAGController extends Controller
     }
 
     /**
-     * @Route("/api/delete/tdr/{dag}", options = { "expose" = true }, name="delete_dag")
+     * @Route("/api/delete/dag/{dag}", options = { "expose" = true }, name="delete_dag")
      */
     public function deleteDAGAction(Request $request, DAG $dag)
     {
         $em = $this->getEm();
         $em->remove($dag);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+    /**
+     * @Route("/api/dag/{dag}/add/fichier", options = { "expose" = true }, name="update_dag_add_fichier")
+     */
+    public function updateDagAddFichierAction(Request $request, DAG $dag)
+    {
+        $fichier = $request->request->get('fichier');;
+        $dag->addFichier($this->getRepository('Fichier')->find($fichier));
+
+        $em = $this->getEm();
+        $em->merge($dag);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+    /**
+     * @Route("/api/dag/{dag}/remove/fichier", options = { "expose" = true }, name="update_dag_remove_fichier")
+     */
+    public function updateDagRemoveFichierAction(Request $request, DAG $dag)
+    {
+        $fichier = $request->request->get('fichier');;
+        $dag->removeFichier($this->getRepository('Fichier')->find($fichier));
+
+        $em = $this->getEm();
+        $em->merge($dag);
         $em->flush();
 
         return new JsonResponse([
