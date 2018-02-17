@@ -31,7 +31,7 @@ $(function () {
     $('#block-table-terme-reference .button-new').click(function () {
 
         $('#form-terme-reference input.nom').val('');
-        $('#form-terme-reference textarea.description').html('');
+        $('#form-terme-reference textarea.description').val('');
 
         $('#block-table-terme-reference').addClass('hidden');
         $('#block-form-terme-reference').removeClass('hidden');
@@ -90,7 +90,7 @@ $(function () {
 
         $('#id_tdr').val(id);
         $('#form-terme-reference input.nom').val(nom);
-        $('#form-terme-reference textarea.description').html(description);
+        $('#form-terme-reference textarea.description').val(description);
 
         $('#block-table-terme-reference').addClass('hidden');
         $('#block-form-terme-reference').removeClass('hidden');
