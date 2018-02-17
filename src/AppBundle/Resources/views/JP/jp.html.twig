@@ -1,0 +1,62 @@
+{% extends "AppBundle::layout.html.twig"%}
+
+{% block body %}
+    <!--tableau du journal de programmation-->
+        <section class="container-fluid">
+            
+    <div id="block-table-journal_programmation" class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="col-xs-6">
+                                JOURNAL DE PROGRAMMATION
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table id="table-journal_programmation" class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Designation du marché</th>
+                                            <th>Type de prestation</th>
+                                            <th>Montant prévisionnel</th>
+                                            <th>Autorité contractante</th>
+                                            <th>Mode Appel d'offre</th>
+                                            <th>Date du lancement</th>
+                                            <th>Date attribution marché</th>
+                                            <th>Date signature du marché</th>
+                                            <th>Date démarrage des traveaux</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                       <!-- <tr>
+                                            <th>Code</th>
+                                            <th>Nom du terme de référence</th>
+                                            <th>Description</th>
+                                            <th>id prestation</th>
+                                            <th>Prestation Associées</th>
+                                            <th>Actions</th>
+                                        </tr>-->
+                                    </tfoot>
+                                    {#<tbody>#}
+                                    {#<tr>#}
+                                    {#<td>1</td>#}
+                                    {#<td>prestation 1</td>#}
+                                    {#<td>description 1</td>#}
+                                    {#<td>#}
+                                    {#<a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>#}
+                                    {#<span class="space-button"></span>#}
+                                    {#<a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>#}
+                                    {#</td>#}
+                                    {#</tr>#}
+                                    {#</tbody>#}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </section>                     
+
+{% endblock %}

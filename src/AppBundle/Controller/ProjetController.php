@@ -26,7 +26,15 @@ class ProjetController extends Controller
         return $this->render('AppBundle:Projet:projet.html.twig');
     }
 
-    public function getRepository($entity = 'Projet')
+    /**
+     * @Route("/journal_programmation", name="index_journal_programmation")
+     */
+    public function indexAction2()
+    {
+        return $this->render('AppBundle:JP:jp.html.twig');
+    }
+
+    public function getRepository($entity = 'JP')
     {
         return $this->getEm()->getRepository("AppBundle:" . $entity);
     }
