@@ -41,8 +41,8 @@ class DAGController extends Controller
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
-            $temp[] = $sample_data->getStatus();
             $temp[] = $sample_data->getDalaisTransmission();
+            $temp[] = $sample_data->getStatus();
 			
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
@@ -78,9 +78,8 @@ class DAGController extends Controller
     {
         $libelle = $request->request->get('libelle');
         $description = $request->request->get('description');
-        $status = $request->request->get('status');
+        $status = $request->request->get('statut');
         $delaisTransmission = $request->request->get('dalaisTransmission');
-        $fichier = $request->request->get('fichier');
 
         $dag = new DAG();
         $dag->setLibelle($libelle);
@@ -90,6 +89,44 @@ class DAGController extends Controller
 
         $em = $this->getEm();
         $em->persist($dag);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+    /**
+     * @Route("/api/update/dag/{dag}", options = { "expose" = true }, name="update_dag")
+     */
+    public function updateDAGAction(Request $request, DAG $dag)
+    {
+        $libelle = $request->request->get('libelle');
+        $description = $request->request->get('description');
+        $delaistransmission = $request->request->get('delaistransmission');
+        $status = $request->request->get('statut');
+
+        $dag->setLibelle($libelle);
+        $dag->setDescription($description);
+        $dag->setDelaistransmission($delaistransmission);
+        $dag->setStatus($status);
+
+        $em = $this->getEm();
+        $em->merge($dag);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+    /**
+     * @Route("/api/delete/dag/{dag}", options = { "expose" = true }, name="delete_dag")
+     */
+    public function deleteDAGAction(Request $request, DAG $dag)
+    {
+        $em = $this->getEm();
+        $em->remove($dag);
         $em->flush();
 
         return new JsonResponse([
@@ -124,44 +161,6 @@ class DAGController extends Controller
 
         $em = $this->getEm();
         $em->merge($dag);
-        $em->flush();
-
-        return new JsonResponse([
-            "data" => true,
-        ]);
-    }
-
-    /**
-     * @Route("/api/update/tdr/{dag}", options = { "expose" = true }, name="update_dag")
-     */
-    public function updateDAGAction(Request $request, DAG $dag)
-    {
-        $libelle = $request->request->get('libelle');
-        $description = $request->request->get('description');
-        $delaistransmission = $request->request->get('delaistransmission');
-        $status = $request->request->get('status');
-
-        $dag->setLibelle($libelle);
-        $dag->setDescription($description);
-        $dag->setDelaistransmission($delaistransmission);
-        $dag->setStatus($status);
-
-        $em = $this->getEm();
-        $em->merge($dag);
-        $em->flush();
-
-        return new JsonResponse([
-            "data" => true,
-        ]);
-    }
-
-    /**
-     * @Route("/api/delete/tdr/{dag}", options = { "expose" = true }, name="delete_dag")
-     */
-    public function deleteDAGAction(Request $request, DAG $dag)
-    {
-        $em = $this->getEm();
-        $em->remove($dag);
         $em->flush();
 
         return new JsonResponse([
