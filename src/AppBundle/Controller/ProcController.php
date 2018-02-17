@@ -46,6 +46,8 @@ class ProcController extends Controller
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
                 <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+                <span class="space-button"></span>
+                <a href="#" class="add_doc" title="Ajouter un document à générer"><i class="fa fa-plus fa-lg fa-default"></i></a>
             ';
 
             $datas[] = $temp;
