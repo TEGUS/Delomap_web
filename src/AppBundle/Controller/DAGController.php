@@ -51,7 +51,7 @@ class DAGController extends Controller
                 <span class="space-button"></span>
                 <a href="#" class="view-files" title="Visualiser Fichiers"><i class="fa fa-eye fa-lg"></i></a>
                 <span class="space-button"></span>
-                <a href="#" class="add-files" title="Ajouter Fichier"><i class="fa fa-file fa-lg"></i></a>
+                <a href="#" class="add-files" title="Ajouter Fichier"><i class="fa fa-link fa-lg"></i></a>
             ';
 
             $datas[] = $temp;

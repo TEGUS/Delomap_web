@@ -316,7 +316,7 @@ $(function () {
         $('#block-table-procedure').removeClass('hidden');
     });
     
-    //click sur le bouton editer TP
+    //click sur le bouton editer proc
     $('#table-procedure').on("click", ".edit", function () {
 
         var id;
@@ -344,7 +344,7 @@ $(function () {
         $('#block-table-procedure').addClass('hidden');
         $('#block-form-procedure').removeClass('hidden');
     });
-    //click sur le bouton supprimer TP
+    //click sur le bouton supprimer proc
     $('#table-procedure').on("click", ".remove", function () {
         //console.log('ici');
 
@@ -397,6 +397,147 @@ $(function () {
                 }
             });
         });
+    });
+    //click sur le bouton list documents proc
+    $('#table-procedure').on("click", ".add_doc", function () {
+        
+        var id;
+        var row = jQuery(this).closest('tr');
+        var i = 0;
+        row.find("td").each(function (cellIndex) {
+            if (i === 0) {
+                id = $(this).html();
+            }
+            i++;
+        });
+
+        $('#modal-procedure-doc').modal('show');
+
+        $.ajax({
+            'type': 'POST',
+            'url': Routing.generate('find_all_dags'),
+            'dataType': 'JSON',
+            'success': function(result) {
+
+                var documents = "";
+                
+                for (var key in result.data) {
+                    var doc = result.data[key];
+                    documents += '<option value="' + doc.id + '">' + doc.libelle + '</option>';
+                }
+                
+                $('#list_docs').html(documents);
+                $('#list_docs').selectpicker('refresh');
+
+                //click sur ajout document
+                $('#modal-procedure-doc').on("click", ".add", function() {
+                    
+                    var idproc = id;
+                    var iddag = $('#list_docs').val();
+                    var nomdag = $("#list_docs option:selected" ).text();
+                    //console.log(idproc);
+                    //console.log(iddag);
+                    $.ajax({
+                        'type': 'POST',
+                        'url': Routing.generate('update_proc_add_dag', { 'proc': idproc }),
+                        'data': {
+                            dag: iddag
+                        },
+                        'dataType': 'JSON',
+                        'success': function(result) {
+                            //
+                            if (result.data === true) {
+                                $('#table-procedure-documents tbody').append('<tr><td>'+iddag+'</td><td>'+nomdag+'</td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>');
+                            } else {
+                                swal({
+                                    title: "Erreur!",
+                                    text: "Verifiez si le document n'existe pas deja dans le tableau",
+                                    type: "error",
+                                    timer: 3000
+                                });
+                            }
+                        },
+                        'error': function() {
+                            //
+                            swal({
+                                title: "Erreur!",
+                                text: "Verifiez si le document n'existe pas deja dans le tableau",
+                                type: "error",
+                                timer: 3000
+                             });
+                        },
+                        'beforeSend': function() {
+                            $('#modal-procedure-doc button.add i').removeClass('hidden');
+                        },
+                        'complete': function() {
+                            $('#modal-procedure-doc button.add i').addClass('hidden');
+                        }
+                    });
+                });
+    
+                //click sur le bouton du tableau document
+                $('#table-procedure-documents').on("click", ".remove", function () {
+                    //console.log('ici');
+            
+                    var iddag;
+                    var idproc = id;
+            
+                    var row = jQuery(this).closest('tr');
+            
+                    var i = 0;
+                    row.find("td").each(function (cellIndex) {
+                        if (i === 0) {
+                            iddag = $(this).html();
+                        }
+                        i++;
+                    });
+            
+                    swal({
+                        title: "Attention !",
+                        text: "Voulez-vous vraiment Supprimer cet élément ? ",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Oui",
+                        cancelButtonText: "Non",
+                        closeOnConfirm: false
+                    }, function () {
+            
+                        $.ajax({
+                            'type': 'POST',
+                            'url': Routing.generate('update_proc_remove_dag', { 'proc': idproc }),
+                            'dataType': 'JSON',
+                            'data': {
+                                dag: iddag
+                            },
+                            'success': function (result) {
+                                if (result.data === true) {
+                                    swal.close();
+                                    $(row).remove();
+                                } else {
+                                    swal("Erreur!", "Erreur", "error");
+                                }
+                            },
+                            'error': function () {
+                                swal("Erreur!", "Erreur", "error");
+                            },
+                            'beforeSend': function() {
+                                $('.sweet-alert button.confirm').html("<i class=\"fa fa-spinner fa-spin\"></i> Oui");
+                            },
+                            'complete': function() {
+                                $('.sweet-alert button.confirm').html("Oui");
+                            }
+                        });
+                    });
+                });
+            },
+            'error': function(xhr, status, error) {
+                var err = eval(xhr.responseText );
+                console.log(err);
+                console.log(error);
+            }
+        });
+
     });
 
     
