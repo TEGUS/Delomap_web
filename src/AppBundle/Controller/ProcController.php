@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DAG;
 use AppBundle\Entity\Proc;
+use AppBundle\Entity\TP;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,9 +20,9 @@ class ProcController extends Controller
         return $this->render('AppBundle:Proc:proc.html.twig');
     }
 
-    public function getRepository($entity = 'Proc')
+    public function getRepository($entity = Proc::class)
     {
-        return $this->getEm()->getRepository("AppBundle:" . $entity);
+        return $this->getEm()->getRepository($entity);
     }
 
     public function getEm()
@@ -41,7 +43,7 @@ class ProcController extends Controller
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
-            $temp[] = $this->getRepository('DAG')->findDAGByIdProc($sample_data->getId());
+            $temp[] = $this->getRepository(DAG::class)->findDAGByIdProc($sample_data->getId());
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
@@ -67,7 +69,7 @@ class ProcController extends Controller
     public function findAllAction()
     {
         return new JsonResponse([
-            "data" => $this->getRepository()->listAll()
+            "data" => $this->getRepository()->findAll()
         ]);
     }
 
@@ -119,7 +121,7 @@ class ProcController extends Controller
     public function updateProcAddTPAction(Request $request, Proc $proc)
     {
         $tp = $request->request->get('tp');;
-        $proc->addTp($this->getRepository('TP')->find($tp));
+        $proc->addTp($this->getRepository(TP::class)->find($tp));
 
         $em = $this->getEm();
         $em->merge($proc);
@@ -137,7 +139,7 @@ class ProcController extends Controller
     public function updateProcRemoveTPAction(Request $request, Proc $proc)
     {
         $tp = $request->request->get('tp');;
-        $proc->removeTp($this->getRepository('TP')->find($tp));
+        $proc->removeTp($this->getRepository(TP::class)->find($tp));
 
         $em = $this->getEm();
         $em->merge($proc);
@@ -154,8 +156,8 @@ class ProcController extends Controller
      */
     public function updateProcAddDAGAction(Request $request, Proc $proc)
     {
-        $dag = $request->request->get('dag');;
-        $proc->addDag($this->getRepository('DAG')->find($dag));
+        $dag = $request->request->get('dag');
+        $proc->addDag($this->getRepository(DAG::class)->find(intval($dag)));
 
         $em = $this->getEm();
         $em->merge($proc);
@@ -173,7 +175,7 @@ class ProcController extends Controller
     public function updateProcRemoveDAGAction(Request $request, Proc $proc)
     {
         $dag = $request->request->get('dag');;
-        $proc->removeDag($this->getRepository('DAG')->find($dag));
+        $proc->removeDag($this->getRepository(DAG::class)->find  (intval($dag)));
 
         $em = $this->getEm();
         $em->merge($proc);

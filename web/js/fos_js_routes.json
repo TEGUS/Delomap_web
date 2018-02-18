@@ -1,0 +1,1005 @@
+{
+  "base_url": "",
+  "routes": {
+    "list_cctp": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/cctps"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_cctp": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/cctp"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_cctp": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "cctp"
+        ],
+        [
+          "text",
+          "\/api\/update\/cctp"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_cctp": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "cctp"
+        ],
+        [
+          "text",
+          "\/api\/delete\/cctp"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "list_cctp_specific": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/cctp_specifics_specifics"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_cctp_specific": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/cctp_specific"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_cctp_specific": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "cctp_specific"
+        ],
+        [
+          "text",
+          "\/api\/update\/cctp_specific"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_cctp_specific": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "cctp_specific"
+        ],
+        [
+          "text",
+          "\/api\/delete\/cctp_specific"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "list_contractant": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/contractants"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_contractant": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/contractant"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_contractant": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "contractant"
+        ],
+        [
+          "text",
+          "\/api\/update\/contractant"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_contractant": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "contractant"
+        ],
+        [
+          "text",
+          "\/api\/delete\/contractant"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "list_datatable_dags": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/datatable\/dags"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "find_all_dags": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/dags"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_dag": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/dag"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_dag": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "dag"
+        ],
+        [
+          "text",
+          "\/api\/update\/dag"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_dag": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "dag"
+        ],
+        [
+          "text",
+          "\/api\/delete\/dag"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_dag_add_fichier": {
+      "tokens": [
+        [
+          "text",
+          "\/add\/fichier"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "dag"
+        ],
+        [
+          "text",
+          "\/api\/dag"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_dag_remove_fichier": {
+      "tokens": [
+        [
+          "text",
+          "\/remove\/fichier"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "dag"
+        ],
+        [
+          "text",
+          "\/api\/dag"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "list_document": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/document"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_document": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/document"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_document": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "document"
+        ],
+        [
+          "text",
+          "\/api\/update\/document"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_document": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "document"
+        ],
+        [
+          "text",
+          "\/api\/delete\/document"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "list_datatable_fichiers": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/datatable\/fichiers"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "find_all_fichiers": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/fichiers"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_fichier": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/fichier"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_fichier": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "fichier"
+        ],
+        [
+          "text",
+          "\/api\/update\/fichier"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_fichier": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "fichier"
+        ],
+        [
+          "text",
+          "\/api\/delete\/fichier"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "list_datatable_lots": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/datatable\/lots"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "find_all_lots": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/lots"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_lot": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/lot"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_lot": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "lot"
+        ],
+        [
+          "text",
+          "\/api\/update\/lot"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_lot": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "lot"
+        ],
+        [
+          "text",
+          "\/api\/delete\/lot"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "list_datatable_procs": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/datatable\/procs"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "find_all_procs": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/procs"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_proc": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/proc"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_proc": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "proc"
+        ],
+        [
+          "text",
+          "\/api\/update\/proc"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_proc_add_tp": {
+      "tokens": [
+        [
+          "text",
+          "\/add\/tp"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "proc"
+        ],
+        [
+          "text",
+          "\/api\/proc"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_proc_remove_tp": {
+      "tokens": [
+        [
+          "text",
+          "\/remove\/tp"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "proc"
+        ],
+        [
+          "text",
+          "\/api\/proc"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_proc_add_dag": {
+      "tokens": [
+        [
+          "text",
+          "\/add\/dag"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "proc"
+        ],
+        [
+          "text",
+          "\/api\/proc"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_proc_remove_dag": {
+      "tokens": [
+        [
+          "text",
+          "\/remove\/dag"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "proc"
+        ],
+        [
+          "text",
+          "\/api\/proc"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_proc": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "proc"
+        ],
+        [
+          "text",
+          "\/api\/delete\/proc"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "list_datatable_projets": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/datatable\/projets"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "find_all_projets": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/projets"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_projet": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/projet"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_projet": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "projet"
+        ],
+        [
+          "text",
+          "\/api\/update\/projet"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_projet": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "projet"
+        ],
+        [
+          "text",
+          "\/api\/delete\/projet"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "find_all_tdrs": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/tdrs"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_tdr": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/tdr"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_tdr": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "tdr"
+        ],
+        [
+          "text",
+          "\/api\/update\/tdr"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_tdr": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "tdr"
+        ],
+        [
+          "text",
+          "\/api\/delete\/tdr"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "list_datatable_tdrs": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/datatable\/tdrs"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "find_all_tdrs_specifics": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/tdrs_specifics"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_tdr_specific": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/tdr_specific"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_tdr_specific": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "tdr_specific"
+        ],
+        [
+          "text",
+          "\/api\/update\/tdr_specific"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_tdr_specific": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "tdr_specific"
+        ],
+        [
+          "text",
+          "\/api\/delete\/tdr_specific"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "list_datatable_tps": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/datatable\/tps"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "find_all_tps": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/tps"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "add_tp": {
+      "tokens": [
+        [
+          "text",
+          "\/api\/add\/tp"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "update_tp": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "tp"
+        ],
+        [
+          "text",
+          "\/api\/update\/tp"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "delete_tp": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "tp"
+        ],
+        [
+          "text",
+          "\/api\/delete\/tp"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    }
+  },
+  "prefix": "",
+  "host": "localhost",
+  "scheme": "http"
+}

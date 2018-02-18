@@ -17,4 +17,15 @@ class FichierRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getResult();
     }
+
+    public function findByDag($id_dag)
+    {
+        $qb = $this->createQueryBuilder('f')
+            ->join('f.dag', 'dag')
+            ->where('dag.id = :id')
+            ->setParameter('id', $id_dag)
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 }
