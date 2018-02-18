@@ -41,11 +41,14 @@ $(function () {
     //click sur le bouton nouveau TP
     $('#block-table-type-prestation .button-new').click(function () {
 
+        $('#id_tp').val('');
         $('#form-type-prestation input.nom').val('');
-        $('#form-type-prestation textarea.description').html('');
+        $('#form-type-prestation textarea.description').val('');
 
         $('#block-table-type-prestation').addClass('hidden');
         $('#block-form-type-prestation').removeClass('hidden');
+        
+        $('#block-form-type-prestation .header h2').html('Nouveau type de prestation');
     });
     //click sur le bouton editer TP
     $('#table-type-prestation').on("click", ".edit", function () {
@@ -67,13 +70,15 @@ $(function () {
             }
             i++;
         });
-
+console.log(description);
         $('#id_tp').val(id);
         $('#form-type-prestation input.nom').val(nom);
-        $('#form-type-prestation textarea.description').html(description);
+        $('#form-type-prestation textarea.description').val(description);
 
         $('#block-table-type-prestation').addClass('hidden');
         $('#block-form-type-prestation').removeClass('hidden');
+        
+        $('#block-form-type-prestation .header h2').html('Editer type de prestation');
     });
     //click sur le bouton supprimer TP
     $('#table-type-prestation').on("click", ".remove", function () {
