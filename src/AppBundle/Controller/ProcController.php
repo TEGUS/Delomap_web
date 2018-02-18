@@ -20,9 +20,9 @@ class ProcController extends Controller
         return $this->render('AppBundle:Proc:proc.html.twig');
     }
 
-    public function getRepository($entity = 'Proc')
+    public function getRepository($entity = Proc::class)
     {
-        return $this->getEm()->getRepository("AppBundle:" . $entity);
+        return $this->getEm()->getRepository($entity);
     }
 
     public function getEm()
