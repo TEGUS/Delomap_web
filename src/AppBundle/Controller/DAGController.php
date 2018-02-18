@@ -43,15 +43,46 @@ class DAGController extends Controller
             $temp[] = $sample_data->getDescription();
             $temp[] = $sample_data->getDalaisTransmission();
             $temp[] = $sample_data->getStatus();
-			
+
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
                 <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
                 <span class="space-button"></span>
                 <a href="#" class="view-files" title="Visualiser Fichiers"><i class="fa fa-eye fa-lg"></i></a>
+            ';
+
+//            <span class="space-button"></span>
+//                <a href="#" class="add-files" title="Ajouter Fichier"><i class="fa fa-file fa-lg"></i></a>
+
+            $datas[] = $temp;
+        }
+
+        return new JsonResponse([
+            "draw" => 1,
+            "recordsTotal" => count($datas),
+            "recordsFiltered" => count($datas),
+            "data" => $datas
+        ]);
+    }
+
+    /**
+     * @Route("/api/dag/{dag}/datatable/fichiers", options = { "expose" = true }, name="list_dag_datatable_fichiers")
+     */
+    public function listDatatableDAGFichierAction($dag)
+    {
+        $fichiers = $this->getRepository('Fichier')->findByDag($dag);
+        $datas = [];
+
+        foreach ($fichiers as $sample_data) {
+            $temp = [];
+            $temp[] = $sample_data->getId();
+            $temp[] = $sample_data->getNom();
+
+            $temp[] = '
+                <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
-                <a href="#" class="add-files" title="Ajouter Fichier"><i class="fa fa-link fa-lg"></i></a>
+                <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
             ';
 
             $datas[] = $temp;

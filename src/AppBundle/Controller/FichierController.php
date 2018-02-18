@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Fichier;
+use AppBundle\Form\FichierType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,11 +12,27 @@ use Symfony\Component\HttpFoundation\Request;
 class FichierController extends Controller
 {
     /**
-     * @Route("/fichiers", name="index_fichiers")
+     * @Route("/add/fichier", name="go_to_fichier")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->render('AppBundle:DAG:fichier.html.twig');
+        $fichier = new Fichier();
+        $form = $this->createForm(FichierType::class, $fichier);
+
+        $em = $this->getEm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($fichier);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('index_dags'));
+        }
+
+        $parameters = array(
+            'form' =>  $form->createView()
+        );
+        return $this->render('AppBundle:DAG:fichier.html.twig', $parameters);
     }
 
 
