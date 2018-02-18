@@ -46,7 +46,7 @@ class Proc
     private $dags;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Projet", cascade={"persist"}, mappedBy="procs")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Projet", cascade={"persist"}, mappedBy="proc")
      */
     private $projets;
 

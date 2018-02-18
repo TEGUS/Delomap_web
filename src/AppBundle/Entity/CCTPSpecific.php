@@ -54,6 +54,11 @@ class CCTPSpecific
      */
     private $projet;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Fichier", mappedBy="cctpSpecific")
+     */
+    private $fichiers;
+
 
     public function __construct()
     {
@@ -188,5 +193,39 @@ class CCTPSpecific
     public function getCctp()
     {
         return $this->cctp;
+    }
+
+    /**
+     * Add fichier
+     *
+     * @param \AppBundle\Entity\Fichier $fichier
+     *
+     * @return CCTPSpecific
+     */
+    public function addFichier(\AppBundle\Entity\Fichier $fichier)
+    {
+        $this->fichiers[] = $fichier;
+
+        return $this;
+    }
+
+    /**
+     * Remove fichier
+     *
+     * @param \AppBundle\Entity\Fichier $fichier
+     */
+    public function removeFichier(\AppBundle\Entity\Fichier $fichier)
+    {
+        $this->fichiers->removeElement($fichier);
+    }
+
+    /**
+     * Get fichiers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFichiers()
+    {
+        return $this->fichiers;
     }
 }

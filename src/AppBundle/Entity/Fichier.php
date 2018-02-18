@@ -57,6 +57,18 @@ class Fichier
      */
     private $dag;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CCTPSpecific", inversedBy="fichiers", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $cctpSpecific;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TDRSpecific", inversedBy="fichiers", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $tdrSpecific;
+
 
     public function __construct()
     {
@@ -185,5 +197,53 @@ class Fichier
     public function getDag()
     {
         return $this->dag;
+    }
+
+    /**
+     * Set cctpSpecific
+     *
+     * @param \AppBundle\Entity\CCTPSpecific $cctpSpecific
+     *
+     * @return Fichier
+     */
+    public function setCctpSpecific(\AppBundle\Entity\CCTPSpecific $cctpSpecific = null)
+    {
+        $this->cctpSpecific = $cctpSpecific;
+
+        return $this;
+    }
+
+    /**
+     * Get cctpSpecific
+     *
+     * @return \AppBundle\Entity\CCTPSpecific
+     */
+    public function getCctpSpecific()
+    {
+        return $this->cctpSpecific;
+    }
+
+    /**
+     * Set tdrSpecific
+     *
+     * @param \AppBundle\Entity\TDRSpecific $tdrSpecific
+     *
+     * @return Fichier
+     */
+    public function setTdrSpecific(\AppBundle\Entity\TDRSpecific $tdrSpecific = null)
+    {
+        $this->tdrSpecific = $tdrSpecific;
+
+        return $this;
+    }
+
+    /**
+     * Get tdrSpecific
+     *
+     * @return \AppBundle\Entity\TDRSpecific
+     */
+    public function getTdrSpecific()
+    {
+        return $this->tdrSpecific;
     }
 }

@@ -55,6 +55,11 @@ class TDRSpecific
      */
     private $projet;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Fichier", mappedBy="tdrSpecific")
+     */
+    private $fichiers;
+
 
     public function __construct()
     {
@@ -189,5 +194,39 @@ class TDRSpecific
     public function getProjet()
     {
         return $this->projet;
+    }
+
+    /**
+     * Add fichier
+     *
+     * @param \AppBundle\Entity\Fichier $fichier
+     *
+     * @return TDRSpecific
+     */
+    public function addFichier(\AppBundle\Entity\Fichier $fichier)
+    {
+        $this->fichiers[] = $fichier;
+
+        return $this;
+    }
+
+    /**
+     * Remove fichier
+     *
+     * @param \AppBundle\Entity\Fichier $fichier
+     */
+    public function removeFichier(\AppBundle\Entity\Fichier $fichier)
+    {
+        $this->fichiers->removeElement($fichier);
+    }
+
+    /**
+     * Get fichiers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFichiers()
+    {
+        return $this->fichiers;
     }
 }

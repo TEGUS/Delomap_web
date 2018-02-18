@@ -116,7 +116,7 @@ class Projet
 
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="projets", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
@@ -124,7 +124,6 @@ class Projet
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TP", cascade={"persist"}, inversedBy="projets")
      */
     private $tp;
-
 
     /**
      * @var \DateTime
@@ -144,9 +143,17 @@ class Projet
     private $cctpSpecifics;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Proc", cascade={"persist"}, inversedBy="projets")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Proc", cascade={"persist"}, inversedBy="projets")
+     * @ORM\JoinColumn(nullable = true)
      */
-    private $procs;
+    private $proc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $statutProccessus;
 
     /**
      * Get id
@@ -380,8 +387,8 @@ class Projet
     {
         $this->lots = new \Doctrine\Common\Collections\ArrayCollection();
         $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tps = new \Doctrine\Common\Collections\ArrayCollection();
         $this->dateCreation = new \DateTime('now');
+        $this->statutProccessus = 1;
     }
 
     /**
@@ -641,40 +648,6 @@ class Projet
     }
 
     /**
-     * Add proc
-     *
-     * @param \AppBundle\Entity\Proc $proc
-     *
-     * @return Projet
-     */
-    public function addProc(\AppBundle\Entity\Proc $proc)
-    {
-        $this->procs[] = $proc;
-
-        return $this;
-    }
-
-    /**
-     * Remove proc
-     *
-     * @param \AppBundle\Entity\Proc $proc
-     */
-    public function removeProc(\AppBundle\Entity\Proc $proc)
-    {
-        $this->procs->removeElement($proc);
-    }
-
-    /**
-     * Get procs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProcs()
-    {
-        return $this->procs;
-    }
-
-    /**
      * Set dateArret
      *
      * @param \DateTime $dateArret
@@ -696,5 +669,53 @@ class Projet
     public function getDateArret()
     {
         return $this->dateArret;
+    }
+
+    /**
+     * Set statutProccessus
+     *
+     * @param integer $statutProccessus
+     *
+     * @return Projet
+     */
+    public function setStatutProccessus($statutProccessus)
+    {
+        $this->statutProccessus = $statutProccessus;
+
+        return $this;
+    }
+
+    /**
+     * Get statutProccessus
+     *
+     * @return integer
+     */
+    public function getStatutProccessus()
+    {
+        return $this->statutProccessus;
+    }
+
+    /**
+     * Set proc
+     *
+     * @param \AppBundle\Entity\Proc $proc
+     *
+     * @return Projet
+     */
+    public function setProc(\AppBundle\Entity\Proc $proc = null)
+    {
+        $this->proc = $proc;
+
+        return $this;
+    }
+
+    /**
+     * Get proc
+     *
+     * @return \AppBundle\Entity\Proc
+     */
+    public function getProc()
+    {
+        return $this->proc;
     }
 }
