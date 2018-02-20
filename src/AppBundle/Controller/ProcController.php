@@ -74,6 +74,14 @@ class ProcController extends Controller
     }
 
     /**
+     * @Route("/api/tp/{tp}/procs", options = {"expose" = true}, name="find_all_procs_by_tp")
+     */
+    public function findProcsByTPAction($tp)
+    {
+        return new JsonResponse($this->getRepository()->findProcByIdTP($tp));
+    }
+
+    /**
      * @Route("/api/add/proc", options = { "expose" = true }, name="add_proc")
      */
     public function addProcAction(Request $request)
@@ -157,7 +165,7 @@ class ProcController extends Controller
     public function updateProcAddDAGAction(Request $request, Proc $proc)
     {
         $dag = $request->request->get('dag');
-        $proc->addDag($this->getRepository(DAG::class)->find(intval($dag)));
+        $proc->addDag($this->getRepository(DAG::class)->find($dag));
 
         $em = $this->getEm();
         $em->merge($proc);
@@ -175,7 +183,7 @@ class ProcController extends Controller
     public function updateProcRemoveDAGAction(Request $request, Proc $proc)
     {
         $dag = $request->request->get('dag');;
-        $proc->removeDag($this->getRepository(DAG::class)->find  (intval($dag)));
+        $proc->removeDag($this->getRepository(DAG::class)->find(intval($dag)));
 
         $em = $this->getEm();
         $em->merge($proc);

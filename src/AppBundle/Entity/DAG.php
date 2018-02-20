@@ -55,7 +55,7 @@ class DAG
     private $documents;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Proc", cascade={"persist"}, inversedBy="dags")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Proc", cascade={"remove"}, mappedBy="dags")
      */
     private $procs;
 
@@ -79,6 +79,13 @@ class DAG
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**

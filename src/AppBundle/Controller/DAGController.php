@@ -3,6 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\DAG;
+use AppBundle\Entity\Fichier;
+use AppBundle\Form\FichierType;
+use AppBundle\Form\SimpleFileType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -50,10 +53,9 @@ class DAGController extends Controller
                 <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
                 <span class="space-button"></span>
                 <a href="#" class="view-files" title="Visualiser Fichiers"><i class="fa fa-eye fa-lg"></i></a>
+                <span class="space-button"></span>
+                <a href="#" class="add-files" title="Ajouter Fichier"><i class="fa fa-file fa-lg"></i></a>
             ';
-
-//            <span class="space-button"></span>
-//                <a href="#" class="add-files" title="Ajouter Fichier"><i class="fa fa-file fa-lg"></i></a>
 
             $datas[] = $temp;
         }
@@ -104,6 +106,14 @@ class DAGController extends Controller
         return new JsonResponse([
             "data" => $this->getRepository()->findAll()
         ]);
+    }
+
+    /**
+     * @Route("/api/proc/{proc}/dags", options = {"expose" = true}, name="find_all_dags_by_proc")
+     */
+    public function findDagByProcAction($proc)
+    {
+        return new JsonResponse($this->getRepository()->findDAGByIdProc($proc));
     }
 
     /**
@@ -170,23 +180,6 @@ class DAGController extends Controller
     }
 
     /**
-     * @Route("/api/dag/{dag}/add/fichier", options = { "expose" = true }, name="update_dag_add_fichier")
-     */
-    public function updateDagAddFichierAction(Request $request, DAG $dag)
-    {
-        $fichier = $request->request->get('fichier');;
-        $dag->addFichier($this->getRepository('Fichier')->find($fichier));
-
-        $em = $this->getEm();
-        $em->merge($dag);
-        $em->flush();
-
-        return new JsonResponse([
-            "data" => true,
-        ]);
-    }
-
-    /**
      * @Route("/api/dag/{dag}/remove/fichier", options = { "expose" = true }, name="update_dag_remove_fichier")
      */
     public function updateDagRemoveFichierAction(Request $request, DAG $dag)
@@ -201,5 +194,31 @@ class DAGController extends Controller
         return new JsonResponse([
             "data" => true,
         ]);
+    }
+
+    /**
+     * @Route("/update/dag/{dag}/add/fichier", name="update_dag_add_fichier")
+     */
+    public function updateDagAddFichierAction(Request $request, DAG $dag)
+    {
+        $fichier = new Fichier();
+        $fichier->setDag($dag);
+        $form = $this->createForm(SimpleFileType::class, $fichier);
+
+        $em = $this->getEm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($fichier);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('index_dags'));
+        }
+
+        $parameters = array(
+            'form' =>  $form->createView(),
+            'dag' => $dag
+        );
+        return $this->render('AppBundle:DAG:fichier.html.twig', $parameters);
     }
 }

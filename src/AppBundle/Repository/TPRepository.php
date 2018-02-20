@@ -36,4 +36,13 @@ class TPRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getArrayResult();
     }
+
+    public function findById($id) {
+        $qb = $this->createQueryBuilder('tp')
+            ->where('tp.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
 }

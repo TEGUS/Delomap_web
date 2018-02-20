@@ -1,4 +1,4 @@
-{% extends "AppBundle::layout.html.twig"%}
+{% extends "AppBundle::layout.html.twig" %}
 
 {% block body %}
     {{ parent() }}
@@ -23,7 +23,8 @@
                         </div>
                         <div class="body">
                             <div class="table-responsive">
-                                <table id="table-projet" class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <table id="table-projet"
+                                       class="table table-bordered table-striped table-hover dataTable js-exportable">
                                     <thead>
                                     <tr>
                                         <th>Nom du projet</th>
@@ -52,13 +53,17 @@
                                         <th>1 000 000</th>
                                         <th><span class="label label-success">Terminé</span></th>
                                         <th>
-                                            <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
+                                            <a href="#" class="edit" title="Modifier"><i
+                                                        class="fa fa-edit fa-lg fa-primary"></i></a>
                                             <span class="space-button"></span>
-                                            <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+                                            <a href="#" class="remove" title="Supprimer"><i
+                                                        class="fa fa-times fa-lg fa-red"></i></a>
                                             <span class="space-button"></span>
-                                            <a href="#" class="details" title="Détails"><i class="fa fa-file fa-lg fa-default"></i></a>
+                                            <a href="#" class="details" title="Détails"><i
+                                                        class="fa fa-file fa-lg fa-default"></i></a>
                                             <span class="space-button"></span>
-                                            <a href="#" class="docs" title="Mise à jour des documents"><i class="fa fa-book fa-lg fa-default"></i></a>
+                                            <a href="#" class="docs" title="Mise à jour des documents"><i
+                                                        class="fa fa-book fa-lg fa-default"></i></a>
                                         </th>
                                     </tr>
                                     </tbody>
@@ -80,139 +85,147 @@
                         </div>
                         <div class="body">
                             <form id="form-projet" class="form-horizontal">
-                            <h3>Infos de base</h3>
+                                <h3>Infos de base</h3>
                                 <fieldset>
-                                <input type="text" name="id" id="id_projet" class="hidden" >
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="nom">Nom du projet * </label>
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" name="nom" class="form-control" placeholder="Veuillez saisir le nom" >
+                                    <input type="text" name="id" id="id_projet" class="hidden">
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                            <label for="nom">Nom du projet * </label>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input type="text" name="nom" class="form-control"
+                                                           placeholder="Veuillez saisir le nom">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="date_deb">Date de début * </label>
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" name="date_deb" class="datepicker form-control" placeholder="Date de début ..." >
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                            <label for="date_deb">Date de début * </label>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input type="text" name="date_deb" class="datepicker form-control"
+                                                           placeholder="Date de début ...">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="date_fin">Date de fin * </label>
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" name="date_fin" class="datepicker form-control" placeholder="Date de fin ..." >
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                            <label for="date_fin">Date de fin * </label>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input type="text" name="date_fin" class="datepicker form-control"
+                                                           placeholder="Date de fin ...">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="cout">Coût du projet * </label>
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="number" name="cout" class="form-control" placeholder="Coût ..." >
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                            <label for="cout">Coût du projet * </label>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input type="number" name="cout" class="form-control"
+                                                           placeholder="Coût ...">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 </fieldset>
                                 <h3>Type de Prestation et Procédure</h3>
                                 <fieldset>
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="tp">Type de prestation * </label>
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <select name="tp" class="form-control show-tick" data-live-search="true">
-                                                    <option value="1">TP 1</option>
-                                                    <option value="2">TP 2</option>
-                                                </select>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                            <label for="tp">Type de prestation * </label>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <select name="tp" class="form-control show-tick"
+                                                            data-live-search="true">
+                                                        <option value="1">TP 1</option>
+                                                        <option value="2">TP 2</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="proc">Procédure choisie * </label>
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <select name="proc" class="form-control show-tick" data-live-search="true">
-                                                    <option value="1">Proc 1</option>
-                                                    <option value="2">Proc 2</option>
-                                                </select>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                            <label for="proc">Procédure choisie * </label>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <select name="proc" class="form-control show-tick"
+                                                            data-live-search="true">
+                                                        <option value="1">Proc 1</option>
+                                                        <option value="2">Proc 2</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 </fieldset>
                                 <h3>autres infos</h3>
                                 <fieldset>
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="proc">Termes de référence </label>
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                        <div class="form-group tdr">
-                                            <button type="button" class="btn bg-black waves-effect" data-color-name="bg-black">
-                                                <i class="fa fa-plus"></i> Ajouter
-                                            </button>
-                                            <table class="table table-striped editable-table-projet">
-                                                <thead>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                            <label for="proc">Termes de référence </label>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                            <div class="form-group tdr">
+                                                <button type="button" class="btn bg-black waves-effect"
+                                                        data-color-name="bg-black">
+                                                    <i class="fa fa-plus"></i> Ajouter
+                                                </button>
+                                                <table class="table table-striped editable-table-projet">
+                                                    <thead>
                                                     <tr>
                                                         <th>Service</th>
                                                         <th>Date</th>
                                                         <th></th>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="proc">CCTP </label>
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                        <div class="form-group cctp">
-                                            <button type="button" class="btn bg-black waves-effect" data-color-name="bg-black">
-                                                <i class="fa fa-plus"></i> Ajouter
-                                            </button>
-                                            <table class="table table-striped editable-table-projet">
-                                                <thead>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                            <label for="proc">CCTP </label>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                            <div class="form-group cctp">
+                                                <button type="button" class="btn bg-black waves-effect"
+                                                        data-color-name="bg-black">
+                                                    <i class="fa fa-plus"></i> Ajouter
+                                                </button>
+                                                <table class="table table-striped editable-table-projet">
+                                                    <thead>
                                                     <tr>
                                                         <th>Service</th>
                                                         <th>Date</th>
                                                         <th></th>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 </fieldset>
                                 <!--div class="row clearfix">
                                     <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
@@ -228,4 +241,47 @@
             <!-- #END# nouveau type de prestation -->
         </div>
     </section>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            //click sur le bouton ajouter cctp
+            $('#table-projet').on("click", ".add-cctp", function () {
+                var id;
+                var row = jQuery(this).closest('tr');
+
+                var i = 0;
+                row.find("td").each(function (cellIndex) {
+                    if (i === 0) {
+                        id = $(this).html();
+                    }
+                    i++;
+                });
+
+                var url = '{{ path("update_projet_add_cctp", {'projet': 'id'}) }}';
+                url = url.replace("id", id);
+                window.location = url;
+            });
+
+            //click sur le bouton ajouter tdr
+            $('#table-projet').on("click", ".add-tdr", function () {
+                var id;
+                var row = jQuery(this).closest('tr');
+
+                var i = 0;
+                row.find("td").each(function (cellIndex) {
+                    if (i === 0) {
+                        id = $(this).html();
+                    }
+                    i++;
+                });
+
+                var url = '{{ path("update_projet_add_tdr", {'projet': 'id'}) }}';
+                url = url.replace("id", id);
+                window.location = url;
+            });
+        })
+    </script>
 {% endblock %}

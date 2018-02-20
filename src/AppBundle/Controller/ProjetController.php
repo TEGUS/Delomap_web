@@ -2,7 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\CCTPSpecific;
 use AppBundle\Entity\Projet;
+use AppBundle\Entity\TDRSpecific;
+use AppBundle\Form\CCTPSpecificType;
+use AppBundle\Form\TDRSpecificType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +27,8 @@ class ProjetController extends Controller
     {
         return $this->render('AppBundle:Projet:projet.html.twig');
     }
-     /**
+
+    /**
      * @Route("/fiche_suivi", name="index_fiche_suivi")
      */
     public function indexAction3()
@@ -79,6 +84,10 @@ class ProjetController extends Controller
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
                 <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+                <span class="space-button"></span>
+                <a href="#" class="add-cctp" title="Ajouter CCTP">Ajouter CCTP</a>
+                <span class="space-button"></span>
+                <a href="#" class="add-tdr" title="Ajouter TDR">Ajouter TDR</a>
             ';
 
             $datas[] = $temp;
@@ -174,6 +183,24 @@ class ProjetController extends Controller
     }
 
     /**
+     * @Route("/api/update/projet/{projet}/choose/proc", options = { "expose" = true }, name="update_projet_choose_proc")
+     */
+    public function updateProjetChooseProcAction(Request $request, Projet $projet)
+    {
+        $proc = $request->request->get('proc');
+        $projet->setProc($this->getRepository('Proc')->find($proc));
+        $projet->setStatutProccessus(3);
+
+        $em = $this->getEm();
+        $em->merge($projet);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+    /**
      * @Route("/api/delete/projet/{projet}", options = { "expose" = true }, name="delete_projet")
      */
     public function deleteProjetAction(Request $request, Projet $projet)
@@ -186,4 +213,77 @@ class ProjetController extends Controller
             "data" => true,
         ]);
     }
+
+    /**
+     * @Route("/update/projet/{projet}/add/cctp", name="update_projet_add_cctp")
+     */
+    public function updateProjetAddCCTPAction(Request $request, $projet)
+    {
+        $projet = $this->getRepository()->find($projet);
+
+        $cctp = new CCTPSpecific();
+        if ($projet != null) {
+            $projet->setStatutProccessus(2);
+            $cctp->setProjet($projet);
+        }
+
+        $form = $this->createForm(CCTPSpecificType::class, $cctp);
+
+        $em = $this->getEm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($projet != null) {
+                $em->merge($projet);
+            }
+
+            $em->persist($cctp);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('index_projets'));
+        }
+
+        $parameters = array(
+            'form' => $form->createView(),
+            'projet' => $projet
+        );
+        return $this->render('AppBundle:CCTP:cctp.html.twig', $parameters);
+    }
+
+    /**
+     * @Route("/update/projet/{projet}/add/tdr", name="update_projet_add_tdr")
+     */
+    public function updateProjetAddTDRAction(Request $request, $projet)
+    {
+        $projet = $this->getRepository()->find($projet);
+
+        $tdr = new TDRSpecific();
+        if ($projet != null) {
+            $projet->setStatutProccessus(2);
+            $tdr->setProjet($projet);
+        }
+
+        $form = $this->createForm(TDRSpecificType::class, $tdr);
+
+        $em = $this->getEm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($projet != null) {
+                $em->merge($projet);
+            }
+
+            $em->persist($tdr);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('index_projets'));
+        }
+
+        $parameters = array(
+            'form' => $form->createView(),
+            'projet' => $projet
+        );
+        return $this->render('AppBundle:TDR:tdr.html.twig', $parameters);
+    }
+
 }

@@ -58,13 +58,13 @@ class Fichier
     private $dag;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CCTPSpecific", inversedBy="fichiers", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\CCTPSpecific", inversedBy="fichier", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $cctpSpecific;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TDRSpecific", inversedBy="fichiers", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\TDRSpecific", inversedBy="fichier", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $tdrSpecific;

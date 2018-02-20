@@ -11,31 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FichierController extends Controller
 {
-    /**
-     * @Route("/add/fichier", name="go_to_fichier")
-     */
-    public function indexAction(Request $request)
-    {
-        $fichier = new Fichier();
-        $form = $this->createForm(FichierType::class, $fichier);
-
-        $em = $this->getEm();
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($fichier);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('index_dags'));
-        }
-
-        $parameters = array(
-            'form' =>  $form->createView()
-        );
-        return $this->render('AppBundle:DAG:fichier.html.twig', $parameters);
-    }
-
-
     public function getRepository($entity = 'Fichier')
     {
         return $this->getEm()->getRepository("AppBundle:" . $entity);

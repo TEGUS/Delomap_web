@@ -55,14 +55,15 @@ class CCTPSpecific
     private $projet;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Fichier", mappedBy="cctpSpecific")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", mappedBy="cctpSpecific")
      */
-    private $fichiers;
+    private $fichier;
 
 
     public function __construct()
     {
-        $this->dateCreation = new Date('now');
+        $this->dateCreation = new \DateTime('now');
+        $this->date = new \DateTime('now');
     }
 
     /**
@@ -196,36 +197,26 @@ class CCTPSpecific
     }
 
     /**
-     * Add fichier
+     * Set fichier
      *
      * @param \AppBundle\Entity\Fichier $fichier
      *
      * @return CCTPSpecific
      */
-    public function addFichier(\AppBundle\Entity\Fichier $fichier)
+    public function setFichier(\AppBundle\Entity\Fichier $fichier = null)
     {
-        $this->fichiers[] = $fichier;
+        $this->fichier = $fichier;
 
         return $this;
     }
 
     /**
-     * Remove fichier
+     * Get fichier
      *
-     * @param \AppBundle\Entity\Fichier $fichier
+     * @return \AppBundle\Entity\Fichier
      */
-    public function removeFichier(\AppBundle\Entity\Fichier $fichier)
+    public function getFichier()
     {
-        $this->fichiers->removeElement($fichier);
-    }
-
-    /**
-     * Get fichiers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFichiers()
-    {
-        return $this->fichiers;
+        return $this->fichier;
     }
 }
