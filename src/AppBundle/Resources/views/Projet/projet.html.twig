@@ -27,45 +27,50 @@
                                        class="table table-bordered table-striped table-hover dataTable js-exportable">
                                     <thead>
                                     <tr>
+                                        <th>Code</th>
                                         <th>Nom du projet</th>
-                                        <th>Date de début</th>
-                                        <th>Date de fin</th>
-                                        <th>Coût</th>
+                                        <th>Description</th>
+                                        <th>Montant</th>
+                                        <th>Date de lancement</th>
+                                        <th>Date d'attribution</th>
+                                        <th>Date de signature</th>
+                                        <th>Date de Demarrage</th>
+                                        <th>Date de réception</th>
+                                        <th>Motif</th>
+                                        <th>Observation</th>
+                                        <th>Contractant</th>
+                                        <th>User</th>
+                                        <th>code tp</th>
+                                        <th>Type de prestation</th>
+                                        <th>Date create</th>
                                         <th>Statut</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
+                                        <th>Code</th>
                                         <th>Nom du projet</th>
-                                        <th>Date de début</th>
-                                        <th>Date de fin</th>
-                                        <th>Coût</th>
+                                        <th>Description</th>
+                                        <th>Montant</th>
+                                        <th>Date de lancement</th>
+                                        <th>Date d'attribution</th>
+                                        <th>Date de signature</th>
+                                        <th>Date de Demarrage</th>
+                                        <th>Date de réception</th>
+                                        <th>Motif</th>
+                                        <th>Observation</th>
+                                        <th>Contractant</th>
+                                        <th>User</th>
+                                        <th>code tp</th>
+                                        <th>Type de prestation</th>
+                                        <th>Date create</th>
                                         <th>Statut</th>
                                         <th>Actions</th>
                                     </tr>
                                     </tfoot>
                                     <tbody>
                                     <tr>
-                                        <th>projet 1</th>
-                                        <th>31-12-2017</th>
-                                        <th>31-01-2018</th>
-                                        <th>1 000 000</th>
-                                        <th><span class="label label-success">Terminé</span></th>
-                                        <th>
-                                            <a href="#" class="edit" title="Modifier"><i
-                                                        class="fa fa-edit fa-lg fa-primary"></i></a>
-                                            <span class="space-button"></span>
-                                            <a href="#" class="remove" title="Supprimer"><i
-                                                        class="fa fa-times fa-lg fa-red"></i></a>
-                                            <span class="space-button"></span>
-                                            <a href="#" class="details" title="Détails"><i
-                                                        class="fa fa-file fa-lg fa-default"></i></a>
-                                            <span class="space-button"></span>
-                                            <a href="#" class="docs" title="Mise à jour des documents"><i
-                                                        class="fa fa-book fa-lg fa-default"></i></a>
-                                        </th>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -85,154 +90,123 @@
                         </div>
                         <div class="body">
                             <form id="form-projet" class="form-horizontal">
-                                <h3>Infos de base</h3>
                                 <fieldset>
-                                    <input type="text" name="id" id="id_projet" class="hidden">
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                            <label for="nom">Nom du projet * </label>
-                                        </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" name="nom" class="form-control"
-                                                           placeholder="Veuillez saisir le nom">
-                                                </div>
+                                <input type="text" name="id" id="id_projet" class="hidden" >
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="nom">Nom du projet * </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="nom" class="form-control nom" placeholder="Veuillez saisir le nom" >
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                            <label for="date_deb">Date de début * </label>
-                                        </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" name="date_deb" class="datepicker form-control"
-                                                           placeholder="Date de début ...">
-                                                </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="date_lanc">Date de lancement * </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input id="date_lanc" type="text" name="date_lanc" class="datepicker form-control date_lanc" placeholder="Date de lancement ..."  >
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                            <label for="date_fin">Date de fin * </label>
-                                        </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" name="date_fin" class="datepicker form-control"
-                                                           placeholder="Date de fin ...">
-                                                </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="date_attr">Date d'attribution * </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="date_attr" class="datepicker form-control date_attr" placeholder="Date d'attribution ..." >
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                            <label for="cout">Coût du projet * </label>
-                                        </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="number" name="cout" class="form-control"
-                                                           placeholder="Coût ...">
-                                                </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="date_sign">Date de signature * </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="date_sign" class="datepicker form-control date_sign" placeholder="Date de signature ..." >
                                             </div>
                                         </div>
                                     </div>
-                                </fieldset>
-                                <h3>Type de Prestation et Procédure</h3>
-                                <fieldset>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                            <label for="tp">Type de prestation * </label>
-                                        </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <select name="tp" class="form-control show-tick"
-                                                            data-live-search="true">
-                                                        <option value="1">TP 1</option>
-                                                        <option value="2">TP 2</option>
-                                                    </select>
-                                                </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="date_dem">Date de démarrage * </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="date_dem" class="datepicker form-control date_dem" placeholder="Date de démarrage ..." >
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                            <label for="proc">Procédure choisie * </label>
-                                        </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <select name="proc" class="form-control show-tick"
-                                                            data-live-search="true">
-                                                        <option value="1">Proc 1</option>
-                                                        <option value="2">Proc 2</option>
-                                                    </select>
-                                                </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="date_recep">Date de réception * </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="date_recep" class="datepicker form-control date_recep" placeholder="Date de réception ..." >
                                             </div>
                                         </div>
                                     </div>
-                                </fieldset>
-                                <h3>autres infos</h3>
-                                <fieldset>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                            <label for="proc">Termes de référence </label>
-                                        </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                            <div class="form-group tdr">
-                                                <button type="button" class="btn bg-black waves-effect"
-                                                        data-color-name="bg-black">
-                                                    <i class="fa fa-plus"></i> Ajouter
-                                                </button>
-                                                <table class="table table-striped editable-table-projet">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Service</th>
-                                                        <th>Date</th>
-                                                        <th></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="date_arret">Date arrêt * </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="date_arret" class="datepicker form-control date_recep" placeholder="Date d'arrêt ..." >
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                            <label for="proc">CCTP </label>
-                                        </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                            <div class="form-group cctp">
-                                                <button type="button" class="btn bg-black waves-effect"
-                                                        data-color-name="bg-black">
-                                                    <i class="fa fa-plus"></i> Ajouter
-                                                </button>
-                                                <table class="table table-striped editable-table-projet">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Service</th>
-                                                        <th>Date</th>
-                                                        <th></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="cout">Coût du projet * </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="number" name="cout" class="form-control cout" placeholder="Coût ..." >
                                             </div>
                                         </div>
                                     </div>
-                                </fieldset>
-                                <!--div class="row clearfix">
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="tp">Type de prestation * </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select id="list_tp_projet" name="tp" class="form-control show-tick" data-live-search="true">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
                                     <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
                                         <button type="button" class="btn btn-primary m-t-15 waves-effect save"><i class="fa fa-spinner fa-spin hidden"></i> Enregistrer</button>
                                         <button type="button" class="btn btn-default m-t-15 waves-effect cancel">Annuler</button>
                                     </div>
-                                </div-->
+                                </div>
                             </form>
                         </div>
                     </div>

@@ -68,18 +68,19 @@ class ProjetController extends Controller
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
             $temp[] = $sample_data->getMontant();
-            $temp[] = $sample_data->getDateLancement();
-            $temp[] = $sample_data->getDateAttribution();
-            $temp[] = $sample_data->getDateSignature();
-            $temp[] = $sample_data->getDateDemarrage();
-            $temp[] = $sample_data->getDateReception();
+            $temp[] = $this->my_get_date($sample_data->getDateLancement());
+            $temp[] = $this->my_get_date($sample_data->getDateAttribution());
+            $temp[] = $this->my_get_date($sample_data->getDateSignature());
+            $temp[] = $this->my_get_date($sample_data->getDateDemarrage());
+            $temp[] = $this->my_get_date($sample_data->getDateReception());
             $temp[] = $sample_data->getMotif();
             $temp[] = $sample_data->getObservation();
             $temp[] = $sample_data->getContractant();
             $temp[] = $sample_data->getUser()->getUsername();
+            $temp[] = $sample_data->getTp()->getId();
             $temp[] = $sample_data->getTp()->getLibelle();
             $temp[] = $sample_data->getDateCreationEnBD();
-            $temp[] = $sample_data->getStatutProccessus();
+            $temp[] = $this->format_status($sample_data->getStatutProccessus());
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
@@ -88,6 +89,10 @@ class ProjetController extends Controller
                 <a href="#" class="add-cctp" title="Ajouter CCTP">Ajouter CCTP</a>
                 <span class="space-button"></span>
                 <a href="#" class="add-tdr" title="Ajouter TDR">Ajouter TDR</a>
+                <span class="space-button"></span>
+                <a href="#" class="details" title="Visualiser le projet"><i class="fa fa-eye fa-lg fa-default"></i></a>
+                <span class="space-button"></span>
+                <a href="#" class="docs" title="Mise à jour des documents"><i class="fa fa-book fa-lg fa-default"></i></a>
             ';
 
             $datas[] = $temp;
@@ -286,4 +291,17 @@ class ProjetController extends Controller
         return $this->render('AppBundle:TDR:tdr.html.twig', $parameters);
     }
 
+    private function format_status($status) {
+        switch ($status) {
+            case 1: return '<span class="label label-default">Créé</span>';
+            case 2: return '<span class="label label-warning">Initialisé</span>';
+            case 3: return '<span class="label label-warning">Procédure choisie</span>';
+            case 4: return '<span class="label label-success">Terminé</span>';
+        }
+        return '';
+    }
+
+    private function my_get_date($date) {
+        return $date->format('Y-m-d');
+    }
 }
