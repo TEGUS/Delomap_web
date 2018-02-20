@@ -128,12 +128,12 @@ class ProjetController extends Controller
 
         $projet = new Projet();
         $projet->setLibelle($libelle);
-        $projet->setDateLancement(new \DateTime($dateLancement));
-        $projet->setDateAttribution(new \DateTime($dateAttribution));
-        $projet->setDateSignature(new \DateTime($dateSignature));
-        $projet->setDateDemarrage(new \DateTime($dateDemarrage));
-        $projet->setDateReception(new \DateTime($dateReception));
-        $projet->setDateArret(new \DateTime($dateArret));
+        if ($dateLancement != null && $dateLancement != '') $projet->setDateLancement(new \DateTime($dateLancement));
+        if ($dateAttribution != null && $dateAttribution != '') $projet->setDateAttribution(new \DateTime($dateAttribution));
+        if ($dateSignature != null && $dateSignature != '') $projet->setDateSignature(new \DateTime($dateSignature));
+        if ($dateDemarrage != null && $dateDemarrage != '') $projet->setDateDemarrage(new \DateTime($dateDemarrage));
+        if ($dateReception != null && $dateReception != '') $projet->setDateReception(new \DateTime($dateReception));
+        if ($dateArret != null && $dateArret != '') $projet->setDateArret(new \DateTime($dateArret));
         $projet->setMontant($montant);
         $projet->setTp($this->getRepository('TP')->find($tp));
         $projet->setUser($this->getUser());
@@ -164,12 +164,12 @@ class ProjetController extends Controller
         $tp = $request->request->get('tp');
 
         $projet->setLibelle($libelle);
-        $projet->setDateLancement(new \DateTime($dateLancement));
-        $projet->setDateAttribution(new \DateTime($dateAttribution));
-        $projet->setDateSignature(new \DateTime($dateSignature));
-        $projet->setDateDemarrage(new \DateTime($dateDemarrage));
-        $projet->setDateReception(new \DateTime($dateReception));
-        $projet->setDateArret(new \DateTime($dateArret));
+        if ($dateLancement != null && $dateLancement != '') $projet->setDateLancement(new \DateTime($dateLancement));
+        if ($dateAttribution != null && $dateAttribution != '') $projet->setDateAttribution(new \DateTime($dateAttribution));
+        if ($dateSignature != null && $dateSignature != '') $projet->setDateSignature(new \DateTime($dateSignature));
+        if ($dateDemarrage != null && $dateDemarrage != '') $projet->setDateDemarrage(new \DateTime($dateDemarrage));
+        if ($dateReception != null && $dateReception != '') $projet->setDateReception(new \DateTime($dateReception));
+        if ($dateArret != null && $dateArret != '') $projet->setDateArret(new \DateTime($dateArret));
         $projet->setMontant($montant);
         $projet->setTp($this->getRepository('TP')->find($tp));
 
