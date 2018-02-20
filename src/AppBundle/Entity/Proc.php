@@ -41,12 +41,12 @@ class Proc
     private $tps;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\DAG", cascade={"persist"}, mappedBy="procs")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\DAG", cascade={"remove"}, inversedBy="procs")
      */
     private $dags;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Projet", cascade={"persist"}, mappedBy="procs")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Projet", cascade={"persist"}, mappedBy="proc")
      */
     private $projets;
 

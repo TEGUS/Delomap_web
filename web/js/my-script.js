@@ -1,4 +1,5 @@
 var table_tp;
+var table_projet;
 
 $(function () {
 
@@ -8,7 +9,7 @@ $(function () {
             clearButton: true,
             weekStart: 1,
             time: false,
-            lang : 'fr' 
+            lang: 'fr'
         });
     }
 
@@ -32,7 +33,7 @@ $(function () {
         ],
         "columnDefs": [
             {
-                "targets": [ 0, 3 ],
+                "targets": [0, 3],
                 "class": "hide_me"
             }
         ]
@@ -41,11 +42,14 @@ $(function () {
     //click sur le bouton nouveau TP
     $('#block-table-type-prestation .button-new').click(function () {
 
+        $('#id_tp').val('');
         $('#form-type-prestation input.nom').val('');
-        $('#form-type-prestation textarea.description').html('');
+        $('#form-type-prestation textarea.description').val('');
 
         $('#block-table-type-prestation').addClass('hidden');
         $('#block-form-type-prestation').removeClass('hidden');
+
+        $('#block-form-type-prestation .header h2').html('Nouveau type de prestation');
     });
     //click sur le bouton editer TP
     $('#table-type-prestation').on("click", ".edit", function () {
@@ -67,13 +71,15 @@ $(function () {
             }
             i++;
         });
-
+        console.log(description);
         $('#id_tp').val(id);
         $('#form-type-prestation input.nom').val(nom);
-        $('#form-type-prestation textarea.description').html(description);
+        $('#form-type-prestation textarea.description').val(description);
 
         $('#block-table-type-prestation').addClass('hidden');
         $('#block-form-type-prestation').removeClass('hidden');
+
+        $('#block-form-type-prestation .header h2').html('Editer type de prestation');
     });
     //click sur le bouton supprimer TP
     $('#table-type-prestation').on("click", ".remove", function () {
@@ -120,10 +126,10 @@ $(function () {
                 'error': function () {
                     swal("Erreur!", "Erreur lors de la suppression du type de prestation", "error");
                 },
-                'beforeSend': function() {
+                'beforeSend': function () {
                     $('.sweet-alert button.confirm').html("<i class=\"fa fa-spinner fa-spin\"></i> Oui");
                 },
-                'complete': function() {
+                'complete': function () {
                     $('.sweet-alert button.confirm').html("Oui");
                 }
             });
@@ -188,16 +194,16 @@ $(function () {
                 'error': function () {
                     swal("Erreur!", msg_echec, "error");
                 },
-                'beforeSend': function() {
+                'beforeSend': function () {
                     $('#block-form-type-prestation .save i').removeClass('hidden');
                 },
-                'complete': function() {
+                'complete': function () {
                     $('#block-form-type-prestation .save i').addClass('hidden');
                 }
             });
         }
     });
-    
+
 
     // validate projet form
     $('#form-projet').validate({
@@ -230,25 +236,25 @@ $(function () {
 
         $('#block-table-projet').addClass('hidden');
         $('#block-form-projet').removeClass('hidden');
-        
+
         $.ajax({
             'type': 'POST',
             'url': Routing.generate('find_all_tps'),
             'dataType': 'JSON',
-            'success': function(result) {
-                
+            'success': function (result) {
+
                 var types_prestation = "";
-                
+
                 for (var key in result) {
                     var tp = result[key];
                     types_prestation += '<option value="' + tp.id + '">' + tp.libelle + '</option>';
                 }
-                
+
                 $('#list_tp_projet').html(types_prestation);
                 $('#list_tp_projet').selectpicker('refresh');
             },
-            'error': function(xhr, status, error) {
-                var err = eval(xhr.responseText );
+            'error': function (xhr, status, error) {
+                var err = eval(xhr.responseText);
                 console.log(err);
                 console.log(error);
             }
@@ -257,49 +263,76 @@ $(function () {
     });
 
     //Annuler fenetre projet
-    $('#form-projet .cancel').click(function() {
+    $('#form-projet .cancel').click(function () {
         $('#block-form-projet').addClass('hidden');
         $('#block-table-projet').removeClass('hidden');
     });
 
     //Enregistrer fenetre projet
-    $('#form-projet .save').click(function() {
-        
+    $('#form-projet .save').click(function () {
+
         //$('#id_projet').val('');
-        console.log();
-        console.log($('#form-projet input.date_lanc').val());
-        console.log($('#form-projet input.date_attr').val());
-        console.log($('#form-projet input.date_sign').val());
-        console.log($('#form-projet input.date_dem').val());
-        console.log($('#form-projet input.date_recep').val());
-        console.log($('#form-projet input.cout').val());
-        console.log($('#list_tp_projet').val());
-        
+
         $.ajax({
             'type': 'POST',
             'url': Routing.generate('add_projet'),
             'data': {
-                nom: $('#form-projet input.nom').val(),
-                
+                libelle: $('#form-projet input.nom').val(),
+                dateLancement: $('#form-projet input.date_lanc').val(),
+                dateAttribution: $('#form-projet input.date_attr').val(),
+                dateSignature: $('#form-projet input.date_sign').val(),
+                dateDemarrage: $('#form-projet input.date_dem').val(),
+                dateReception: $('#form-projet input.date_recep').val(),
+                dateArret: $('#form-projet input.date_arret').val(),
+                montant: $('#form-projet input.cout').val(),
+                tp: $('#list_tp_projet').val()
             },
             'dataType': 'JSON',
-            'success': function(result) {
+            'success': function (result) {
                 $('#block-form-projet').addClass('hidden');
                 $('#block-table-projet').removeClass('hidden');
 
-                swal("Réussi!", msg_reussite, "success");
+                swal("Réussi!", "Nouveau projet enregistré avec succes", "success");
             },
             'error': function () {
                 swal("Erreur!", "Erreur", "error");
             },
-            'beforeSend': function() {
+            'beforeSend': function () {
                 $('#block-form-projet .save i').removeClass('hidden');
             },
-            'complete': function() {
+            'complete': function () {
                 $('#block-form-projet .save i').addClass('hidden');
             }
         });
 
     });
+
+    //chargement du datatable projet
+    if ($('#table-projet').length) {
+        table_projet = $('#table-projet').DataTable({
+            "language": {
+                "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
+                buttons: {
+                    copy: 'Copier',
+                    print: 'Imprimer'
+                }
+            },
+            "ajax": {
+                "url": Routing.generate('list_datatable_projets'),
+                "type": "POST"
+            },
+            dom: 'Bfrtip',
+            responsive: true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            "columnDefs": [
+                {
+                    "targets": [ 0, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15],
+                    "class": "hide_me"
+                }
+            ]
+        });
+    }
 
 });

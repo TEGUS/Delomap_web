@@ -55,10 +55,15 @@ class TDRSpecific
      */
     private $projet;
 
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", mappedBy="tdrSpecific")
+     */
+    private $fichier;
+
 
     public function __construct()
     {
-        $this->dateCreation = new Date('now');
+        $this->dateCreation = new \DateTime('now');
     }
 
     /**
@@ -189,5 +194,29 @@ class TDRSpecific
     public function getProjet()
     {
         return $this->projet;
+    }
+
+    /**
+     * Set fichier
+     *
+     * @param \AppBundle\Entity\Fichier $fichier
+     *
+     * @return TDRSpecific
+     */
+    public function setFichier(\AppBundle\Entity\Fichier $fichier = null)
+    {
+        $this->fichier = $fichier;
+
+        return $this;
+    }
+
+    /**
+     * Get fichier
+     *
+     * @return \AppBundle\Entity\Fichier
+     */
+    public function getFichier()
+    {
+        return $this->fichier;
     }
 }

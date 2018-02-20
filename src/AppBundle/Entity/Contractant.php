@@ -48,6 +48,13 @@ class Contractant
     private $projets;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="typeContractant", type="string", length=255, nullable=true)
+     */
+    private $typeContractant;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
@@ -200,5 +207,29 @@ class Contractant
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * Set typeContractant
+     *
+     * @param string $typeContractant
+     *
+     * @return Contractant
+     */
+    public function setTypeContractant($typeContractant)
+    {
+        $this->typeContractant = $typeContractant;
+
+        return $this;
+    }
+
+    /**
+     * Get typeContractant
+     *
+     * @return string
+     */
+    public function getTypeContractant()
+    {
+        return $this->typeContractant;
     }
 }

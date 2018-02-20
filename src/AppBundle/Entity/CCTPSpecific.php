@@ -54,10 +54,16 @@ class CCTPSpecific
      */
     private $projet;
 
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", mappedBy="cctpSpecific")
+     */
+    private $fichier;
+
 
     public function __construct()
     {
-        $this->dateCreation = new Date('now');
+        $this->dateCreation = new \DateTime('now');
+        $this->date = new \DateTime('now');
     }
 
     /**
@@ -188,5 +194,29 @@ class CCTPSpecific
     public function getCctp()
     {
         return $this->cctp;
+    }
+
+    /**
+     * Set fichier
+     *
+     * @param \AppBundle\Entity\Fichier $fichier
+     *
+     * @return CCTPSpecific
+     */
+    public function setFichier(\AppBundle\Entity\Fichier $fichier = null)
+    {
+        $this->fichier = $fichier;
+
+        return $this;
+    }
+
+    /**
+     * Get fichier
+     *
+     * @return \AppBundle\Entity\Fichier
+     */
+    public function getFichier()
+    {
+        return $this->fichier;
     }
 }
