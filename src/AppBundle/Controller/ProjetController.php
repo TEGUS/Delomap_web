@@ -291,17 +291,23 @@ class ProjetController extends Controller
         return $this->render('AppBundle:TDR:tdr.html.twig', $parameters);
     }
 
-    private function format_status($status) {
+    private function format_status($status)
+    {
         switch ($status) {
-            case 1: return '<span class="label label-default">Créé</span>';
-            case 2: return '<span class="label label-warning">Initialisé</span>';
-            case 3: return '<span class="label label-warning">Procédure choisie</span>';
-            case 4: return '<span class="label label-success">Terminé</span>';
+            case 1:
+                return '<span class="label label-default">Créé</span>';
+            case 2:
+                return '<span class="label label-warning">Initialisé</span>';
+            case 3:
+                return '<span class="label label-warning">Procédure choisie</span>';
+            case 4:
+                return '<span class="label label-success">Terminé</span>';
         }
         return '';
     }
 
-    private function my_get_date($date) {
-        return $date->format('Y-m-d');
+    private function my_get_date($date)
+    {
+        return $date === null ? null : $date->format('Y-m-d');
     }
 }
