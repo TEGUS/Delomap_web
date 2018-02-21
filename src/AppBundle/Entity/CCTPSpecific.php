@@ -43,12 +43,6 @@ class CCTPSpecific
     private $service;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CCTP", inversedBy="cctpSpecifics", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $cctp;
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Projet", inversedBy="cctpSpecific", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */

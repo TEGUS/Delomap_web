@@ -44,12 +44,6 @@ class TDRSpecific
     private $service;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TDR", inversedBy="tdrSpecifics", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $tdr;
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Projet", inversedBy="tdrSpecifics", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
