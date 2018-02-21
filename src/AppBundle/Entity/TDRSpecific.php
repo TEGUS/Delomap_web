@@ -56,7 +56,7 @@ class TDRSpecific
     private $projet;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", mappedBy="tdrSpecific")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"}, inversedBy="tdrSpecific")
      */
     private $fichier;
 
@@ -64,6 +64,7 @@ class TDRSpecific
     public function __construct()
     {
         $this->dateCreation = new \DateTime('now');
+        $this->date = new \DateTime('now');
     }
 
     /**
