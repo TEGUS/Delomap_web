@@ -44,19 +44,13 @@ class TDRSpecific
     private $service;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TDR", inversedBy="tdrSpecifics", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $tdr;
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Projet", inversedBy="tdrSpecifics", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $projet;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", mappedBy="tdrSpecific")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"}, inversedBy="tdrSpecific")
      */
     private $fichier;
 
@@ -64,6 +58,7 @@ class TDRSpecific
     public function __construct()
     {
         $this->dateCreation = new \DateTime('now');
+        $this->date = new \DateTime('now');
     }
 
     /**
@@ -146,30 +141,6 @@ class TDRSpecific
     public function getService()
     {
         return $this->service;
-    }
-
-    /**
-     * Set tdr
-     *
-     * @param \AppBundle\Entity\TDR $tdr
-     *
-     * @return TDRSpecific
-     */
-    public function setTdr(\AppBundle\Entity\TDR $tdr)
-    {
-        $this->tdr = $tdr;
-
-        return $this;
-    }
-
-    /**
-     * Get tdr
-     *
-     * @return \AppBundle\Entity\TDR
-     */
-    public function getTdr()
-    {
-        return $this->tdr;
     }
 
     /**

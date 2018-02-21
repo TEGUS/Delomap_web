@@ -43,19 +43,13 @@ class CCTPSpecific
     private $service;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CCTP", inversedBy="cctpSpecifics", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $cctp;
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Projet", inversedBy="cctpSpecific", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $projet;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", mappedBy="cctpSpecific")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"}, inversedBy="cctpSpecific")
      */
     private $fichier;
 
@@ -170,30 +164,6 @@ class CCTPSpecific
     public function getProjet()
     {
         return $this->projet;
-    }
-
-    /**
-     * Set cctp
-     *
-     * @param \AppBundle\Entity\CCTP $cctp
-     *
-     * @return CCTPSpecific
-     */
-    public function setCctp(\AppBundle\Entity\CCTP $cctp)
-    {
-        $this->cctp = $cctp;
-
-        return $this;
-    }
-
-    /**
-     * Get cctp
-     *
-     * @return \AppBundle\Entity\CCTP
-     */
-    public function getCctp()
-    {
-        return $this->cctp;
     }
 
     /**

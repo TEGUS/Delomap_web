@@ -57,18 +57,6 @@ class Fichier
      */
     private $dag;
 
-    /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\CCTPSpecific", inversedBy="fichier", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $cctpSpecific;
-
-    /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\TDRSpecific", inversedBy="fichier", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $tdrSpecific;
-
 
     public function __construct()
     {

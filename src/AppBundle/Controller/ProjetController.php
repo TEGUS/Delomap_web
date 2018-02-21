@@ -6,7 +6,9 @@ use AppBundle\Entity\CCTPSpecific;
 use AppBundle\Entity\Projet;
 use AppBundle\Entity\TDRSpecific;
 use AppBundle\Form\CCTPSpecificType;
+use AppBundle\Form\CCTPSpecificTypeWithoutProjet;
 use AppBundle\Form\TDRSpecificType;
+use AppBundle\Form\TDRSpecificTypeWithoutProjet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -227,14 +229,14 @@ class ProjetController extends Controller
     public function updateProjetAddCCTPAction(Request $request, $projet)
     {
         $projet = $this->getRepository()->find($projet);
-
         $cctp = new CCTPSpecific();
+        $form = $this->createForm(CCTPSpecificType::class, $cctp);
+
         if ($projet != null) {
             $projet->setStatutProccessus(2);
             $cctp->setProjet($projet);
+            $form = $this->createForm(CCTPSpecificTypeWithoutProjet::class, $cctp);
         }
-
-        $form = $this->createForm(CCTPSpecificType::class, $cctp);
 
         $em = $this->getEm();
 
@@ -263,14 +265,15 @@ class ProjetController extends Controller
     public function updateProjetAddTDRAction(Request $request, $projet)
     {
         $projet = $this->getRepository()->find($projet);
-
         $tdr = new TDRSpecific();
+        $form = $this->createForm(TDRSpecificType::class, $tdr);
+
         if ($projet != null) {
             $projet->setStatutProccessus(2);
             $tdr->setProjet($projet);
-        }
 
-        $form = $this->createForm(TDRSpecificType::class, $tdr);
+            $form = $this->createForm(TDRSpecificTypeWithoutProjet::class, $tdr);
+        }
 
         $em = $this->getEm();
 
