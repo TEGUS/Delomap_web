@@ -144,30 +144,6 @@ class TDRSpecific
     }
 
     /**
-     * Set tdr
-     *
-     * @param \AppBundle\Entity\TDR $tdr
-     *
-     * @return TDRSpecific
-     */
-    public function setTdr(\AppBundle\Entity\TDR $tdr)
-    {
-        $this->tdr = $tdr;
-
-        return $this;
-    }
-
-    /**
-     * Get tdr
-     *
-     * @return \AppBundle\Entity\TDR
-     */
-    public function getTdr()
-    {
-        return $this->tdr;
-    }
-
-    /**
      * Set projet
      *
      * @param \AppBundle\Entity\Projet $projet

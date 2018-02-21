@@ -167,30 +167,6 @@ class CCTPSpecific
     }
 
     /**
-     * Set cctp
-     *
-     * @param \AppBundle\Entity\CCTP $cctp
-     *
-     * @return CCTPSpecific
-     */
-    public function setCctp(\AppBundle\Entity\CCTP $cctp)
-    {
-        $this->cctp = $cctp;
-
-        return $this;
-    }
-
-    /**
-     * Get cctp
-     *
-     * @return \AppBundle\Entity\CCTP
-     */
-    public function getCctp()
-    {
-        return $this->cctp;
-    }
-
-    /**
      * Set fichier
      *
      * @param \AppBundle\Entity\Fichier $fichier
