@@ -25,39 +25,6 @@
                                         {{ form_start(form) }}
                                         {{ form_errors(form) }}
 
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
-                                                        <label for="dag">{{ form_label(form.projet, 'Choose Projet *') }}</label>
-                                                    </div>
-
-                                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                                        <div class="form-group">
-                                                            <div class="form-line">
-                                                                {{ form_widget(form.projet, { 'attr' : { 'class' : 'form-control'} }) }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
-                                                        <label for="dag">{{ form_label(form.dag, 'Choose DAG *') }}</label>
-                                                    </div>
-
-                                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                                        <div class="form-group">
-                                                            <div class="form-line">
-                                                                {{ form_widget(form.dag, { 'attr' : { 'class' : 'show-tick form-control', 'data-live-search' : true} }) }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div class="row clearfix">
                                             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
                                                 <label for="dag">{{ form_label(form.dateSignature, 'Date Signature *') }}</label>
@@ -74,13 +41,13 @@
 
                                         <div class="row clearfix">
                                             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
-                                                <label for="dag">{{ form_label(form.fichier.docFile, 'Choose File *') }}</label>
+                                                <label for="dag">{{ form_label(form.fichierSigne.docFile, 'Choose File *') }}</label>
                                             </div>
 
                                             <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                                 <div class="form-group">
                                                     <div class="form-line">
-                                                        {{ form_widget(form.fichier.docFile, { 'attr' : { 'class' : 'form-control'} }) }}
+                                                        {{ form_widget(form.fichierSigne.docFile, { 'attr' : { 'class' : 'form-control'} }) }}
                                                     </div>
                                                 </div>
                                             </div>

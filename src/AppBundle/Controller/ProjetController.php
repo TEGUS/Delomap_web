@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\CCTPSpecific;
+use AppBundle\Entity\Document;
 use AppBundle\Entity\Projet;
 use AppBundle\Entity\TDRSpecific;
 use AppBundle\Form\CCTPSpecificType;
@@ -200,6 +201,16 @@ class ProjetController extends Controller
 
         $em = $this->getEm();
         $em->merge($projet);
+
+        $dags = $this->getRepository('DAG')->findDAGByIdProc($proc);
+
+        foreach ($dags as $d) {
+            $document = new Document();
+            $document->setProjet($projet);
+            $document->setDag($d);
+            $em->persist($document);
+        }
+
         $em->flush();
 
         return new JsonResponse([

@@ -2,7 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DAG;
 use AppBundle\Entity\Document;
+use AppBundle\Entity\Projet;
+use AppBundle\Form\DocumentModifieType;
+use AppBundle\Form\DocumentSigneType;
 use AppBundle\Form\DocumentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,6 +15,16 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DocumentController extends Controller
 {
+    public function getRepository($entity = 'Document')
+    {
+        return $this->getEm()->getRepository("AppBundle:" . $entity);
+    }
+
+    public function getEm()
+    {
+        return $this->getDoctrine()->getManager();
+    }
+
     /**
      * @Route("/document", name="index_document")
      */
@@ -29,6 +43,8 @@ class DocumentController extends Controller
         $em = $this->getEm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $document->setDateSave(new \DateTime('now'));
+            $document->setDateUpload(new \DateTime('now'));
             $em->persist($document);
             $em->flush();
             return $this->redirect($this->generateUrl('index_document'));
@@ -37,17 +53,55 @@ class DocumentController extends Controller
         $parameters = array(
             'form' => $form->createView()
         );
-        return $this->render('AppBundle:Document:new_document.html.twig', $parameters);
+        return $this->render('AppBundle:Document:new_document_signe.html.twig', $parameters);
     }
 
-    public function getRepository($entity = 'Document')
+    /**
+     * @Route("/new/document/signe/{projet}/{dag}", name="new_document_signe")
+     */
+    public function newDocumentSigneAction(Request $request, Projet $projet, DAG $dag)
     {
-        return $this->getEm()->getRepository("AppBundle:" . $entity);
+        $document = new Document();
+        $document->setProjet($projet);
+        $document->setDag($dag);
+        $form = $this->createForm(DocumentSigneType::class, $document);
+        $em = $this->getEm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $document->setDateSave(new \DateTime('now'));
+            $document->setDateUpload(new \DateTime('now'));
+            $em->persist($document);
+            $em->flush();
+            return $this->redirect($this->generateUrl('index_document'));
+        }
+
+        $parameters = array(
+            'form' => $form->createView()
+        );
+        return $this->render('AppBundle:Document:document_signe.html.twig', $parameters);
     }
 
-    public function getEm()
+    /**
+     * @Route("/new/document/modifie/{projet}/{dag}", name="new_document_modifie")
+     */
+    public function newDocumentModifieAction(Request $request, Projet $projet, DAG $dag)
     {
-        return $this->getDoctrine()->getManager();
+        $document = new Document();
+        $document->setProjet($projet);
+        $document->setDag($dag);
+        $form = $this->createForm(DocumentModifieType::class, $document);
+        $em = $this->getEm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($document);
+            $em->flush();
+            return $this->redirect($this->generateUrl('index_document'));
+        }
+
+        $parameters = array(
+            'form' => $form->createView()
+        );
+        return $this->render('AppBundle:Document:document_modifie.html.twig', $parameters);
     }
 
     /**
@@ -82,6 +136,16 @@ class DocumentController extends Controller
             "recordsTotal" => count($datas),
             "recordsFiltered" => count($datas),
             "data" => $datas
+        ]);
+    }
+
+    /**
+     * @Route("/api/projet/{projet}/documents", options = { "expose" = true }, name="list_documents_projet")
+     */
+    public function listDocumentByProjetAction($projet)
+    {
+        return new JsonResponse([
+            "data" => $this->getRepository()->findByProjet($projet)
         ]);
     }
 

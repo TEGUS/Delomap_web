@@ -56,8 +56,15 @@ class Document
 
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $fichier;
+    private $fichierSigne;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $fichierModifie;
 
     /**
      * @var \DateTime
@@ -69,8 +76,8 @@ class Document
     public function __construct()
     {
         $this->dateCreation = new \DateTime('now');
-        $this->dateSave = new \DateTime('now');
-        $this->dateUpload = new \DateTime('now');
+//        $this->dateSave = new \DateTime('now');
+//        $this->dateUpload = new \DateTime('now');
     }
 
     /**
@@ -228,26 +235,50 @@ class Document
     }
 
     /**
-     * Set fichier
+     * Set fichierSigne
      *
-     * @param \AppBundle\Entity\Fichier $fichier
+     * @param \AppBundle\Entity\Fichier $fichierSigne
      *
      * @return Document
      */
-    public function setFichier(\AppBundle\Entity\Fichier $fichier = null)
+    public function setFichierSigne(\AppBundle\Entity\Fichier $fichierSigne = null)
     {
-        $this->fichier = $fichier;
+        $this->fichierSigne = $fichierSigne;
 
         return $this;
     }
 
     /**
-     * Get fichier
+     * Get fichierSigne
      *
      * @return \AppBundle\Entity\Fichier
      */
-    public function getFichier()
+    public function getFichierSigne()
     {
-        return $this->fichier;
+        return $this->fichierSigne;
+    }
+
+    /**
+     * Set fichierModifie
+     *
+     * @param \AppBundle\Entity\Fichier $fichierModifie
+     *
+     * @return Document
+     */
+    public function setFichierModifie(\AppBundle\Entity\Fichier $fichierModifie = null)
+    {
+        $this->fichierModifie = $fichierModifie;
+
+        return $this;
+    }
+
+    /**
+     * Get fichierModifie
+     *
+     * @return \AppBundle\Entity\Fichier
+     */
+    public function getFichierModifie()
+    {
+        return $this->fichierModifie;
     }
 }
