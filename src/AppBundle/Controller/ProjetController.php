@@ -98,6 +98,45 @@ class ProjetController extends Controller
         ]);
     }
 
+     /**
+     * @Route("/api/liste/projets", options = { "expose" = true }, name="list_datatable_projets")
+     */
+    public function listProjetsAction()
+    {
+        $projets = $this->getRepository()->listAll();
+        $datas = [];
+
+        foreach ($projets as $sample_data) {
+            $temp = [];
+            $temp[] = $sample_data->getId();
+            $temp[] = $sample_data->getLibelle();
+            $temp[] = $sample_data->getDescription();
+            $temp[] = $sample_data->getMontant();
+            $temp[] = $this->my_get_date($sample_data->getDateLancement());
+            $temp[] = $this->my_get_date($sample_data->getDateAttribution());
+            $temp[] = $this->my_get_date($sample_data->getDateSignature());
+            $temp[] = $this->my_get_date($sample_data->getDateDemarrage());
+            $temp[] = $this->my_get_date($sample_data->getDateReception());
+            $temp[] = $sample_data->getMotif();
+            $temp[] = $sample_data->getObservation();
+            $temp[] = $sample_data->getContractant();
+            $temp[] = $sample_data->getUser()->getUsername();
+            $temp[] = $sample_data->getTp()->getId();
+            $temp[] = $sample_data->getTp()->getLibelle();
+            $temp[] = $sample_data->getproc()->getLibelle();
+
+            $datas[] = $temp;
+        }
+
+    
+    
+    
+    }
+    
+    
+    
+    
+    
     /**
      * @Route("/api/projets", options = {"expose" = true}, name="find_all_projets")
      */
