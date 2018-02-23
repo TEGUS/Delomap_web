@@ -83,21 +83,9 @@ class ProjetController extends Controller
             $temp[] = $sample_data->getTp()->getLibelle();
             $temp[] = $sample_data->getDateCreationEnBD();
             $temp[] = $this->format_status($sample_data->getStatutProccessus());
-            $temp[] = '
-                <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Modifier"><i class="material-icons">mode_edit</i></a>
-                <span class="space-button2"></span>
-                <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float remove" title="Supprimer"><i class="material-icons">clear</i></a>
-                <span class="space-button2"></span>
-                <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float add-cctp" title="Ajouter CCTP"><i class="material-icons">add</i></a>
-                <span class="space-button2"></span>
-                <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float add-tdr" title="Ajouter TDR"><i class="material-icons">add_circle</i></a>
-                <span class="space-button2"></span>
-                <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float details" title="Visualiser le projet"><i class="material-icons">visibility</i></a>
-                <span class="space-button2"></span>
-                <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float proc" title="Ajouter une procedure"><i class="material-icons">timeline</i></a>
-                <span class="space-button2"></span>
-                <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float docs" title="Mise à jour des documents"><i class="material-icons">description</i></a>
-            ';
+            $statut = $sample_data->getStatutProccessus();
+            $profil = '';
+            $temp[] = $this->get_buttons($statut, $profil);
 
             $datas[] = $temp;
         }
@@ -314,5 +302,35 @@ class ProjetController extends Controller
     private function my_get_date($date)
     {
         return $date === null ? null : $date->format('Y-m-d');
+    }
+
+    private function get_buttons($statut, $profil)
+    {
+        $buttons = '';
+        if ($statut == 1) {
+            $buttons .= '
+            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Modifier"><i class="material-icons">mode_edit</i></a>
+            <span class="space-button2"></span>
+            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float add-cctp" title="Ajouter CCTP"><i class="material-icons">add</i></a>
+            <span class="space-button2"></span>
+            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float add-tdr" title="Ajouter TDR"><i class="material-icons">add_circle</i></a>
+            <span class="space-button2"></span>';
+        } else if ($statut == 2) {
+            $buttons .= '
+            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float proc" title="Ajouter une procedure"><i class="material-icons">timeline</i></a>
+            <span class="space-button2"></span>';
+        } else if ($statut == 3) {
+            $buttons .= '
+            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float docs" title="Gestion des documents"><i class="material-icons">description</i></a>
+            <span class="space-button2"></span>';
+        }
+
+        $buttons .= '
+        <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float details" title="Visualiser le projet"><i class="material-icons">visibility</i></a>
+        <span class="space-button2"></span>
+        <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float remove" title="Supprimer"><i class="material-icons">clear</i></a>
+        ';
+
+        return $buttons;
     }
 }

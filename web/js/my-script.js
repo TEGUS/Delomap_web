@@ -737,4 +737,32 @@ $(function () {
         });
     }
 
+
+    //ouvrir la fenêtre de gestion des projets
+    $('#table-projet').on("click", ".docs", function () {
+        var id;
+        var nom;
+
+        var row = jQuery(this).closest('tr');
+
+        var i = 0;
+        row.find("td").each(function (cellIndex) {
+            if (i === 0) {
+                id = $(this).html();
+            } else if (i === 1) {
+                nom = $(this).html();
+            }
+        });
+console.log(nom);
+        $('#block-gestion-docs h2 span').html(nom);
+        $('#id_projet_pour_doc').val(id);
+
+        $('#block-gestion-docs').removeClass('hidden');
+        $('#block-table-projet').addClass('hidden');
+    });
+    //fermer la fenêtre de gestion des projets
+    $('#block-gestion-docs button.cancel').click(function() {
+        $('#block-gestion-docs').addClass('hidden');
+        $('#block-table-projet').removeClass('hidden');
+    });
 });

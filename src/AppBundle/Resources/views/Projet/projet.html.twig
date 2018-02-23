@@ -70,7 +70,6 @@
                                     </tr>
                                     </tfoot>
                                     <tbody>
-                                    <tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -90,7 +89,6 @@
                         </div>
                         <div class="body">
                             <form id="form-projet" class="form-horizontal">
-                                <fieldset>
                                 <input type="text" name="id" id="id_projet" class="hidden" >
                                 <div class="row clearfix">
                                     <div class="col-sm-4 col-xs-5 form-control-label">
@@ -263,6 +261,83 @@
                 </div>
             </div>
             <!-- #END# ajouter procedure -->
+            <!-- Gestion des documents -->
+            <div id="block-gestion-docs" class="row clearfix hidden">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Suivi des documents [<span></span>]
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <input type="text" name="id" id="id_projet_pour_doc" class="hidden" >
+                            <div class="table-responsive">
+                                <table id="table-gestion-docs"
+                                       class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                    <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Nom du document</th>
+                                        <th>Statut de mise à jour</th>
+                                        <th>Document modèle</th>
+                                        <th>Document mis à jour</th>
+                                        <th>Document signé</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Nom du document</th>
+                                        <th>Statut de mise à jour</th>
+                                        <th>Document modèle</th>
+                                        <th>Document mis à jour</th>
+                                        <th>Document signé</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    <tr>
+                                        <th>2</th>
+                                        <th>procès verbal</th>
+                                        <th><span class="label label-success">prêt</span></th>
+                                        <th><a href="#">PV.pdf</a></th>
+                                        <th><a href="#">PV_update.pdf</a></th>
+                                        <th><a href="#">PV_signe.pdf</a></th>
+                                        <th>
+                                            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Charger le document modifié"><i class="material-icons">file_upload</i></a>
+                                            <span class="space-button2"></span>
+                                            <a type="button" class="btn btn-success btn-circle waves-effect waves-circle waves-float remove" title="Charger le document signé"><i class="material-icons">file_upload</i></a>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>3</th>
+                                        <th>document d'accréditation</th>
+                                        <th><span class="label label-danger">en attente</span></th>
+                                        <th><a href="#">doc_accr.pdf</a></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>
+                                            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Charger le document modifié"><i class="material-icons">file_upload</i></a>
+                                            <span class="space-button2"></span>
+                                            <a type="button" class="btn btn-success btn-circle waves-effect waves-circle waves-float remove" title="Charger le document signé"><i class="material-icons">file_upload</i></a>
+                                        </th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
+                                    <button type="button" class="btn btn-primary m-t-15 waves-effect save"><i class="fa fa-spinner fa-spin hidden"></i> Afficher DAO</button>
+                                    <button type="button" class="btn btn-default m-t-15 waves-effect cancel">Retour</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Gestion des documents -->
         </div>
     </section>
 {% endblock %}
