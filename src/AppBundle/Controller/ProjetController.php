@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\CCTPSpecific;
+use AppBundle\Entity\DAG;
 use AppBundle\Entity\Document;
 use AppBundle\Entity\Projet;
 use AppBundle\Entity\TDRSpecific;
