@@ -29,6 +29,11 @@
     margin-right: 6px;
 }
 
+.space-button2 {
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
 .card .header {
     height: 70px;
 }

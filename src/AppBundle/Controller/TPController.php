@@ -45,11 +45,13 @@ class TPController extends Controller
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
-            $temp[] = $this->getRepository('Proc')->findProcByIdTP($sample_data->getId());
+            $temp[] = json_encode($this->getRepository('Proc')->findProcByIdTP($sample_data->getId()));
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
                 <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+                <span class="space-button"></span>
+                <a href="#" class="add_proc" title="Ajouter une procédure"><i class="fa fa-list fa-lg fa-default"></i></a>
             ';
 
             $datas[] = $temp;

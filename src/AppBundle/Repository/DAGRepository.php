@@ -36,4 +36,13 @@ class DAGRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getArrayResult();
     }
+
+    public function findById($id) {
+        $qb = $this->createQueryBuilder('dag')
+            ->where('dag.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
 }

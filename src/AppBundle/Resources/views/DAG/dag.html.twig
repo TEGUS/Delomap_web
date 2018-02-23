@@ -19,8 +19,8 @@
                                 Liste des documents à générer
                             </h2>
                             <div class="col-xs-6 right-side">
-                                <a href="{{ path('go_to_fichier') }}" type="button"
-                                   class="btn btn-primary waves-effect">Ajouter Fichier</a>
+                                {#<a href="{{ path('go_to_fichier') }}" type="button"#}
+                                   {#class="btn btn-primary waves-effect">Ajouter Fichier</a>#}
                                 <button type="button" class="btn btn-primary waves-effect button-new">Nouveau</button>
                             </div>
                         </div>
@@ -511,10 +511,9 @@
                     i++;
                 });
 
-                $('#id_dag').val(id);
-
-                $('#block-table-document-genere').addClass('hidden');
-                $('#block-form-add-fichier').removeClass('hidden');
+                var url = '{{ path("update_dag_add_fichier", {'dag': 'id'}) }}';
+                url = url.replace("id", id);
+                window.location = url;
             });
 
             //click sur le bouton annuler Add Fichier

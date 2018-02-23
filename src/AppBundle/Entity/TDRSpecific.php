@@ -44,26 +44,21 @@ class TDRSpecific
     private $service;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TDR", inversedBy="tdrSpecifics", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $tdr;
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Projet", inversedBy="tdrSpecifics", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $projet;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Fichier", mappedBy="tdrSpecific")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"}, inversedBy="tdrSpecific")
      */
-    private $fichiers;
+    private $fichier;
 
 
     public function __construct()
     {
-        $this->dateCreation = new Date('now');
+        $this->dateCreation = new \DateTime('now');
+        $this->date = new \DateTime('now');
     }
 
     /**
@@ -149,30 +144,6 @@ class TDRSpecific
     }
 
     /**
-     * Set tdr
-     *
-     * @param \AppBundle\Entity\TDR $tdr
-     *
-     * @return TDRSpecific
-     */
-    public function setTdr(\AppBundle\Entity\TDR $tdr)
-    {
-        $this->tdr = $tdr;
-
-        return $this;
-    }
-
-    /**
-     * Get tdr
-     *
-     * @return \AppBundle\Entity\TDR
-     */
-    public function getTdr()
-    {
-        return $this->tdr;
-    }
-
-    /**
      * Set projet
      *
      * @param \AppBundle\Entity\Projet $projet
@@ -197,36 +168,26 @@ class TDRSpecific
     }
 
     /**
-     * Add fichier
+     * Set fichier
      *
      * @param \AppBundle\Entity\Fichier $fichier
      *
      * @return TDRSpecific
      */
-    public function addFichier(\AppBundle\Entity\Fichier $fichier)
+    public function setFichier(\AppBundle\Entity\Fichier $fichier = null)
     {
-        $this->fichiers[] = $fichier;
+        $this->fichier = $fichier;
 
         return $this;
     }
 
     /**
-     * Remove fichier
+     * Get fichier
      *
-     * @param \AppBundle\Entity\Fichier $fichier
+     * @return \AppBundle\Entity\Fichier
      */
-    public function removeFichier(\AppBundle\Entity\Fichier $fichier)
+    public function getFichier()
     {
-        $this->fichiers->removeElement($fichier);
-    }
-
-    /**
-     * Get fichiers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFichiers()
-    {
-        return $this->fichiers;
+        return $this->fichier;
     }
 }

@@ -16,7 +16,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Ajouter un Fichier à un DAG (Document à Générer)
+                                Ajouter un Fichier au DAG (Document à Générer) [ {{ dag.libelle }} ]
                             </h2>
                         </div>
                         <div class="body container-fluid">
@@ -26,19 +26,19 @@
                                         {{ form_start(form) }}
                                         {{ form_errors(form) }}
 
-                                        <div class="row clearfix">
-                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
-                                                <label for="dag">{{ form_label(form.dag, 'Choose DAG *') }}</label>
-                                            </div>
+                                        {#<div class="row clearfix">#}
+                                            {#<div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">#}
+                                                {#<label for="dag">{{ form_label(form.dag, 'Choose DAG *') }}</label>#}
+                                            {#</div>#}
 
-                                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                                <div class="form-group">
-                                                    <div class="form-line">
-                                                        {{ form_widget(form.dag, { 'attr' : { 'class' : 'form-control'} }) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            {#<div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">#}
+                                                {#<div class="form-group">#}
+                                                    {#<div class="form-line">#}
+                                                        {#{{ form_widget(form.dag, { 'attr' : { 'class' : 'form-control'} }) }}#}
+                                                    {#</div>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                        {#</div>#}
 
                                         <div class="row clearfix">
                                             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">

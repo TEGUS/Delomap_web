@@ -6,9 +6,11 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
-        ROLE_AGENT:       ROLE_USER
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_GUEST:       [ROLE_USER, ROLE_VIEW]
+        ROLE_STAFF:       [ROLE_USER, ROLE_GUEST, ROLE_CREATE, ROLE_DELETE]
+        ROLE_AGENT:       [ROLE_USER, ROLE_GUEST]
+        ROLE_ADMIN:       [ROLE_USER, ROLE_AGENT, ROLE_STAFF]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:

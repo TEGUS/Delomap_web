@@ -74,11 +74,11 @@
                             <li{% if app.request.get('_route') == 'index_tps' %} class="active"{% endif %}>
                                 <a href="{{ path('index_tps') }}">Liste des Types de prestation</a>
                             </li>
-                            <li{% if app.request.get('_route') == 'index_tdrs' %} class="active"{% endif %}>
-                                <a href="{{ path('index_tdrs') }}">Termes de référence (TDR)</a>
+                            <li{% if app.request.get('_route') == 'update_projet_add_tdr' %} class="active"{% endif %}>
+                                <a href="{{ path('update_projet_add_tdr', {'projet': 0}) }}">TDR</a>
                             </li>
-                            <li{% if app.request.get('_route') == 'index_cctp' %} class="active"{% endif %}>
-                                <a href="{{ path('index_cctp') }}">CCTP</a>
+                            <li{% if app.request.get('_route') == 'update_projet_add_cctp' %} class="active"{% endif %}>
+                                <a href="{{ path('update_projet_add_cctp', {'projet': 0}) }}">CCTP</a>
                             </li>
 
                             <li{% if app.request.get('_route') == 'index_procs' %} class="active"{% endif %}>
@@ -106,23 +106,25 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">group</i>
-                            <span>GESTION DES UTILISATEURS</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="pages/tables/normal-tables.html">Gestion des utilisateurs</a>
-                            </li>
-                            <li>
-                                <a href="pages/tables/jquery-datatable.html">Gestion des profils</a>
-                            </li>
-                            <li>
-                                <a href="pages/tables/editable-table.html">Gestion des rôles</a>
-                            </li>
-                        </ul>
-                    </li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle">
+                                <i class="material-icons">group</i>
+                                <span>GESTION DES UTILISATEURS</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="pages/tables/normal-tables.html">Gestion des utilisateurs</a>
+                                </li>
+                                <li>
+                                    <a href="pages/tables/jquery-datatable.html">Gestion des profils</a>
+                                </li>
+                                <li>
+                                    <a href="pages/tables/editable-table.html">Gestion des rôles</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
             <!-- #Menu -->

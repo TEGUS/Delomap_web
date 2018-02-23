@@ -2,7 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\CCTPSpecific;
 use AppBundle\Entity\Projet;
+use AppBundle\Entity\TDRSpecific;
+use AppBundle\Form\CCTPSpecificType;
+use AppBundle\Form\CCTPSpecificTypeWithoutProjet;
+use AppBundle\Form\TDRSpecificType;
+use AppBundle\Form\TDRSpecificTypeWithoutProjet;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +29,8 @@ class ProjetController extends Controller
     {
         return $this->render('AppBundle:Projet:projet.html.twig');
     }
-     /**
+
+    /**
      * @Route("/fiche_suivi", name="index_fiche_suivi")
      */
     public function indexAction3()
@@ -63,23 +70,22 @@ class ProjetController extends Controller
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
             $temp[] = $sample_data->getMontant();
-            $temp[] = $sample_data->getDateLancement();
-            $temp[] = $sample_data->getDateAttribution();
-            $temp[] = $sample_data->getDateSignature();
-            $temp[] = $sample_data->getDateDemarrage();
-            $temp[] = $sample_data->getDateReception();
+            $temp[] = $this->my_get_date($sample_data->getDateLancement());
+            $temp[] = $this->my_get_date($sample_data->getDateAttribution());
+            $temp[] = $this->my_get_date($sample_data->getDateSignature());
+            $temp[] = $this->my_get_date($sample_data->getDateDemarrage());
+            $temp[] = $this->my_get_date($sample_data->getDateReception());
             $temp[] = $sample_data->getMotif();
             $temp[] = $sample_data->getObservation();
             $temp[] = $sample_data->getContractant();
             $temp[] = $sample_data->getUser()->getUsername();
+            $temp[] = $sample_data->getTp()->getId();
             $temp[] = $sample_data->getTp()->getLibelle();
             $temp[] = $sample_data->getDateCreationEnBD();
-            $temp[] = $sample_data->getStatutProccessus();
-            $temp[] = '
-                <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
-                <span class="space-button"></span>
-                <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
-            ';
+            $temp[] = $this->format_status($sample_data->getStatutProccessus());
+            $statut = $sample_data->getStatutProccessus();
+            $profil = '';
+            $temp[] = $this->get_buttons($statut, $profil);
 
             $datas[] = $temp;
         }
@@ -119,12 +125,12 @@ class ProjetController extends Controller
 
         $projet = new Projet();
         $projet->setLibelle($libelle);
-        $projet->setDateLancement(new \DateTime($dateLancement));
-        $projet->setDateAttribution(new \DateTime($dateAttribution));
-        $projet->setDateSignature(new \DateTime($dateSignature));
-        $projet->setDateDemarrage(new \DateTime($dateDemarrage));
-        $projet->setDateReception(new \DateTime($dateReception));
-        $projet->setDateArret(new \DateTime($dateArret));
+        if ($dateLancement != null && $dateLancement != '') $projet->setDateLancement(new \DateTime($dateLancement));
+        if ($dateAttribution != null && $dateAttribution != '') $projet->setDateAttribution(new \DateTime($dateAttribution));
+        if ($dateSignature != null && $dateSignature != '') $projet->setDateSignature(new \DateTime($dateSignature));
+        if ($dateDemarrage != null && $dateDemarrage != '') $projet->setDateDemarrage(new \DateTime($dateDemarrage));
+        if ($dateReception != null && $dateReception != '') $projet->setDateReception(new \DateTime($dateReception));
+        if ($dateArret != null && $dateArret != '') $projet->setDateArret(new \DateTime($dateArret));
         $projet->setMontant($montant);
         $projet->setTp($this->getRepository('TP')->find($tp));
         $projet->setUser($this->getUser());
@@ -155,14 +161,32 @@ class ProjetController extends Controller
         $tp = $request->request->get('tp');
 
         $projet->setLibelle($libelle);
-        $projet->setDateLancement(new \DateTime($dateLancement));
-        $projet->setDateAttribution(new \DateTime($dateAttribution));
-        $projet->setDateSignature(new \DateTime($dateSignature));
-        $projet->setDateDemarrage(new \DateTime($dateDemarrage));
-        $projet->setDateReception(new \DateTime($dateReception));
-        $projet->setDateArret(new \DateTime($dateArret));
+        if ($dateLancement != null && $dateLancement != '') $projet->setDateLancement(new \DateTime($dateLancement));
+        if ($dateAttribution != null && $dateAttribution != '') $projet->setDateAttribution(new \DateTime($dateAttribution));
+        if ($dateSignature != null && $dateSignature != '') $projet->setDateSignature(new \DateTime($dateSignature));
+        if ($dateDemarrage != null && $dateDemarrage != '') $projet->setDateDemarrage(new \DateTime($dateDemarrage));
+        if ($dateReception != null && $dateReception != '') $projet->setDateReception(new \DateTime($dateReception));
+        if ($dateArret != null && $dateArret != '') $projet->setDateArret(new \DateTime($dateArret));
         $projet->setMontant($montant);
         $projet->setTp($this->getRepository('TP')->find($tp));
+
+        $em = $this->getEm();
+        $em->merge($projet);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true,
+        ]);
+    }
+
+    /**
+     * @Route("/api/update/projet/{projet}/choose/proc", options = { "expose" = true }, name="update_projet_choose_proc")
+     */
+    public function updateProjetChooseProcAction(Request $request, Projet $projet)
+    {
+        $proc = $request->request->get('proc');
+        $projet->setProc($this->getRepository('Proc')->find($proc));
+        $projet->setStatutProccessus(3);
 
         $em = $this->getEm();
         $em->merge($projet);
@@ -185,5 +209,128 @@ class ProjetController extends Controller
         return new JsonResponse([
             "data" => true,
         ]);
+    }
+
+    /**
+     * @Route("/update/projet/{projet}/add/cctp", name="update_projet_add_cctp")
+     */
+    public function updateProjetAddCCTPAction(Request $request, $projet)
+    {
+        $projet = $this->getRepository()->find($projet);
+        $cctp = new CCTPSpecific();
+        $form = $this->createForm(CCTPSpecificType::class, $cctp);
+
+        if ($projet != null) {
+            $projet->setStatutProccessus(2);
+            $cctp->setProjet($projet);
+            $form = $this->createForm(CCTPSpecificTypeWithoutProjet::class, $cctp);
+        }
+
+        $em = $this->getEm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($projet != null) {
+                $em->merge($projet);
+            }
+
+            $em->persist($cctp);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('index_projets'));
+        }
+
+        $parameters = array(
+            'form' => $form->createView(),
+            'projet' => $projet
+        );
+        return $this->render('AppBundle:CCTP:cctp.html.twig', $parameters);
+    }
+
+    /**
+     * @Route("/update/projet/{projet}/add/tdr", name="update_projet_add_tdr")
+     */
+    public function updateProjetAddTDRAction(Request $request, $projet)
+    {
+        $projet = $this->getRepository()->find($projet);
+        $tdr = new TDRSpecific();
+        $form = $this->createForm(TDRSpecificType::class, $tdr);
+
+        if ($projet != null) {
+            $projet->setStatutProccessus(2);
+            $tdr->setProjet($projet);
+
+            $form = $this->createForm(TDRSpecificTypeWithoutProjet::class, $tdr);
+        }
+
+        $em = $this->getEm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($projet != null) {
+                $em->merge($projet);
+            }
+
+            $em->persist($tdr);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('index_projets'));
+        }
+
+        $parameters = array(
+            'form' => $form->createView(),
+            'projet' => $projet
+        );
+        return $this->render('AppBundle:TDR:tdr.html.twig', $parameters);
+    }
+
+    private function format_status($status)
+    {
+        switch ($status) {
+            case 1:
+                return '<span class="label label-default">Créé</span>';
+            case 2:
+                return '<span class="label label-warning">Initialisé</span>';
+            case 3:
+                return '<span class="label label-warning">Procédure choisie</span>';
+            case 4:
+                return '<span class="label label-success">Terminé</span>';
+        }
+        return '';
+    }
+
+    private function my_get_date($date)
+    {
+        return $date === null ? null : $date->format('Y-m-d');
+    }
+
+    private function get_buttons($statut, $profil)
+    {
+        $buttons = '';
+        if ($statut == 1) {
+            $buttons .= '
+            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Modifier"><i class="material-icons">mode_edit</i></a>
+            <span class="space-button2"></span>
+            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float add-cctp" title="Ajouter CCTP"><i class="material-icons">add</i></a>
+            <span class="space-button2"></span>
+            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float add-tdr" title="Ajouter TDR"><i class="material-icons">add_circle</i></a>
+            <span class="space-button2"></span>';
+        } else if ($statut == 2) {
+            $buttons .= '
+            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float proc" title="Ajouter une procedure"><i class="material-icons">timeline</i></a>
+            <span class="space-button2"></span>';
+        } else if ($statut == 3) {
+            $buttons .= '
+            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float docs" title="Gestion des documents"><i class="material-icons">description</i></a>
+            <span class="space-button2"></span>';
+        }
+
+        $buttons .= '
+        <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float details" title="Visualiser le projet"><i class="material-icons">visibility</i></a>
+        <span class="space-button2"></span>
+        <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float remove" title="Supprimer"><i class="material-icons">clear</i></a>
+        ';
+
+        return $buttons;
     }
 }

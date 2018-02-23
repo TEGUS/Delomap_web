@@ -36,16 +36,6 @@ class TP
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\TDR", mappedBy="tp")
-     */
-    private $tdrs;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CCTP", mappedBy="tp")
-     */
-    private $cctps;
-
-    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Projet", cascade={"persist"}, mappedBy="tp")
      */
     private $projets;
@@ -125,79 +115,9 @@ class TP
      */
     public function __construct()
     {
-        $this->tdrs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->cctps = new \Doctrine\Common\Collections\ArrayCollection();
         $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
         $this->procs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->dateCreation = new \DateTime('now');
-    }
-
-    /**
-     * Add tdr
-     *
-     * @param \AppBundle\Entity\TDR $tdr
-     *
-     * @return TP
-     */
-    public function addTdr(\AppBundle\Entity\TDR $tdr)
-    {
-        $this->tdrs[] = $tdr;
-
-        return $this;
-    }
-
-    /**
-     * Remove tdr
-     *
-     * @param \AppBundle\Entity\TDR $tdr
-     */
-    public function removeTdr(\AppBundle\Entity\TDR $tdr)
-    {
-        $this->tdrs->removeElement($tdr);
-    }
-
-    /**
-     * Get tdrs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTdrs()
-    {
-        return $this->tdrs;
-    }
-
-    /**
-     * Add cctp
-     *
-     * @param \AppBundle\Entity\CCTP $cctp
-     *
-     * @return TP
-     */
-    public function addCctp(\AppBundle\Entity\CCTP $cctp)
-    {
-        $this->cctps[] = $cctp;
-
-        return $this;
-    }
-
-    /**
-     * Remove cctp
-     *
-     * @param \AppBundle\Entity\CCTP $cctp
-     */
-    public function removeCctp(\AppBundle\Entity\CCTP $cctp)
-    {
-        $this->cctps->removeElement($cctp);
-    }
-
-    /**
-     * Get cctps
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCctps()
-    {
-        return $this->cctps;
     }
 
     /**

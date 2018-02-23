@@ -402,14 +402,30 @@ $(function () {
     $('#table-procedure').on("click", ".add_doc", function () {
         
         var id;
+        var nom;
+        var liste_docs;
+
         var row = jQuery(this).closest('tr');
         var i = 0;
         row.find("td").each(function (cellIndex) {
             if (i === 0) {
                 id = $(this).html();
+            } else if  (i === 1) {
+                nom = $(this).html();
+            } else if(i === 3) {
+                liste_docs = JSON.parse($(this).html());
             }
             i++;
         });
+
+        var liste_documents = "";
+        for(key in liste_docs) {
+            var doc = liste_docs[key];
+            liste_documents += '<tr><td>'+doc.id+'</td><td>'+doc.libelle+'</td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>';
+        }
+        $('#table-procedure-documents tbody').html(liste_documents);
+
+        $('#modal-procedure-doc h4').html('Liste des documents ['+nom+']');
 
         $('#modal-procedure-doc').modal('show');
 
@@ -430,7 +446,7 @@ $(function () {
                 $('#list_docs').selectpicker('refresh');
 
                 //click sur ajout document
-                $('#modal-procedure-doc').on("click", ".add", function() {
+                $('#modal-procedure-doc .add').click( function() {
                     
                     var idproc = id;
                     var iddag = $('#list_docs').val();
@@ -476,7 +492,7 @@ $(function () {
                 });
     
                 //click sur le bouton du tableau document
-                $('#table-procedure-documents').on("click", ".remove", function () {
+                $('#table-procedure-documents .remove').click( function () {
                     //console.log('ici');
             
                     var iddag;
@@ -538,6 +554,10 @@ $(function () {
             }
         });
 
+    });
+    //fermeture du modal d'ajout de documents a la procedure
+    $('#modal-procedure-doc .close_btn').click( function() {
+        table_proc.ajax.reload();
     });
 
     
