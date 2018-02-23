@@ -243,8 +243,7 @@
             }
 
             //Exportable table
-            
-            table_dag.destroy();
+            var table_dag;
             table_dag = $('#table-document-genere').DataTable({
                 "language": {
                     "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
@@ -457,7 +456,9 @@
                 console.log(id)
 
                 //Exportable table Fichiers
-                table_fichier.destroy();
+                if (table_fichier != null) {
+                    table_fichier.destroy();
+                }
                 table_fichier = $('#table-fichiers').DataTable({
                     "language": {
                         "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",

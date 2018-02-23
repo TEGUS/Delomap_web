@@ -299,13 +299,13 @@ class ProjetController extends Controller
     {
         switch ($status) {
             case 1:
-                return '<span class="label label-default">Créé</span>';
+                return '<span class="label label-default lb-md">Créé</span>';
             case 2:
-                return '<span class="label label-warning">Initialisé</span>';
+                return '<span class="label label-warning lb-md">Initialisé</span>';
             case 3:
-                return '<span class="label label-warning">Procédure choisie</span>';
+                return '<span class="label label-warning lb-md">Procédure choisie</span>';
             case 4:
-                return '<span class="label label-success">Terminé</span>';
+                return '<span class="label label-success lb-md">Terminé</span>';
         }
         return '';
     }

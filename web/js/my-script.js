@@ -752,8 +752,9 @@ $(function () {
             } else if (i === 1) {
                 nom = $(this).html();
             }
+            i++;
         });
-console.log(nom);
+        
         $('#block-gestion-docs h2 span').html(nom);
         $('#id_projet_pour_doc').val(id);
 
