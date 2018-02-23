@@ -1,5 +1,5 @@
 .login-page {
-    background: url(../images/img_biya.png) no-repeat center center fixed;
+    background: url(../images/img_biya.jpeg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -48,4 +48,16 @@
 
 #block-table-journal_programmation{
     height: -300px;
+}
+
+.lb-sm {
+    font-size: 10px;
+}
+
+.lb-md {
+    font-size: 12px;
+}
+
+.lb-lg {
+    font-size: 20px;
 }

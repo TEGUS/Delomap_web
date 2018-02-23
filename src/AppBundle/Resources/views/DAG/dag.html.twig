@@ -243,7 +243,8 @@
             }
 
             //Exportable table
-            table_tp = $('#table-document-genere').DataTable({
+            var table_dag;
+            table_dag = $('#table-document-genere').DataTable({
                 "language": {
                     "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
                     buttons: {
@@ -259,12 +260,6 @@
                 responsive: true,
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
-                ],
-                "columnDefs": [
-                    {
-                        "targets": [0, 3],
-                        "class": "hide_me"
-                    }
                 ]
             });
 
@@ -353,7 +348,7 @@
                             if (result.data) {
                                 swal("Réussi!", "DAG supprimée avec succès", "success");
 
-                                table_tp.ajax.reload();
+                                table_dag.ajax.reload();
                             } else {
                                 swal("Erreur!", "Erreur lors de la suppression du DAG", "error");
                             }
@@ -423,7 +418,7 @@
                                 $('#block-table-document-genere').removeClass('hidden');
                                 swal("Réussi!", msg_reussite, "success");
 
-                                table_tp.ajax.reload();
+                                table_dag.ajax.reload();
                             } else {
                                 swal("Erreur!", msg_echec, "error");
                             }
@@ -444,11 +439,11 @@
 
             // ----- GZSTION FICHIER (ADD and VIEW)
 
+            var table_fichier;
 
             //click sur le bouton View Fichiers
             $('#table-document-genere').on("click", ".view-files", function () {
                 var id;
-
                 var row = jQuery(this).closest('tr');
 
                 var i = 0;
@@ -461,6 +456,9 @@
                 console.log(id)
 
                 //Exportable table Fichiers
+                if (table_fichier != null) {
+                    table_fichier.destroy();
+                }
                 table_fichier = $('#table-fichiers').DataTable({
                     "language": {
                         "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
@@ -477,12 +475,6 @@
                     responsive: true,
                     buttons: [
                         'copy', 'csv', 'excel', 'pdf', 'print'
-                    ],
-                    "columnDefs": [
-                        {
-                            "targets": [0, 3],
-                            "class": "hide_me"
-                        }
                     ]
                 });
 
@@ -566,7 +558,7 @@
                                 $('#block-table-document-genere').removeClass('hidden');
                                 swal("Réussi!", msg_reussite, "success");
 
-                                table_tp.ajax.reload();
+                                table_dag.ajax.reload();
                             } else {
                                 swal("Erreur!", msg_echec, "error");
                             }
@@ -582,6 +574,76 @@
                         }
                     });
                 }
+            });
+
+            //click sur le bouton supprimer Fichier d'un DAG
+            $('#table-fichiers').on("click", ".remove", function () {
+                var id;
+
+                var row = jQuery(this).closest('tr');
+
+                var i = 0;
+                row.find("td").each(function (cellIndex) {
+                    if (i === 0) {
+                        id = $(this).html();
+                    }
+                    i++;
+                });
+
+                swal({
+                    title: "Attention !",
+                    text: "Voulez-vous vraiment Supprimer cet élément ? ",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Oui",
+                    cancelButtonText: "Non",
+                    closeOnConfirm: false
+                }, function () {
+
+                    $.ajax({
+                        'type': 'POST',
+                        'url': Routing.generate('update_dag_remove_fichier', {'fichier': id}),
+                        'dataType': 'JSON',
+                        'data': {},
+                        'success': function (result) {
+                            if (result.data) {
+                                swal("Réussi!", "DAG supprimée avec succès", "success");
+
+                                table_fichier.ajax.reload();
+                            } else {
+                                swal("Erreur!", "Erreur lors de la suppression du DAG", "error");
+                            }
+                        },
+                        'error': function () {
+                            swal("Erreur!", "Erreur lors de la suppression du DAG", "error");
+                        },
+                        'beforeSend': function () {
+                            $('.sweet-alert button.confirm').html("<i class=\"fa fa-spinner fa-spin\"></i> Oui");
+                        },
+                        'complete': function () {
+                            $('.sweet-alert button.confirm').html("Oui");
+                        }
+                    });
+                });
+            });
+
+            //click sur le bouton view document signé
+            $('#table-fichiers').on("click", ".view", function () {
+                var id;
+                var nom;
+                var row = jQuery(this).closest('tr');
+                var i = 0;
+                row.find("td").each(function (cellIndex) {
+                    if (i === 0) {
+                        id = $(this).html();
+                    } else if (i === 1) {
+                        nom = $(this).html();
+                    }
+                    i++;
+                });
+
+                window.open(Routing.getBaseUrl().split('/app_dev.php')[0] + '/uploads/docs/' + nom, '_blank');
             });
         })
     </script>

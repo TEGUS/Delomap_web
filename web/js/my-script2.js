@@ -563,7 +563,7 @@ $(function () {
     
     
     //Exportation des DAG dans le tableau
-    $('#table-document-genere').DataTable({
+    /*$('#table-document-genere').DataTable({
         "language": {
             "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
             buttons: {
@@ -587,7 +587,6 @@ $(function () {
             }
         ]
     });
-    
     //click sur le bouton nouveau DAG
     $('#block-document-genere .button-new').click(function () {
 
@@ -599,12 +598,11 @@ $(function () {
         $('#block-table-document-genere').addClass('hidden');
         $('#block-form-document-genere').removeClass('hidden');
     });
-    
     //click sur le bouton annuler DAG
     $('#block-form-document-genere .cancel').click(function () {
         $('#block-form-document-genere').addClass('hidden');
         $('#block-table-document-genere').removeClass('hidden');
-    });
+    });*/
     
 
 });

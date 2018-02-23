@@ -52,7 +52,7 @@ class Fichier
     private $docFile;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DAG", inversedBy="fichiers", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DAG", inversedBy="fichiers", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $dag;
