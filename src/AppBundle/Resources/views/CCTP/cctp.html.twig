@@ -95,11 +95,11 @@
             <!-- #END# Add Fichier -->
 
             {% if projet != null %}
-
+                <input type="text" name="id" id="id_projet" value="{{ projet.id }}" class="hidden">
                 <div class="container-fluid">
                     <div class="block-header">
                         <h2>
-                            Liste des CCTP
+                            Liste des CCTP du projet [ {{ projet.libelle }} ]
                         </h2>
                     </div>
                     <!-- Table des documents à générer -->
@@ -152,7 +152,9 @@
     <script>
         $(function () {
             //Exportable table
-            {% if projet != null %}
+                var id = $('#id_projet').val();
+                console.log(id);
+                
                 table_cctp = $('#table-cctp').DataTable({
                     "language": {
                         "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
@@ -162,8 +164,8 @@
                         }
                     },
                     "ajax": {
-                        "url": Routing.generate('list_cctp_specific_of_projet', {'projet': {{ projet.id }}),
-                        "type": "POST"
+                        "url": Routing.generate('list_cctp_specific_of_projet', {'projet': id }),
+                        "type": "GET"
                     },
                     dom: 'Bfrtip',
                     responsive: true,
@@ -173,7 +175,6 @@
                 });
 
                 table_cctp.ajax.reload();
-            {% endif %}
         });
     </script>
 {% endblock %}
