@@ -34,7 +34,7 @@ class DAGRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('id', $id_proc)
             ->getQuery();
 
-        return $qb->getArrayResult();
+        return $qb->getResult();
     }
 
     public function findById($id) {
