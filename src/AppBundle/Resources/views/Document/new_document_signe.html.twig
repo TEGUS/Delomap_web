@@ -1,0 +1,115 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block body %}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>
+                    PANEL Documents Signés
+                </h2>
+            </div>
+
+            <!-- Add Document -->
+            <div id="block-form-add-fichie" class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Ajouter un document signé
+                            </h2>
+                        </div>
+                        <div class="body container-fluid">
+                            <div class="row">
+                                <div class="col-sm-10 col-sm-offset-1">
+                                    <div class="form-horizontal">
+                                        {{ form_start(form) }}
+                                        {{ form_errors(form) }}
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row clearfix">
+                                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
+                                                        <label for="dag">{{ form_label(form.projet, 'Choose Projet *') }}</label>
+                                                    </div>
+
+                                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                                        <div class="form-group">
+                                                            <div class="form-line">
+                                                                {{ form_widget(form.projet, { 'attr' : { 'class' : 'form-control'} }) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row clearfix">
+                                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
+                                                        <label for="dag">{{ form_label(form.dag, 'Choose DAG *') }}</label>
+                                                    </div>
+
+                                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                                        <div class="form-group">
+                                                            <div class="form-line">
+                                                                {{ form_widget(form.dag, { 'attr' : { 'class' : 'show-tick form-control', 'data-live-search' : true} }) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
+                                                <label for="dag">{{ form_label(form.dateSignature, 'Date Signature *') }}</label>
+                                            </div>
+
+                                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        {{ form_widget(form.dateSignature, {'attr' : {'class' : 'datepicker form-control'} }) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
+                                                <label for="dag">{{ form_label(form.fichierSigne.docFile, 'Choose File *') }}</label>
+                                            </div>
+
+                                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        {{ form_widget(form.fichierSigne.docFile, { 'attr' : { 'class' : 'form-control'} }) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{ form_errors(form) }}
+                                        {{ form_rest(form) }}
+
+                                        <div class="row clearfix">
+                                            <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
+                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect save">
+                                                    <i class="fa fa-spinner fa-spin hidden"></i> Enregistrer
+                                                </button>
+                                                <a href="{{ path('index_document') }}" type="button"
+                                                   class="btn btn-default m-t-15 waves-effect cancel">
+                                                    Annuler
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        {{ form_end(form) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Add Document -->
+        </div>
+    </section>
+{% endblock %}

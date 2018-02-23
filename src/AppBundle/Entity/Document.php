@@ -55,6 +55,18 @@ class Document
     private $dag;
 
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $fichierSigne;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $fichierModifie;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
@@ -64,6 +76,8 @@ class Document
     public function __construct()
     {
         $this->dateCreation = new \DateTime('now');
+//        $this->dateSave = new \DateTime('now');
+//        $this->dateUpload = new \DateTime('now');
     }
 
     /**
@@ -218,5 +232,53 @@ class Document
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * Set fichierSigne
+     *
+     * @param \AppBundle\Entity\Fichier $fichierSigne
+     *
+     * @return Document
+     */
+    public function setFichierSigne(\AppBundle\Entity\Fichier $fichierSigne = null)
+    {
+        $this->fichierSigne = $fichierSigne;
+
+        return $this;
+    }
+
+    /**
+     * Get fichierSigne
+     *
+     * @return \AppBundle\Entity\Fichier
+     */
+    public function getFichierSigne()
+    {
+        return $this->fichierSigne;
+    }
+
+    /**
+     * Set fichierModifie
+     *
+     * @param \AppBundle\Entity\Fichier $fichierModifie
+     *
+     * @return Document
+     */
+    public function setFichierModifie(\AppBundle\Entity\Fichier $fichierModifie = null)
+    {
+        $this->fichierModifie = $fichierModifie;
+
+        return $this;
+    }
+
+    /**
+     * Get fichierModifie
+     *
+     * @return \AppBundle\Entity\Fichier
+     */
+    public function getFichierModifie()
+    {
+        return $this->fichierModifie;
     }
 }

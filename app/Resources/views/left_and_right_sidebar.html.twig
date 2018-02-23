@@ -83,11 +83,14 @@
                             <li{% if app.request.get('_route') == 'index_procs' %} class="active"{% endif %}>
                                 <a href="{{ path('index_procs') }}">Procédures</a>
                             </li>
-{#                            <li{% if app.request.get('_route') == 'index_document' %} class="active"{% endif %}>
+                            {#<li{% if app.request.get('_route') == 'index_document' %} class="active"{% endif %}>
                                 <a href="{{ path('index_document') }}">Les types de document</a>
                             </li>#}
                             <li{% if app.request.get('_route') == 'index_dags' %} class="active"{% endif %}>
                                 <a href="{{ path('index_dags') }}">Documents à générer</a>
+                            </li>
+                            <li{% if app.request.get('_route') == 'index_document' %} class="active"{% endif %}>
+                                <a href="{{ path('index_document') }}">Documents Signés</a>
                             </li>
                         </ul>
                     </li>

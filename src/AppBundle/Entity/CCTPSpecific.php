@@ -49,7 +49,7 @@ class CCTPSpecific
     private $projet;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"}, inversedBy="cctpSpecific")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"})
      */
     private $fichier;
 

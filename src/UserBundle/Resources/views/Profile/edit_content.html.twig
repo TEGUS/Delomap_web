@@ -1,0 +1,73 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<h3 class="page-header">Edition du compte</h3>
+
+<div class="row">
+    <div class="col-md-8">
+        {{ form_start(form) }}
+
+        <div class="row clearfix">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
+                <label for="username">{{ form_label(form.username, 'Pseudo *') }}</label>
+                {{ form_errors(form.username) }}
+            </div>
+
+            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                <div class="form-group">
+                    <div class="form-line">
+                        {{ form_widget(form.username, { 'attr' : { 'class' : 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
+                <label for="email">{{ form_label(form.email, 'Email *') }}</label>
+                {{ form_errors(form.email) }}
+            </div>
+
+            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                <div class="form-group">
+                    <div class="form-line">
+                        {{ form_widget(form.email, { 'attr' : { 'class' : 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 ">
+                <label for="current_password">{{ form_label(form.current_password, 'Mot de passe actuel *') }}</label>
+                {{ form_errors(form.current_password) }}
+            </div>
+
+            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                <div class="form-group">
+                    <div class="form-line">
+                        {{ form_widget(form.current_password, { 'attr' : { 'class' : 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+
+        <div class="form-group">
+            <input type="submit" value="{{ 'profile.edit.submit'|trans }}" class="btn btn-primary"/>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label>Photo de profil</label>
+                <input type="file" accept="images/*"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary">Mettre à jour</button>
+            </div>
+        </form>
+    </div>
+</div>
