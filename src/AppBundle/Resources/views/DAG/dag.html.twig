@@ -243,7 +243,9 @@
             }
 
             //Exportable table
-            table_tp = $('#table-document-genere').DataTable({
+            
+            table_dag.destroy();
+            table_dag = $('#table-document-genere').DataTable({
                 "language": {
                     "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
                     buttons: {
@@ -353,7 +355,7 @@
                             if (result.data) {
                                 swal("Réussi!", "DAG supprimée avec succès", "success");
 
-                                table_tp.ajax.reload();
+                                table_dag.ajax.reload();
                             } else {
                                 swal("Erreur!", "Erreur lors de la suppression du DAG", "error");
                             }
@@ -423,7 +425,7 @@
                                 $('#block-table-document-genere').removeClass('hidden');
                                 swal("Réussi!", msg_reussite, "success");
 
-                                table_tp.ajax.reload();
+                                table_dag.ajax.reload();
                             } else {
                                 swal("Erreur!", msg_echec, "error");
                             }
@@ -461,6 +463,7 @@
                 console.log(id)
 
                 //Exportable table Fichiers
+                table_fichier.destroy();
                 table_fichier = $('#table-fichiers').DataTable({
                     "language": {
                         "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
@@ -566,7 +569,7 @@
                                 $('#block-table-document-genere').removeClass('hidden');
                                 swal("Réussi!", msg_reussite, "success");
 
-                                table_tp.ajax.reload();
+                                table_dag.ajax.reload();
                             } else {
                                 swal("Erreur!", msg_echec, "error");
                             }
