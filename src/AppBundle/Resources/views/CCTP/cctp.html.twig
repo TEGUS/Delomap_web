@@ -93,6 +93,87 @@
                 </div>
             </div>
             <!-- #END# Add Fichier -->
+
+            {% if projet != null %}
+
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>
+                            Liste des CCTP
+                        </h2>
+                    </div>
+                    <!-- Table des documents à générer -->
+                    <div id="block-table-cctp" class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h2 class="col-xs-4">
+                                        Liste des CCTP
+                                    </h2>
+                                </div>
+                                <div class="body">
+                                    <div class="table-responsive">
+                                        <table id="table-cctp"
+                                               class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                            <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Service</th>
+                                                <th>Fichier</th>
+                                                <th>Date Creation</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Service</th>
+                                                <th>Fichier</th>
+                                                <th>Date Creation</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Table des DAG -->
+                </div>
+
+            {% endif %}
         </div>
     </section>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            //Exportable table
+            {% if projet != null %}
+                table_cctp = $('#table-cctp').DataTable({
+                    "language": {
+                        "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
+                        buttons: {
+                            copy: 'Copier',
+                            print: 'Imprimer'
+                        }
+                    },
+                    "ajax": {
+                        "url": Routing.generate('list_cctp_specific_of_projet', {'projet': {{ projet.id }}),
+                        "type": "POST"
+                    },
+                    dom: 'Bfrtip',
+                    responsive: true,
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+
+                table_cctp.ajax.reload();
+            {% endif %}
+        });
+    </script>
 {% endblock %}

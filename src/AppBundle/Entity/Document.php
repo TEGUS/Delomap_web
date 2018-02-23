@@ -76,7 +76,7 @@ class Document
     public function __construct()
     {
         $this->dateCreation = new \DateTime('now');
-//        $this->dateSave = new \DateTime('now');
+        $this->dateSave = new \DateTime('now');
 //        $this->dateUpload = new \DateTime('now');
     }
 
