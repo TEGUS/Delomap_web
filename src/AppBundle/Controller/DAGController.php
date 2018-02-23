@@ -82,9 +82,11 @@ class DAGController extends Controller
             $temp[] = $sample_data->getNom();
 
             $temp[] = '
-                <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
-                <span class="space-button"></span>
+                <!--<a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
+                <span class="space-button"></span>-->
                 <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+                <span class="space-button"></span>
+                <a href="#" class="view" title="Visualiser le document"><i class="fa fa-eye fa-lg"></i></a>
             ';
 
             $datas[] = $temp;
@@ -180,15 +182,12 @@ class DAGController extends Controller
     }
 
     /**
-     * @Route("/api/dag/{dag}/remove/fichier", options = { "expose" = true }, name="update_dag_remove_fichier")
+     * @Route("/api/dag/remove/fichier/{fichier}", options = { "expose" = true }, name="update_dag_remove_fichier")
      */
-    public function updateDagRemoveFichierAction(Request $request, DAG $dag)
+    public function updateDagRemoveFichierAction(Fichier $fichier)
     {
-        $fichier = $request->request->get('fichier');;
-        $dag->removeFichier($this->getRepository('Fichier')->find($fichier));
-
         $em = $this->getEm();
-        $em->merge($dag);
+        $em->remove($fichier);
         $em->flush();
 
         return new JsonResponse([

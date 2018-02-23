@@ -55,6 +55,11 @@ class Document
     private $dag;
 
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"})
+     */
+    private $fichier;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
@@ -64,6 +69,8 @@ class Document
     public function __construct()
     {
         $this->dateCreation = new \DateTime('now');
+        $this->dateSave = new \DateTime('now');
+        $this->dateUpload = new \DateTime('now');
     }
 
     /**
@@ -218,5 +225,29 @@ class Document
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * Set fichier
+     *
+     * @param \AppBundle\Entity\Fichier $fichier
+     *
+     * @return Document
+     */
+    public function setFichier(\AppBundle\Entity\Fichier $fichier = null)
+    {
+        $this->fichier = $fichier;
+
+        return $this;
+    }
+
+    /**
+     * Get fichier
+     *
+     * @return \AppBundle\Entity\Fichier
+     */
+    public function getFichier()
+    {
+        return $this->fichier;
     }
 }
