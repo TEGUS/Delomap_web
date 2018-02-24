@@ -225,13 +225,12 @@ $(function () {
                 $('#list_docs').selectpicker('refresh');
 
                 //click sur ajout document
-                $('#modal-procedure-doc .add').click( function() {
+                $('#modal-procedure-doc button.add').click( function() {
                     
                     var idproc = id;
                     var iddag = $('#list_docs').val();
                     var nomdag = $("#list_docs option:selected" ).text();
-                    //console.log(idproc);
-                    //console.log(iddag);
+                    
                     $.ajax({
                         'type': 'POST',
                         'url': Routing.generate('update_proc_add_dag', { 'proc': idproc }),
@@ -262,9 +261,11 @@ $(function () {
                              });
                         },
                         'beforeSend': function() {
+                            $('#modal-procedure-doc button.add').prop('disabled', true);
                             $('#modal-procedure-doc button.add i').removeClass('hidden');
                         },
                         'complete': function() {
+                            $('#modal-procedure-doc button.add').prop('disabled', false);
                             $('#modal-procedure-doc button.add i').addClass('hidden');
                         }
                     });
@@ -337,6 +338,7 @@ $(function () {
     //fermeture du modal d'ajout de documents a la procedure
     $('#modal-procedure-doc .close_btn').click( function() {
         table_proc.ajax.reload();
+        $('#modal-procedure-doc').modal('hide');
     });
 
     
