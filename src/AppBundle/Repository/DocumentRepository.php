@@ -31,7 +31,19 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
     public function findByProjet($id_projet)
     {
         $qb = $this->createQueryBuilder('doc')
+            ->select([
+                'doc.id',
+                'dag.libelle',
+                'doc.dateUpload',
+                'doc.dateSignature',
+                'doc.dateSave',
+//                'fichierModifie.nom',
+//                'fichierSigne.nom',
+            ])
             ->join('doc.projet', 'projet')
+            ->join('doc.dag', 'dag')
+//            ->join('doc.fichierModifie', 'fichierModifie')
+//            ->join('doc.fichierSigne', 'fichierSigne')
             ->where('projet.id = :id')
             ->setParameter('id', $id_projet)
             ->getQuery();

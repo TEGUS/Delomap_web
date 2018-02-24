@@ -55,6 +55,12 @@ abstract class User extends BaseUser
     private $list_roles;
 
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $picture;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
@@ -206,5 +212,53 @@ abstract class User extends BaseUser
     public function getListRoles()
     {
         return $this->list_roles;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return User
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param \AppBundle\Entity\Fichier $picture
+     *
+     * @return User
+     */
+    public function setPicture(\AppBundle\Entity\Fichier $picture = null)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \AppBundle\Entity\Fichier
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 }

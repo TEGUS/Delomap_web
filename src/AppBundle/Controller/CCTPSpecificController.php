@@ -22,37 +22,6 @@ class CCTPSpecificController extends Controller
     }
 
     /**
-     * @Route("/api/cctp_specifics_specifics", options = { "expose" = true }, name="list_cctp_specific")
-     */
-    public function listCCTPSpecificAction()
-    {
-        $cctp_specifics_specifics = $this->getRepository()->listAll();
-        $datas = [];
-
-        foreach ($cctp_specifics_specifics as $sample_data) {
-            $temp = [];
-            $temp[] = $sample_data->getId();
-            $temp[] = $sample_data->getLibelle();
-            $temp[] = $sample_data->getDescription();
-            $temp[] = $sample_data->getTp()->getLibelle();
-            $temp[] = '
-                <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
-                <span class="space-button"></span>
-                <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
-            ';
-
-            $datas[] = $temp;
-        }
-
-        return new JsonResponse([
-            "draw" => 1,
-            "recordsTotal" => count($datas),
-            "recordsFiltered" => count($datas),
-            "data" => $datas
-        ]);
-    }
-
-    /**
      * @Route("/api/projet/{projet}/cctp_specifics_specifics", options = { "expose" = true }, name="list_cctp_specific_of_projet")
      */
     public function listProjetCCTPSpecificAction($projet)

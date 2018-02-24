@@ -6,4 +6,10 @@
 	</h3>
     <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
     <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+
+    {% if app.user.name != null %}
+		<p>Nom: {{ user.name }}</p>
+		<p>Prénom: {{ user.surname }}</p>
+		<p>Adresse: {{ user.adresse }}</p>
+    {% endif %}
 </div>
