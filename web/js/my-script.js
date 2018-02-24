@@ -183,8 +183,8 @@ $(function () {
                 $('#list_procs').selectpicker('refresh');
 
                 //click sur ajout procedure
-                $('#modal-tp-proc .add').click( function() {
-                    
+                $('#modal-tp-proc button.add').click( function() {
+                    console.log('entree');
                     var idtp = id;
                     var idproc = $('#list_procs').val();
                     var nomproc = $("#list_procs option:selected" ).text();
@@ -198,6 +198,7 @@ $(function () {
                         'dataType': 'JSON',
                         'success': function(result) {
                             //
+                    console.log('oui');
                             if (result.data === true) {
                                 $('#table-prestation-procedure tbody').append('<tr><td>'+idproc+'</td><td>'+nomproc+'</td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>');
                             } else {
@@ -211,6 +212,7 @@ $(function () {
                         },
                         'error': function() {
                             //
+                    console.log('non');
                             swal({
                                 title: "Erreur!",
                                 text: "Verifiez si la procedure n'existe pas deja dans le tableau",
@@ -219,9 +221,11 @@ $(function () {
                              });
                         },
                         'beforeSend': function() {
+                            $('#modal-tp-proc button.add').prop('disabled', true);
                             $('#modal-tp-proc button.add i').removeClass('hidden');
                         },
                         'complete': function() {
+                            $('#modal-tp-proc button.add').prop('disabled', false);
                             $('#modal-tp-proc button.add i').addClass('hidden');
                         }
                     });
@@ -295,6 +299,7 @@ $(function () {
     //fermeture du modal d'ajout de la procedure au type de prestation
     $('#modal-tp-proc .close_btn').click( function() {
         table_tp.ajax.reload();
+        $('#modal-tp-proc').modal('hide');
     });
 
     //click sur le bouton annuler TP
