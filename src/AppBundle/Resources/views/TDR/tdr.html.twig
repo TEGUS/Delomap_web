@@ -10,8 +10,8 @@
                 </h2>
             </div>
 
-            <!-- Add Fichier -->
-            <div id="block-form-add-fichie" class="row clearfix">
+            <!-- Add TDR -->
+            <div id="block-form-add-tdr" class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
@@ -92,7 +92,88 @@
                     </div>
                 </div>
             </div>
-            <!-- #END# Add Fichier -->
+            <!-- #END# Add TDR -->
+
+            {% if projet != null %}
+                <input type="text" name="id" id="id_projet" value="{{ projet.id }}" class="hidden">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>
+                            Liste des CCTP du projet [ {{ projet.libelle }} ]
+                        </h2>
+                    </div>
+                    <!-- Table des TDR -->
+                    <div id="block-table-tdr" class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h2 class="col-xs-4">
+                                        Liste des CCTP
+                                    </h2>
+                                </div>
+                                <div class="body">
+                                    <div class="table-responsive">
+                                        <table id="table-tdr"
+                                               class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                            <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Service</th>
+                                                <th>Fichier</th>
+                                                <th>Date Creation</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Service</th>
+                                                <th>Fichier</th>
+                                                <th>Date Creation</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Table des TDR -->
+                </div>
+            {% endif %}
         </div>
     </section>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            //Exportable table
+            var id = $('#id_projet').val();
+            console.log(id);
+
+            table_tdr_Sp = $('#table-tdr').DataTable({
+                "language": {
+                    "url": "../plugins/jquery-datatable/i18n/French.json",
+                    buttons: {
+                        copy: 'Copier',
+                        print: 'Imprimer'
+                    }
+                },
+                "ajax": {
+                    "url": Routing.generate('list_tdr_specific_of_projet', {'projet': id }),
+                    "type": "GET"
+                },
+                dom: 'Bfrtip',
+                responsive: true,
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+
+            table_tdr_Sp.ajax.reload();
+        });
+    </script>
 {% endblock %}

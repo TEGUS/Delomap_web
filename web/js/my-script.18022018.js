@@ -15,7 +15,7 @@ $(function () {
     //Exportable table
     table_tp = $('#table-type-prestation').DataTable({
         "language": {
-            "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
+            "url": "../plugins/jquery-datatable/i18n/French.json",
             buttons: {
                 copy: 'Copier',
                 print: 'Imprimer'

@@ -844,19 +844,6 @@
       "methods": [],
       "schemes": []
     },
-    "list_datatable_tdrs": {
-      "tokens": [
-        [
-          "text",
-          "\/api\/datatable\/tdrs"
-        ]
-      ],
-      "defaults": [],
-      "requirements": [],
-      "hosttokens": [],
-      "methods": [],
-      "schemes": []
-    },
     "find_all_tdrs_specifics": {
       "tokens": [
         [

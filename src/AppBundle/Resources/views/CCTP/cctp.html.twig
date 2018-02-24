@@ -10,8 +10,8 @@
                 </h2>
             </div>
 
-            <!-- Add Fichier -->
-            <div id="block-form-add-fichie" class="row clearfix">
+            <!-- Add CCTP -->
+            <div id="block-form-add-cctp" class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
@@ -92,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <!-- #END# Add Fichier -->
+            <!-- #END# Add CCTP -->
 
             {% if projet != null %}
                 <input type="text" name="id" id="id_projet" value="{{ projet.id }}" class="hidden">
@@ -102,7 +102,7 @@
                             Liste des CCTP du projet [ {{ projet.libelle }} ]
                         </h2>
                     </div>
-                    <!-- Table des documents à générer -->
+                    <!-- Table des CCTP -->
                     <div id="block-table-cctp" class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="card">
@@ -139,9 +139,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- #END# Table des DAG -->
+                    <!-- #END# Table des CCTP -->
                 </div>
-
             {% endif %}
         </div>
     </section>
@@ -154,10 +153,10 @@
             //Exportable table
                 var id = $('#id_projet').val();
                 console.log(id);
-                
-                table_cctp = $('#table-cctp').DataTable({
+
+                table_cctp_Sp = $('#table-cctp').DataTable({
                     "language": {
-                        "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
+                        "url": "../plugins/jquery-datatable/i18n/French.json",
                         buttons: {
                             copy: 'Copier',
                             print: 'Imprimer'
@@ -174,7 +173,7 @@
                     ]
                 });
 
-                table_cctp.ajax.reload();
+            table_cctp_Sp.ajax.reload();
         });
     </script>
 {% endblock %}

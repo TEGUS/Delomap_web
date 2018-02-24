@@ -66,3 +66,20 @@
         </div>
     </section>
 {% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            if ($('.datepicker').length) {
+                $('.datepicker').bootstrapMaterialDatePicker({
+                    format: 'DD MMMM YYYY',
+                    clearButton: true,
+                    weekStart: 1,
+                    time: false,
+                    lang: 'fr'
+                });
+            }
+        });
+    </script>
+{% endblock %}

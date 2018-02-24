@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Document
@@ -55,12 +56,14 @@ class Document
     private $dag;
 
     /**
+     * @Expose
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $fichierSigne;
 
     /**
+     * @Expose
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
@@ -68,7 +71,6 @@ class Document
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
      */
     private $dateCreation;

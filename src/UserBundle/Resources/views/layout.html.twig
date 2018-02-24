@@ -23,29 +23,57 @@
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="row">
                                                 <div class="col-md-3">
-
                                                     {% block fos_user_content_menu %}
-                                                        <div class="text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                                                            <img src="{{ asset('images/user.png') }}" class="img-responsive" style="border-radius: 50px; height: 200px; width: 200px;">
-                                                            <h3>{{ app.user.username }}</h3>
+                                                        <div class="text-center"
+                                                             style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                                            {% if app.user.picture != null %}
+                                                                <img src="{{ asset('uploads/docs/'~app.user.picture.nom) }}"
+                                                                     class="img-responsive"
+                                                                     style="border-radius: 50%; height: 200px; width: 200px;">
+                                                            {% else %}
+                                                                <img src="{{ asset('images/user.png') }}"
+                                                                     class="img-responsive"
+                                                                     style="border-radius: 50%; height: 200px; width: 200px;">
+                                                            {% endif %}
+
+                                                            {% if app.user.name != null %}
+                                                                <h3>{{ app.user.name }} {{ app.user.surname }}</h3>
+                                                            {% else %}
+                                                                <h3>{{ app.user.username }}</h3>
+                                                            {% endif %}
+
                                                             <h5>{{ app.user.email }}</h5>
+                                                            <h6>
+                                                                <a class="{% if app.request.get('_route') == 'update_user_add_picture' %}active{% endif %}"
+                                                                   href="{{ path('update_user_add_picture') }}">Mettre à
+                                                                    jour la photo de profil</a>
+                                                            </h6>
                                                         </div>
 
                                                         <div class="list-group">
-                                                            <a href="{{ path('fos_user_profile_show') }}" class="list-group-item {% if app.request.get('_route') == 'fos_user_profile_show' %} active{% endif %}"> Mon compte </a>
-                                                            <a href="{{ path('fos_user_profile_edit') }}" class="list-group-item {% if app.request.get('_route') == 'fos_user_profile_edit' %} active{% endif %}">
+                                                            <a href="{{ path('fos_user_profile_show') }}"
+                                                               class="list-group-item {% if app.request.get('_route') == 'fos_user_profile_show' %} active{% endif %}">
+                                                                Mon compte </a>
+                                                            <a href="{{ path('update_user_info') }}"
+                                                               class="list-group-item {% if app.request.get('_route') == 'update_user_info' %} active{% endif %}">
+                                                                <i class="fa fa-user"></i>
+                                                                Mes Infos
+                                                            </a>
+                                                            <a href="{{ path('fos_user_profile_edit') }}"
+                                                               class="list-group-item {% if app.request.get('_route') == 'fos_user_profile_edit' %} active{% endif %}">
                                                                 <i class="fa fa-edit"></i>
                                                                 Modifier mon compte
                                                             </a>
-                                                            <a href="{{ path('fos_user_change_password') }}" class="list-group-item {% if app.request.get('_route') == 'fos_user_change_password' %} active{% endif %}">
+                                                            <a href="{{ path('fos_user_change_password') }}"
+                                                               class="list-group-item {% if app.request.get('_route') == 'fos_user_change_password' %} active{% endif %}">
                                                                 <i class="fa fa-lock"></i>
                                                                 Changer le mot de passe
                                                             </a>
                                                         </div>
 
                                                         {#<div class="">#}
-                                                            {#<i class="fa fa-remove"></i>#}
-                                                            {#<a href="#" class="text-danger">Supprimer mon compte</a>#}
+                                                        {#<i class="fa fa-remove"></i>#}
+                                                        {#<a href="#" class="text-danger">Supprimer mon compte</a>#}
                                                         {#</div>#}
 
                                                     {% endblock fos_user_content_menu %}
@@ -83,4 +111,8 @@
     {% endif %} #}
 
 
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
 {% endblock %}
