@@ -101,9 +101,9 @@ class ProjetController extends Controller
     }
 
      /**
-     * @Route("/api/liste/projets", options = { "expose" = true }, name="list_datatable_projets")
+     * @Route("/api/liste/projets", options = { "expose" = true }, name="list_projets")
      */
-    public function listProjetsAction()
+    public function listProjetsAction2()
     {
         $projets = $this->getRepository()->listAll();
         $datas = [];
