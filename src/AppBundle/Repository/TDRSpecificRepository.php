@@ -17,4 +17,15 @@ class TDRSpecificRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getResult();
     }
+
+    public function listAllByProjet($id_projet)
+    {
+        $qb = $this->createQueryBuilder('tdr_s')
+            ->join('tdr_s.projet', 'projet')
+            ->where('projet.id = :id')
+            ->setParameter('id', $id_projet)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
 }

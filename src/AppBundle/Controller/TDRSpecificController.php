@@ -22,20 +22,19 @@ class TDRSpecificController extends Controller
     }
 
     /**
-     * @Route("/api/datatable/tdrs", options = { "expose" = true }, name="list_datatable_tdrs")
+     * @Route("/api/projet/{projet}/tdr_specifics_specifics", options = { "expose" = true }, name="list_tdr_specific_of_projet")
      */
-    public function listTDRsAction()
+    public function listProjetCCTPSpecificAction($projet)
     {
-        $tdrs = $this->getRepository()->listAll();
+        $tdr_specifics_specifics = $this->getRepository()->listAllByProjet($projet);
         $datas = [];
 
-        foreach ($tdrs as $sample_data) {
+        foreach ($tdr_specifics_specifics as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
-            $temp[] = $sample_data->getLibelle();
-            $temp[] = $sample_data->getDescription();
-            $temp[] = $sample_data->getTp()->getId();
-            $temp[] = $sample_data->getTp()->getLibelle();
+            $temp[] = $sample_data->getService();
+//            $temp[] = $sample_data->getFichier()->getNom();
+//            $temp[] = $this->my_get_date($sample_data->getDateCreation());
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
