@@ -4,7 +4,7 @@ $(function () {
     //Exportation des procedures dans le tableau
     table_proc = $('#table-procedure').DataTable({
         "language": {
-            "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
+            "url": "../plugins/jquery-datatable/i18n/French.json",
             buttons: {
                 copy: 'Copier',
                 print: 'Imprimer'
@@ -344,7 +344,7 @@ $(function () {
     //Exportation des DAG dans le tableau
     /*$('#table-document-genere').DataTable({
         "language": {
-            "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
+            "url": "../plugins/jquery-datatable/i18n/French.json",
             buttons: {
                 copy: 'Copier',
                 print: 'Imprimer'

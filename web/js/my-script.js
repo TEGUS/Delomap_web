@@ -16,7 +16,7 @@ $(function () {
     //Exportable table
     table_tp = $('#table-type-prestation').DataTable({
         "language": {
-            "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
+            "url": "../plugins/jquery-datatable/i18n/French.json",
             buttons: {
                 copy: 'Copier',
                 print: 'Imprimer'
@@ -713,7 +713,7 @@ $(function () {
     if ($('#table-projet').length) {
         table_projet = $('#table-projet').DataTable({
             "language": {
-                "url": Routing.getBaseUrl() + "/plugins/jquery-datatable/i18n/French.json",
+                "url": "../plugins/jquery-datatable/i18n/French.json",
                 buttons: {
                     copy: 'Copier',
                     print: 'Imprimer'
@@ -738,7 +738,7 @@ $(function () {
     }
 
 
-    //ouvrir la fenêtre de gestion des projets
+    //ouvrir la fenêtre de gestion des documents projets
     $('#table-projet').on("click", ".docs", function () {
         var id;
         var nom;
@@ -758,10 +758,43 @@ $(function () {
         $('#block-gestion-docs h2 span').html(nom);
         $('#id_projet_pour_doc').val(id);
 
+        $.ajax({
+            type: "POST",
+            url: Routing.generate('list_documents_projet', { 'projet': id }),
+            dataType: "JSON",
+            success: function(result) {
+                //console.log(result);
+                var str = "";
+                for (key in result.data) {
+                    str += '<tr>';
+                    str += '<td>'+result.data[key]["id"]+'</td>';
+                    str += '<td>'+result.data[key]["libelle"]+'</td>';
+                    str += '<td><span class="label label-danger">en attente</span></td>';
+                    str += '<td><a href="../uploads/docs/5a906e18cda81_NYAMA KANEN SARL (Statuts).docx" target="_blank">test.jpeg</a></td>';
+                    str += '<td></td>';
+                    str += '<td></td>';
+                    str += '<td>';
+                    str += '<a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Charger le document modifié"><i class="material-icons">file_upload</i></a>';
+                    str += '<span class="space-button2"></span>';
+                    str += '<a href="'+Routing.getBaseUrl()+'/new/document" type="button" class="btn btn-success btn-circle waves-effect waves-circle waves-float remove" title="Charger le document signé"><i class="material-icons">file_upload</i></a>';
+                    str += '<span class="space-button2"></span>';
+                    str += '<a href="mailto:user@example.com?subject=Transfert%20des%20docs&body=bien%20vouloir%20accuser%20reception%20de%20ces%20documents" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float send" title="Envoyer mail"><i class="material-icons">send</i></a>';
+                    str += '</td></tr>';
+                }
+                $('#table-gestion-docs tbody').html(str);
+            },
+            error: function() {
+                $('#table-gestion-docs tbody').html('');
+            },
+            beforeSend: function() {
+                $('#table-gestion-docs tbody').html('<tr><td colspan="7">Chargement en cours...</td></tr>');
+            }
+        });
+
         $('#block-gestion-docs').removeClass('hidden');
         $('#block-table-projet').addClass('hidden');
     });
-    //fermer la fenêtre de gestion des projets
+    //fermer la fenêtre de gestion des documents du projets
     $('#block-gestion-docs button.cancel').click(function() {
         $('#block-gestion-docs').addClass('hidden');
         $('#block-table-projet').removeClass('hidden');
