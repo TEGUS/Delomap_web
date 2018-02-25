@@ -1,6 +1,7 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block body %}
+    {{ parent() }}
 
     <section class="content">
         <div class="container-fluid">
@@ -79,4 +80,13 @@
             <!-- #END# Add Fichier -->
         </div>
     </section>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function () {
+
+        });
+    </script>
 {% endblock %}

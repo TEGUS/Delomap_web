@@ -126,14 +126,14 @@
                     </ul>
                 </li>
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <li>
+                    <li {% if app.request.get('_route') == 'index_manage_user' %} class="active" {% endif %}>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">group</i>
                             <span>GESTION DES UTILISATEURS</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
-                                <a href="pages/tables/normal-tables.html">Gestion des utilisateurs</a>
+                            <li {% if app.request.get('_route') == 'index_manage_user' %} class="active" {% endif %}>
+                                <a href="{{ path('index_manage_user') }}">Utilisateurs</a>
                             </li>
                             <li>
                                 <a href="pages/tables/jquery-datatable.html">Gestion des profils</a>

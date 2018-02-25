@@ -4,3 +4,12 @@
     {{ parent() }}
     
 {% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function () {
+
+        });
+    </script>
+{% endblock %}
