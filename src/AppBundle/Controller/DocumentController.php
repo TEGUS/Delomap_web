@@ -144,8 +144,36 @@ class DocumentController extends Controller
      */
     public function listDocumentByProjetAction($projet)
     {
+        $documents = $this->getRepository()->findByProjet2($projet);
+        $datas = [];
+        foreach ($documents as $sample_data) {
+            $dag = $sample_data->getDag() === null ? null : $sample_data->getDag();
+            $fichierModifie = $sample_data->getFichierModifie() === null ? null : $sample_data->getFichierModifie();
+            $fichierSigne = $sample_data->getFichierSigne() === null ? null : $sample_data->getFichierSigne();
+            $doc_model = null;
+
+            if ($dag != null) {
+                $fichiers = $this->getRepository('Fichier')->findByDag($dag->getId());
+                $doc_model = count($fichiers) != 0 ? $fichiers[count($fichiers) - 1]->getNom() : null;
+            } else {
+                $doc_model = null;
+            }
+
+            $temp = [];
+            $temp[] = $sample_data->getId();
+            $temp[] = $dag === null ? null : $dag->getLibelle();
+            $temp[] = $doc_model;
+            $temp[] = $this->my_get_date($sample_data->getDateSignature());
+            $temp[] = $this->my_get_date($sample_data->getDateUpload());
+            $temp[] = $this->my_get_date($sample_data->getDateSave());
+            $temp[] = $this->my_get_date($sample_data->getDateCreation());
+            $temp[] = $fichierModifie === null ? null : $fichierModifie->getNom();
+            $temp[] = $fichierSigne === null ? null : $fichierSigne->getNom();
+            $datas[] = $temp;
+        }
+
         return new JsonResponse([
-            "data" => $this->getRepository()->findByProjet($projet)
+            "data" => $datas
         ]);
     }
 
@@ -154,8 +182,8 @@ class DocumentController extends Controller
      */
     public function addDocumentAction(Request $request)
     {
-        $datesignature= $request->request->get('datesignature');
-        $dateupload= $request->request->get('dateupload');
+        $datesignature = $request->request->get('datesignature');
+        $dateupload = $request->request->get('dateupload');
 
         $document = new Document();
         $document->setDatesignature($datesignature);
@@ -221,5 +249,10 @@ class DocumentController extends Controller
     private function my_get_date($date)
     {
         return $date === null ? null : $date->format('Y-m-d');
+    }
+
+    private function getValueOfElement($element, $getValue)
+    {
+        return $element === null ? null : $getValue;
     }
 }
