@@ -126,6 +126,37 @@ class ManageUserController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/api/user/{user}/roles", options = { "expose" = true }, name="list_role_user")
+     */
+    public function userRoleAction(Request $request, User $user)
+    {
+        $roles = $user->getRoles();
+        $datas = [];
+
+        foreach ($roles as $sample_data) {
+            $temp = [];
+            $temp[] = $sample_data;
+
+            $temp[] = $sample_data != 'ROLE_USER' ?
+                '
+                <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+                <span class="space-button"></span>
+                '
+                :
+                '';
+
+            $datas[] = $temp;
+        }
+
+        return new JsonResponse([
+            "draw" => 1,
+            "recordsTotal" => count($datas),
+            "recordsFiltered" => count($datas),
+            "data" => $datas
+        ]);
+    }
+
     private function my_get_date($date)
     {
         return $date === null ? null : $date->format('Y-m-d');

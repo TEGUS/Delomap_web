@@ -174,7 +174,7 @@
                             <h4 class="modal-title">Liste des rôles</h4>
                         </div>
                         <div class="modal-body">
-                            <div>
+                            <div class="row">
                                 <select id="list_roles" data-live-search="true">
                                     <option value="ROLE_GUEST" selected>ROLE_GUEST</option>
                                     <option value="ROLE_STAFF">ROLE_STAFF</option>
@@ -183,18 +183,19 @@
                                             class="fa fa-spinner fa-spin hidden"></i> Ajouter
                                 </button>
                             </div>
-                            <table id="table-procedure-documents"
-                                   class="table table-bordered table-striped table-hover dataTable js-exportable">
-                                <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Role</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                            <div class="row">
+                                <table id="table-role"
+                                       class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                    <thead>
+                                    <tr>
+                                        <th>Role</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-link waves-effect close_btn" data-dismiss="modal">
@@ -432,6 +433,25 @@
                 });
 
                 $('#modal-role').modal('show');
+
+                table_role = $('#table-role').DataTable({
+                    "language": {
+                        "url": "../plugins/jquery-datatable/i18n/French.json",
+                        buttons: {
+                            copy: 'Copier',
+                            print: 'Imprimer'
+                        }
+                    },
+                    "ajax": {
+                        "url": Routing.generate('list_role_user', {'user' : id}),
+                        "type": "GET"
+                    },
+                    dom: 'Bfrtip',
+                    responsive: true,
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
             });
 
 
