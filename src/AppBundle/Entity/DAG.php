@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * DAG
@@ -60,6 +61,7 @@ class DAG
     private $procs;
 
     /**
+     * @Expose
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Fichier", mappedBy="dag")
      */
     private $fichiers;

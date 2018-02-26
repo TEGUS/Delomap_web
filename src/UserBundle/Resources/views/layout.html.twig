@@ -2,6 +2,7 @@
 
 
 {% block body %}
+    {#{{ parent() }}#}
 
     <section class="content">
         <div class="container-fluid">
@@ -115,4 +116,9 @@
 
 {% block javascript %}
     {{ parent() }}
+    <script>
+        $(function () {
+
+        });
+    </script>
 {% endblock %}

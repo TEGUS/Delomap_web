@@ -1,0 +1,460 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>
+                    PANEL GESTION DES UTILISATEURS
+                </h2>
+            </div>
+
+            <!-- Table des User -->
+            <div id="block-table-user" class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="col-xs-4">
+                                Liste des utilisateurs
+                            </h2>
+                            <div class="col-xs-6 right-side">
+                                <button type="button" class="btn btn-primary waves-effect button-new">Nouveau</button>
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table id="table-user"
+                                       class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                    <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Pseudo</th>
+                                        <th>Email</th>
+                                        <th>Activé ?</th>
+                                        <th>Date Creation</th>
+                                        <th>Dernière date de connexion</th>
+                                        <th>Rôles</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Pseudo</th>
+                                        <th>Email</th>
+                                        <th>Activé ?</th>
+                                        <th>Date Creation</th>
+                                        <th>Rôles</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Table des User -->
+
+
+            <!-- Add User -->
+            <div id="block-form-add-user" class="row clearfix hidden">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Ajouter un Utilisateur
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <form id="form-user" class="form-horizontal">
+                                <input type="text" name="id" id="id_user" class="hidden">
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                        <label for="username">Nom d'utilisateur * </label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="username" id="username"
+                                                       class="form-control username"
+                                                       placeholder="Veuillez saisir le nom d'utilisateur" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                        <label for="email">Email * </label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="email" name="email" id="email" class="form-control email"
+                                                       placeholder="Veuillez saisir l'adresse email" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                        <label for="password">Mot de passe * </label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="password" name="password" id="password"
+                                                       class="form-control password"
+                                                       placeholder="Veuillez saisir le mot de passe" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                        <label for="type">Type * </label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select id="type" name="type" class="form-control show-tick">
+                                                    <option value="agent" selected>Agent</option>
+                                                    <option value="admin">Admin</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                        <label for="enabled">Activé ? * </label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select id="enabled" name="enabled"
+                                                        class="form-control enabled show-tick">
+                                                    <option value="true" selected>Oui</option>
+                                                    <option value="false">Non</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
+                                        <button type="button" class="btn btn-primary m-t-15 waves-effect save"><i
+                                                    class="fa fa-spinner fa-spin hidden"></i> Enregistrer
+                                        </button>
+                                        <button type="button" class="btn btn-default m-t-15 waves-effect cancel">
+                                            Annuler
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Add User -->
+
+            <!-- Add Role -->
+            <div class="modal fade" id="modal-role" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="role">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Liste des rôles</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <select id="list_roles" data-live-search="true">
+                                    <option value="ROLE_GUEST" selected>ROLE_GUEST</option>
+                                    <option value="ROLE_STAFF">ROLE_STAFF</option>
+                                </select>
+                                <button type="button" class="btn btn-link waves-effect btn-primary add"><i
+                                            class="fa fa-spinner fa-spin hidden"></i> Ajouter
+                                </button>
+                            </div>
+                            <div class="row">
+                                <table id="table-role"
+                                       class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                    <thead>
+                                    <tr>
+                                        <th>Role</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect close_btn" data-dismiss="modal">
+                                Fermer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Add Role -->
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            if ($('.datepicker').length) {
+                $('.datepicker').bootstrapMaterialDatePicker({
+                    format: 'DD MMMM YYYY',
+                    clearButton: true,
+                    weekStart: 1,
+                    time: false,
+                    lang: 'fr'
+                });
+            }
+
+            //Exportable table
+            var table_user;
+            table_user = $('#table-user').DataTable({
+                "language": {
+                    "url": "../plugins/jquery-datatable/i18n/French.json",
+                    buttons: {
+                        copy: 'Copier',
+                        print: 'Imprimer'
+                    }
+                },
+                "ajax": {
+                    "url": Routing.generate('list_datatable_users'),
+                    "type": "GET"
+                },
+                dom: 'Bfrtip',
+                responsive: true,
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+
+            //click sur le bouton nouveau
+            $('#block-table-user .button-new').click(function () {
+
+                $('#form-user input.username').val('');
+                $('#form-user input.email').val('');
+                $('#form-user input.password').val('');
+                $('#form-user input.type').val('agent');
+                $('#form-user input.enabled').val('true');
+
+                $('#block-table-user').addClass('hidden');
+                $('#block-form-add-user').removeClass('hidden');
+            });
+
+            //click sur le bouton annuler
+            $('#block-form-add-user .cancel').click(function () {
+                $('#block-form-add-user').addClass('hidden');
+                $('#block-table-user').removeClass('hidden');
+            });
+
+            //click sur le bouton Enregistrer
+            $('#block-form-add-user .save').click(function () {
+                if ($("#form-user").valid()) {
+                    var id = $('#id_user').val();
+                    var url = "";
+                    var msg_reussite = "";
+                    var msg_echec = "";
+                    if (id) {
+                        url = Routing.generate('update_user', {'user': id});
+                        msg_reussite = "Utilisateur modifié avec succès";
+                        msg_echec = "Problème de modification de l'utilisateur";
+                    } else {
+                        url = Routing.generate('add_user');
+                        msg_reussite = "Utilisateur enregistrée avec succès";
+                        msg_echec = "Problème d'enregistrement de l'utilisateur";
+                    }
+
+                    $.ajax({
+                        'type': 'POST',
+                        'url': url,
+                        'dataType': 'JSON',
+                        'data': {
+                            username: $('#username').val(),
+                            email: $('#email').val(),
+                            password: $('#password').val(),
+                            type: $('#type').val(),
+                            enabled: $('#enabled').val()
+                        },
+                        'success': function (result) {
+                            if (result.data) {
+                                $('#block-form-add-user').addClass('hidden');
+                                $('#block-table-user').removeClass('hidden');
+                                swal("Réussi!", msg_reussite, "success");
+
+                                table_user.ajax.reload();
+                            } else {
+                                swal("Erreur!", msg_echec, "error");
+                            }
+                        },
+                        'error': function () {
+                            swal("Erreur!", msg_echec, "error");
+                        },
+                        'beforeSend': function () {
+                            $('#block-form-add-user .save i').removeClass('hidden');
+                        },
+                        'complete': function () {
+                            $('#block-form-add-user .save i').addClass('hidden');
+                        }
+                    });
+                }
+            });
+
+            //click sur le bouton Disabled
+            $('#table-user').on("click", ".setDissabled", function () {
+                var id;
+                var row = jQuery(this).closest('tr');
+
+                var i = 0;
+                row.find("td").each(function (cellIndex) {
+                    if (i === 0) {
+                        id = $(this).html();
+                    }
+                    i++;
+                });
+
+                swal({
+                    title: "Attention !",
+                    text: "Voulez-vous vraiment Désactiver cet utilisateur ? ",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Oui",
+                    cancelButtonText: "Non",
+                    closeOnConfirm: false
+                }, function () {
+
+                    $.ajax({
+                        'type': 'POST',
+                        'url': Routing.generate('enable_or_disable_user', {'user': id, 'bool': 0}),
+                        'dataType': 'JSON',
+                        'data': {},
+                        'success': function (result) {
+                            if (result.data) {
+                                swal("Réussi!", "Utilisateur désactivé avec succès", "success");
+
+                                table_user.ajax.reload();
+                            } else {
+                                swal("Erreur!", "Erreur lors de la désactivation de l'utilisateur", "error");
+                            }
+                        },
+                        'error': function () {
+                            swal("Erreur!", "Erreur lors de la désactivation de l'utilisateur", "error");
+                        },
+                        'beforeSend': function () {
+                            $('.sweet-alert button.confirm').html("<i class=\"fa fa-spinner fa-spin\"></i> Oui");
+                        },
+                        'complete': function () {
+                            $('.sweet-alert button.confirm').html("Oui");
+                        }
+                    });
+                });
+            });
+
+            //click sur le bouton Enabled
+            $('#table-user').on("click", ".setEnabled", function () {
+                var id;
+                var row = jQuery(this).closest('tr');
+
+                var i = 0;
+                row.find("td").each(function (cellIndex) {
+                    if (i === 0) {
+                        id = $(this).html();
+                    }
+                    i++;
+                });
+
+                swal({
+                    title: "Attention !",
+                    text: "Voulez-vous vraiment Activer cet utilisateur ? ",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Oui",
+                    cancelButtonText: "Non",
+                    closeOnConfirm: false
+                }, function () {
+
+                    $.ajax({
+                        'type': 'POST',
+                        'url': Routing.generate('enable_or_disable_user', {'user': id, 'bool': 1}),
+                        'dataType': 'JSON',
+                        'data': {},
+                        'success': function (result) {
+                            if (result.data) {
+                                swal("Réussi!", "Utilisateur activé avec succès", "success");
+
+                                table_user.ajax.reload();
+                            } else {
+                                swal("Erreur!", "Erreur lors de l'activation de l'utilisateur", "error");
+                            }
+                        },
+                        'error': function () {
+                            swal("Erreur!", "Erreur lors de l'activation de l'utilisateur", "error");
+                        },
+                        'beforeSend': function () {
+                            $('.sweet-alert button.confirm').html("<i class=\"fa fa-spinner fa-spin\"></i> Oui");
+                        },
+                        'complete': function () {
+                            $('.sweet-alert button.confirm').html("Oui");
+                        }
+                    });
+                });
+            });//click sur le bouton Enabled
+
+
+            //click sur le bouton profil
+            $('#table-user').on("click", ".profil", function () {
+                var id;
+                var row = jQuery(this).closest('tr');
+
+                var i = 0;
+                row.find("td").each(function (cellIndex) {
+                    if (i === 0) {
+                        id = $(this).html();
+                    }
+                    i++;
+                });
+
+                $('#modal-role').modal('show');
+
+                table_role = $('#table-role').DataTable({
+                    "language": {
+                        "url": "../plugins/jquery-datatable/i18n/French.json",
+                        buttons: {
+                            copy: 'Copier',
+                            print: 'Imprimer'
+                        }
+                    },
+                    "ajax": {
+                        "url": Routing.generate('list_role_user', {'user' : id}),
+                        "type": "GET"
+                    },
+                    dom: 'Bfrtip',
+                    responsive: true,
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            });
+
+
+        });
+    </script>
+{% endblock %}
