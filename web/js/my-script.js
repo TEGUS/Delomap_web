@@ -798,9 +798,9 @@ $(function () {
                     str += '<td>'+doc_signe+'</td>';
                     str += '<td>'+date_sign+'</td>';
                     str += '<td>';
-                    str += '<a href="'+Routing.getBaseUrl()+'/new/document/modifie/'+idproj_pour_doc+'/'+result.data[key][0]+'" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Charger le document modifié"><i class="material-icons">file_upload</i></a>';
+                    str += '<a href="'+Routing.getBaseUrl()+'/new/document/modifie/'+result.data[key][0]+'" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Charger le document modifié"><i class="material-icons">file_upload</i></a>';
                     str += '<span class="space-button2"></span>';
-                    str += '<a href="'+Routing.getBaseUrl()+'/new/document/signe/'+idproj_pour_doc+'/'+result.data[key][0]+'" type="button" class="btn btn-success btn-circle waves-effect waves-circle waves-float remove" title="Charger le document signé"><i class="material-icons">file_upload</i></a>';
+                    str += '<a href="'+Routing.getBaseUrl()+'/new/document/signe/'+result.data[key][0]+'" type="button" class="btn btn-success btn-circle waves-effect waves-circle waves-float remove" title="Charger le document signé"><i class="material-icons">file_upload</i></a>';
                     str += '<span class="space-button2"></span>';
                     str += '<a href="mailto:user@example.com?subject=Transfert%20des%20docs&body=bien%20vouloir%20accuser%20reception%20de%20ces%20documents" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float send" title="Envoyer mail"><i class="material-icons">send</i></a>';
                     str += '</td></tr>';

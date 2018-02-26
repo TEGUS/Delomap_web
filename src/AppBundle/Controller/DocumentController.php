@@ -57,13 +57,23 @@ class DocumentController extends Controller
     }
 
     /**
-     * @Route("/new/document/signe/{projet}/{dag}", name="new_document_signe")
+     * @Route("/new/document/signe/{document}", name="new_document_signe")
      */
-    public function newDocumentSigneAction(Request $request, Projet $projet, DAG $dag)
+    public function newDocumentSigneAction(Request $request, Document $document)
     {
+        /* $document = $this->getRepository()->findOneBy([
+            "projet" => $projet,
+            "dag" => $dag
+        ]); */
+
+        // $document = $projet;
+        /*
+        dump($document);
+        die();
+        
         $document = new Document();
         $document->setProjet($projet);
-        $document->setDag($dag);
+        $document->setDag($dag);*/
         $form = $this->createForm(DocumentSigneType::class, $document);
         $em = $this->getEm();
         $form->handleRequest($request);
@@ -71,6 +81,23 @@ class DocumentController extends Controller
             $document->setDateSave(new \DateTime('now'));
             $document->setDateUpload(new \DateTime('now'));
             $em->persist($document);
+
+            $projet = $document->getProjet();
+            $list_docs_projet = $this->getRepository()->findBy([
+                "projet" => $projet->getId()
+            ]);
+            $bool = true;
+            foreach($list_docs_projet as $p) {
+                if($p->getFichierSigne() == null) {
+                    $bool = false;
+                    return;
+                }
+            }
+            if ($bool) {
+                $projet->setStatutProccessus(4);
+                $em->merge($projet);
+            }
+
             $em->flush();
             return $this->redirect($this->generateUrl('index_projets'));
         }
@@ -82,13 +109,16 @@ class DocumentController extends Controller
     }
 
     /**
-     * @Route("/new/document/modifie/{projet}/{dag}", name="new_document_modifie")
+     * @Route("/new/document/modifie/{document}", name="new_document_modifie")
      */
-    public function newDocumentModifieAction(Request $request, Projet $projet, DAG $dag)
+    public function newDocumentModifieAction(Request $request, Document $document)
     {
-        $document = new Document();
-        $document->setProjet($projet);
-        $document->setDag($dag);
+        // $document = new Document();
+        // $document->setProjet($projet);
+        // $document->setDag($dag);
+
+        // $document = $projet;
+
         $form = $this->createForm(DocumentModifieType::class, $document);
         $em = $this->getEm();
         $form->handleRequest($request);
@@ -237,14 +267,16 @@ class DocumentController extends Controller
     /**
      * @Route("/api/find/document/{document}", options = { "expose" = true }, name="find_document")
      */
-    public function findDocumentAction(Request $request, $document)
+    public function findDocumentAction(Document $document)
     {
         $doc = $this->getRepository()->findById($document);
 
         return new JsonResponse([
-            "data" => $doc[0]->getFichier()->getNom(),
+            "data" => $doc[0]->getFichier()->getNom()
+            //"data" => $document->getFichier()->getNom(),
         ]);
     }
+
 
     private function my_get_date($date)
     {

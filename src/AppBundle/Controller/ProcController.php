@@ -43,7 +43,7 @@ class ProcController extends Controller
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
             $temp[] = $sample_data->getDescription();
-            $temp[] = json_encode($this->getRepository(DAG::class)->findDAGByIdProc($sample_data->getId()));
+            $temp[] = json_encode($this->getRepository(DAG::class)->findDAGByIdProc2($sample_data->getId()));
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>

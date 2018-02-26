@@ -28,6 +28,16 @@ class DocumentRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getResult();
     }
 
+    public function findById2($id_doc)
+    {
+        $qb = $this->createQueryBuilder('doc')
+            ->where('doc.id = :id')
+            ->setParameter('id', $id_doc)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
     public function findByProjet($id_projet)
     {
         $qb = $this->createQueryBuilder('doc')

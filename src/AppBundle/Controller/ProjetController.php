@@ -337,9 +337,11 @@ class ProjetController extends Controller
             <span class="space-button2"></span>';
         }
 
-        $buttons .= '
+        /* $buttons .= '
         <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float details" title="Visualiser le projet"><i class="material-icons">visibility</i></a>
-        <span class="space-button2"></span>
+        <span class="space-button2"></span>'; */
+
+        $buttons .= '
         <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float remove" title="Supprimer"><i class="material-icons">clear</i></a>
         ';
 
