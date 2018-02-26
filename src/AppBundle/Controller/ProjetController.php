@@ -16,53 +16,46 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class ProjetController extends Controller
-{
+class ProjetController extends Controller {
+
     //    Retoune User
-    public function getUser()
-    {
+    public function getUser() {
         return $this->get('security.token_storage')->getToken()->getUser();
     }
 
     /**
      * @Route("/projets", name="index_projets")
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         return $this->render('AppBundle:Projet:projet.html.twig');
     }
 
     /**
      * @Route("/fiche_suivi", name="index_fiche_suivi")
      */
-    public function indexAction3()
-    {
+    public function indexAction3() {
         return $this->render('AppBundle:suivi:suivi.html.twig');
     }
 
     /**
      * @Route("/journal_programmation", name="index_journal_programmation")
      */
-    public function indexAction2()
-    {
+    public function indexAction2() {
         return $this->render('AppBundle:JP:jp.html.twig');
     }
 
-    public function getRepository($entity = 'Projet')
-    {
+    public function getRepository($entity = 'Projet') {
         return $this->getEm()->getRepository("AppBundle:" . $entity);
     }
 
-    public function getEm()
-    {
+    public function getEm() {
         return $this->getDoctrine()->getManager();
     }
 
     /**
      * @Route("/api/datatable/projets", options = { "expose" = true }, name="list_datatable_projets")
      */
-    public function listProjetsAction()
-    {
+    public function listProjetsAction() {
         $projets = $this->getRepository()->listAll();
         $datas = [];
 
@@ -100,11 +93,10 @@ class ProjetController extends Controller
         ]);
     }
 
-     /**
-     * @Route("/api/liste/projets", options = { "expose" = true }, name="list_projets")
+    /**
+     * @Route("/api/journal/programmation", options = { "expose" = true }, name="datatable_journal_programmation")
      */
-    public function listProjetsAction2()
-    {
+    public function listProjetsAction2() {
         $projets = $this->getRepository()->listAll();
         $datas = [];
 
@@ -112,38 +104,35 @@ class ProjetController extends Controller
             $temp = [];
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
-            $temp[] = $sample_data->getDescription();
+            $temp[] = $sample_data->getTp()->getLibelle();
             $temp[] = $sample_data->getMontant();
+            $temp[] = $sample_data->getContractant();; // autorité contractante
+            $temp[] = $sample_data->getproc()->getLibelle();
             $temp[] = $this->my_get_date($sample_data->getDateLancement());
             $temp[] = $this->my_get_date($sample_data->getDateAttribution());
             $temp[] = $this->my_get_date($sample_data->getDateSignature());
             $temp[] = $this->my_get_date($sample_data->getDateDemarrage());
+            /*
             $temp[] = $this->my_get_date($sample_data->getDateReception());
             $temp[] = $sample_data->getMotif();
             $temp[] = $sample_data->getObservation();
-            $temp[] = $sample_data->getContractant();
-            $temp[] = $sample_data->getUser()->getUsername();
-            $temp[] = $sample_data->getTp()->getId();
-            $temp[] = $sample_data->getTp()->getLibelle();
-            $temp[] = $sample_data->getproc()->getLibelle();
+            $temp[] = $sample_data->getContractant();*/
 
             $datas[] = $temp;
         }
 
-    
-    
-    
+        return new JsonResponse([
+            "draw" => 1,
+            "recordsTotal" => count($datas),
+            "recordsFiltered" => count($datas),
+            "data" => $datas
+        ]);
     }
-    
-    
-    
-    
-    
+
     /**
      * @Route("/api/projets", options = {"expose" = true}, name="find_all_projets")
      */
-    public function findAllAction()
-    {
+    public function findAllAction() {
         return new JsonResponse([
             "data" => $this->getRepository()->findAll()
         ]);
@@ -152,8 +141,7 @@ class ProjetController extends Controller
     /**
      * @Route("/api/add/projet", options = { "expose" = true }, name="add_projet")
      */
-    public function addProjetAction(Request $request)
-    {
+    public function addProjetAction(Request $request) {
         $libelle = $request->request->get('libelle');
         $dateLancement = $request->request->get('dateLancement');
         $dateAttribution = $request->request->get('dateAttribution');
@@ -166,12 +154,18 @@ class ProjetController extends Controller
 
         $projet = new Projet();
         $projet->setLibelle($libelle);
-        if ($dateLancement != null && $dateLancement != '') $projet->setDateLancement(new \DateTime($dateLancement));
-        if ($dateAttribution != null && $dateAttribution != '') $projet->setDateAttribution(new \DateTime($dateAttribution));
-        if ($dateSignature != null && $dateSignature != '') $projet->setDateSignature(new \DateTime($dateSignature));
-        if ($dateDemarrage != null && $dateDemarrage != '') $projet->setDateDemarrage(new \DateTime($dateDemarrage));
-        if ($dateReception != null && $dateReception != '') $projet->setDateReception(new \DateTime($dateReception));
-        if ($dateArret != null && $dateArret != '') $projet->setDateArret(new \DateTime($dateArret));
+        if ($dateLancement != null && $dateLancement != '')
+            $projet->setDateLancement(new \DateTime($dateLancement));
+        if ($dateAttribution != null && $dateAttribution != '')
+            $projet->setDateAttribution(new \DateTime($dateAttribution));
+        if ($dateSignature != null && $dateSignature != '')
+            $projet->setDateSignature(new \DateTime($dateSignature));
+        if ($dateDemarrage != null && $dateDemarrage != '')
+            $projet->setDateDemarrage(new \DateTime($dateDemarrage));
+        if ($dateReception != null && $dateReception != '')
+            $projet->setDateReception(new \DateTime($dateReception));
+        if ($dateArret != null && $dateArret != '')
+            $projet->setDateArret(new \DateTime($dateArret));
         $projet->setMontant($montant);
         $projet->setTp($this->getRepository('TP')->find($tp));
         $projet->setUser($this->getUser());
@@ -188,8 +182,7 @@ class ProjetController extends Controller
     /**
      * @Route("/api/update/projet/{projet}", options = { "expose" = true }, name="update_projet")
      */
-    public function updateProjetAction(Request $request, Projet $projet)
-    {
+    public function updateProjetAction(Request $request, Projet $projet) {
         $libelle = $request->request->get('libelle');
         $dateLancement = $request->request->get('dateLancement');
         $dateAttribution = $request->request->get('dateAttribution');
@@ -202,12 +195,18 @@ class ProjetController extends Controller
         $tp = $request->request->get('tp');
 
         $projet->setLibelle($libelle);
-        if ($dateLancement != null && $dateLancement != '') $projet->setDateLancement(new \DateTime($dateLancement));
-        if ($dateAttribution != null && $dateAttribution != '') $projet->setDateAttribution(new \DateTime($dateAttribution));
-        if ($dateSignature != null && $dateSignature != '') $projet->setDateSignature(new \DateTime($dateSignature));
-        if ($dateDemarrage != null && $dateDemarrage != '') $projet->setDateDemarrage(new \DateTime($dateDemarrage));
-        if ($dateReception != null && $dateReception != '') $projet->setDateReception(new \DateTime($dateReception));
-        if ($dateArret != null && $dateArret != '') $projet->setDateArret(new \DateTime($dateArret));
+        if ($dateLancement != null && $dateLancement != '')
+            $projet->setDateLancement(new \DateTime($dateLancement));
+        if ($dateAttribution != null && $dateAttribution != '')
+            $projet->setDateAttribution(new \DateTime($dateAttribution));
+        if ($dateSignature != null && $dateSignature != '')
+            $projet->setDateSignature(new \DateTime($dateSignature));
+        if ($dateDemarrage != null && $dateDemarrage != '')
+            $projet->setDateDemarrage(new \DateTime($dateDemarrage));
+        if ($dateReception != null && $dateReception != '')
+            $projet->setDateReception(new \DateTime($dateReception));
+        if ($dateArret != null && $dateArret != '')
+            $projet->setDateArret(new \DateTime($dateArret));
         $projet->setMontant($montant);
         $projet->setTp($this->getRepository('TP')->find($tp));
 
@@ -223,8 +222,7 @@ class ProjetController extends Controller
     /**
      * @Route("/api/update/projet/{projet}/choose/proc", options = { "expose" = true }, name="update_projet_choose_proc")
      */
-    public function updateProjetChooseProcAction(Request $request, Projet $projet)
-    {
+    public function updateProjetChooseProcAction(Request $request, Projet $projet) {
         $proc = $request->request->get('proc');
         $projet->setProc($this->getRepository('Proc')->find($proc));
         $projet->setStatutProccessus(3);
@@ -251,8 +249,7 @@ class ProjetController extends Controller
     /**
      * @Route("/api/delete/projet/{projet}", options = { "expose" = true }, name="delete_projet")
      */
-    public function deleteProjetAction(Request $request, Projet $projet)
-    {
+    public function deleteProjetAction(Request $request, Projet $projet) {
         $em = $this->getEm();
         $em->remove($projet);
         $em->flush();
@@ -265,8 +262,7 @@ class ProjetController extends Controller
     /**
      * @Route("/update/projet/{projet}/add/cctp", name="update_projet_add_cctp")
      */
-    public function updateProjetAddCCTPAction(Request $request, $projet)
-    {
+    public function updateProjetAddCCTPAction(Request $request, $projet) {
         $projet = $this->getRepository()->find($projet);
         $cctp = new CCTPSpecific();
         $form = $this->createForm(CCTPSpecificType::class, $cctp);
@@ -301,8 +297,7 @@ class ProjetController extends Controller
     /**
      * @Route("/update/projet/{projet}/add/tdr", name="update_projet_add_tdr")
      */
-    public function updateProjetAddTDRAction(Request $request, $projet)
-    {
+    public function updateProjetAddTDRAction(Request $request, $projet) {
         $projet = $this->getRepository()->find($projet);
         $tdr = new TDRSpecific();
         $form = $this->createForm(TDRSpecificType::class, $tdr);
@@ -335,8 +330,7 @@ class ProjetController extends Controller
         return $this->render('AppBundle:TDR:tdr.html.twig', $parameters);
     }
 
-    private function format_status($status)
-    {
+    private function format_status($status) {
         switch ($status) {
             case 1:
                 return '<span class="label label-default lb-md">Créé</span>';
@@ -350,13 +344,11 @@ class ProjetController extends Controller
         return '';
     }
 
-    private function my_get_date($date)
-    {
+    private function my_get_date($date) {
         return $date === null ? null : $date->format('Y-m-d');
     }
 
-    private function get_buttons($statut, $profil)
-    {
+    private function get_buttons($statut, $profil) {
         $buttons = '';
         if ($statut == 1) {
             $buttons .= '
@@ -384,4 +376,5 @@ class ProjetController extends Controller
 
         return $buttons;
     }
+
 }
