@@ -72,7 +72,7 @@ class DocumentController extends Controller
             $document->setDateUpload(new \DateTime('now'));
             $em->persist($document);
             $em->flush();
-            return $this->redirect($this->generateUrl('index_document'));
+            return $this->redirect($this->generateUrl('index_projets'));
         }
 
         $parameters = array(
@@ -95,7 +95,7 @@ class DocumentController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($document);
             $em->flush();
-            return $this->redirect($this->generateUrl('index_document'));
+            return $this->redirect($this->generateUrl('index_projets'));
         }
 
         $parameters = array(

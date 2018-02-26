@@ -769,19 +769,38 @@ $(function () {
             dataType: "JSON",
             success: function(result) {
                 //console.log(result);
+                var idproj_pour_doc = id;
+                
                 var str = "";
                 for (key in result.data) {
                     str += '<tr>';
-                    str += '<td>'+result.data[key]["id"]+'</td>';
-                    str += '<td>'+result.data[key]["libelle"]+'</td>';
-                    str += '<td><span class="label label-danger">en attente</span></td>';
-                    str += '<td><a href="../uploads/docs/5a906e18cda81_NYAMA KANEN SARL (Statuts).docx" target="_blank">test.jpeg</a></td>';
-                    str += '<td></td>';
-                    str += '<td></td>';
+                    str += '<td>'+result.data[key][0]+'</td>';
+                    str += '<td>'+result.data[key][1]+'</td>';
+                    var statut = '<span class="label label-danger">en attente</span>';
+                    if (result.data[key][8] != null) {
+                        statut = '<span class="label label-success">Prêt</span>';
+                    }
+                    str += '<td>'+statut+'</td>';
+                    str += '<td><a  type="button" class="btn btn-default waves-effect" href="../uploads/docs/'+result.data[key][2]+'" title="Enregistré le '+result.data[key][5]+'" target="_blank"><i class="material-icons">file_download</i> <b>Télécharger</b></a></td>';
+                    var doc_modif = "";
+                    if (result.data[key][7] != null) {
+                        doc_modif += '<a type="button" class="btn btn-default waves-effect" href="../uploads/docs/'+result.data[key][7]+'" target="_blank"><i class="material-icons">file_download</i> <b>Télécharger</b></a>';
+                    }
+                    var doc_signe = "";
+                    if (result.data[key][8] != null) {
+                        doc_signe += '<a type="button" class="btn btn-default waves-effect" href="../uploads/docs/'+result.data[key][8]+'" title="Signature enregistrée le '+result.data[key][3]+'" target="_blank"><i class="material-icons">file_download</i> <b>Télécharger</b></a>';
+                    }
+                    var date_sign = "";
+                    if (result.data[key][3] != null) {
+                        date_sign += result.data[key][3];
+                    }
+                    str += '<td>'+doc_modif+'</td>';
+                    str += '<td>'+doc_signe+'</td>';
+                    str += '<td>'+date_sign+'</td>';
                     str += '<td>';
-                    str += '<a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Charger le document modifié"><i class="material-icons">file_upload</i></a>';
+                    str += '<a href="'+Routing.getBaseUrl()+'/new/document/modifie/'+idproj_pour_doc+'/'+result.data[key][0]+'" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Charger le document modifié"><i class="material-icons">file_upload</i></a>';
                     str += '<span class="space-button2"></span>';
-                    str += '<a href="'+Routing.getBaseUrl()+'/new/document" type="button" class="btn btn-success btn-circle waves-effect waves-circle waves-float remove" title="Charger le document signé"><i class="material-icons">file_upload</i></a>';
+                    str += '<a href="'+Routing.getBaseUrl()+'/new/document/signe/'+idproj_pour_doc+'/'+result.data[key][0]+'" type="button" class="btn btn-success btn-circle waves-effect waves-circle waves-float remove" title="Charger le document signé"><i class="material-icons">file_upload</i></a>';
                     str += '<span class="space-button2"></span>';
                     str += '<a href="mailto:user@example.com?subject=Transfert%20des%20docs&body=bien%20vouloir%20accuser%20reception%20de%20ces%20documents" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float send" title="Envoyer mail"><i class="material-icons">send</i></a>';
                     str += '</td></tr>';
