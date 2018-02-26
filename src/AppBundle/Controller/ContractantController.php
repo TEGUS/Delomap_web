@@ -29,11 +29,42 @@ class ContractantController extends Controller
     }
 
     /**
-     * @Route("/api/contractants", options = { "expose" = true }, name="list_contractant")
+     * @Route("/api/acteurs", options = { "expose" = true }, name="list_acteur")
      */
-    public function listContractantsAction()
+    public function listActeursAction()
     {
         $contractants = $this->getRepository()->listAll();
+        $datas = [];
+
+        foreach ($contractants as $sample_data) {
+            $temp = [];
+            $temp[] = $sample_data->getId();
+            $temp[] = $sample_data->getEmail();
+            $temp[] = $sample_data->getNom();
+            $temp[] = $sample_data->getTel();
+            $temp[] = '
+                <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
+                <span class="space-button"></span>
+                <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+            ';
+
+            $datas[] = $temp;
+        }
+
+        return new JsonResponse([
+            "draw" => 1,
+            "recordsTotal" => count($datas),
+            "recordsFiltered" => count($datas),
+            "data" => $datas
+        ]);
+    }
+    
+    /**
+     * @Route("/api/administrations", options = { "expose" = true }, name="list_administration")
+     */
+public function listAdministrationsAction()
+    {
+        $contractants = $this->getRepository()->listAll('administration');
         $datas = [];
 
         foreach ($contractants as $sample_data) {

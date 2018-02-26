@@ -1,64 +1,57 @@
 {% extends "AppBundle::layout.html.twig"%}
 
 {% block body %}
-    
-      
-            <!-- Table projets -->
-            <div id="block-table-procedure" class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            
-                            
+
+    <section class="container-fluid">
+
+        <!-- Table projets -->
+        <div id="block-fiche-suivi" class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="card">
+                    <div class="header">
+                        <div class="block-header row">
+                            <div class="col-xs-6">
+                                <h2><b> FICHE SUIVI </b></h2>
+                            </div>
+
+                            <div class="col-xs-6 right-side">
+                                <a href="#" type="button" class="btn btn-primary m-t-15 waves-effect">Mise à jour marché</a>
+                            </div>
                         </div>
-                            <div class="container-fluid">
-            <div class="block-header">
-                <h2>
-                    <center><b> FICHE SUIVI </b>
-                    </center>
-                </h2>
+                    </div>
+                    <div class="body">
+
+                        <div class="table-responsive">
+                            <table id="table-fiche-suivi" class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead style="background-color: #607D8B;color: white;">
+                                    <tr>
+                                        <th>Designation du marché</th>
+                                        <th>Type de prestation</th>
+                                        <th>Montant prévisionnel</th>
+                                        <th>Autorité contractante</th>
+                                        <th>Mode Appel d'offre</th>
+                                        <th>Date du lancement</th>
+                                        <th>Date attribution marché</th>
+                                        <th>Date signature du marché</th>
+                                        <th>Date démarrage des traveaux</th>
+                                        <th>Date Réel de Lancement</th>
+                                        <th>Date de Démarrage Effectif</th>
+                                        <th>Observations</th>
+                                        <th>Motifs</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div>
+                            <a href="{{ path('homepage') }}" type="button" class="btn btn-primary btn-lg m-t-15 waves-effect"><< Retour</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-                        <div class="body">
-                            
-                            <div class="table-responsive">
-                                <table id="table-procedure" class="table table-bordered table-striped table-hover dataTable js-exportable">
-                                    <thead>
-                                        <tr>
-                                            <th>Désignation du Projet</th>
-                                            <th>Date Réel de Lancement</th>
-                                            <th>Date de Démarrage Effectif</th>
-                                            <th>Observations</th>
-                                            <th>Motifs</th>
-                                            {#<th>Actions</th>#}
-                                        </tr>
-                                    </thead>
-                                    {#<tfoot>
-                                        <tr>
-                                            <th>Désignation du Projet</th>
-                                            <th>Date Réel de Lancement</th>
-                                            <th>DDate de Démarrage Effectif</th>
-                                            <th>Observations</th>
-                                            <th>Motifs</th>
-                                        </tr>
-                                    </tfoot>#}
-                            </div>
-                                    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    </section>           
 {% endblock %}

@@ -10,9 +10,11 @@ namespace AppBundle\Repository;
  */
 class ContractantRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function listAll()
+    public function listAll($type = 'acteur')
     {
-        $qb = $this->createQueryBuilder('contractant')
+        $qb = $this->createQueryBuilder('c')
+                ->where('c.type = :type')
+                ->setParameter('type', $type)
             ->getQuery();
 
         return $qb->getResult();
