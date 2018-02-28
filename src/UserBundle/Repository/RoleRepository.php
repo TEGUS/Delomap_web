@@ -10,4 +10,11 @@ namespace UserBundle\Repository;
  */
 class RoleRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAll()
+    {
+        $qb = $this->createQueryBuilder('role')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 }

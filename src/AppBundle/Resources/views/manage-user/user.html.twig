@@ -176,8 +176,6 @@
                         <div class="modal-body">
                             <div class="row">
                                 <select id="list_roles" data-live-search="true">
-                                    <option value="ROLE_GUEST" selected>ROLE_GUEST</option>
-                                    <option value="ROLE_STAFF">ROLE_STAFF</option>
                                 </select>
                                 <button type="button" class="btn btn-link waves-effect btn-primary add"><i
                                             class="fa fa-spinner fa-spin hidden"></i> Ajouter
@@ -419,6 +417,31 @@
             });//click sur le bouton Enabled
 
 
+            // Load Role Sorted
+            function loadRoleSorted(idUser) {
+                $.ajax({
+                    'type': 'POST',
+                    'url': Routing.generate('all_roles_sorted', {'user': idUser}),
+                    'dataType': 'JSON',
+                    'success': function(result) {
+                        $('#list_roles').html('');
+
+                        var roles_ = "";
+                        var data = result.data;
+                        for (var key in data) {
+                            roles_ += '<option value="' + data[key] + '">' + data[key] + '</option>';
+                        }
+                        $('#list_roles').html(roles_);
+                        $('#list_roles').selectpicker('refresh');
+                    },
+                    'error': function(xhr, status, error) {
+                        var err = eval(xhr.responseText );
+                        console.log(err);
+                        console.log(error);
+                    }
+                });
+            }
+
             //click sur le bouton profil
             $('#table-user').on("click", ".profil", function () {
                 var id;
@@ -431,6 +454,7 @@
                     }
                     i++;
                 });
+                $('#id_user').val(id);
 
                 $('#modal-role').modal('show');
 
@@ -452,8 +476,118 @@
                         'copy', 'csv', 'excel', 'pdf', 'print'
                     ]
                 });
+
+                loadRoleSorted(id);
+
+                //click sur ajout role
+                $('#modal-role button.add').click( function() {
+
+                    var idUser = id;
+                    var role = $('#list_roles').val();
+//                            var nomdag = $("#list_roles option:selected" ).text();
+
+                    $.ajax({
+                        'type': 'POST',
+                        'url': Routing.generate('add_role', { 'user': idUser }),
+                        'data': {
+                            role: role
+                        },
+                        'dataType': 'JSON',
+                        'success': function(result) {
+                            //
+                            if (result.data === true) {
+                                loadRoleSorted(idUser);
+                                table_role.ajax.reload();
+                                //$('#table-role tbody').append('<tr><td>'+role+'</td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>');
+                            } else {
+                                swal({
+                                    title: "Erreur!",
+                                    text: "Verifiez si le role n'existe pas deja dans le tableau",
+                                    type: "error",
+                                    timer: 3000
+                                });
+                            }
+                        },
+                        'error': function() {
+                            //
+                            swal({
+                                title: "Erreur!",
+                                text: "Verifiez si le role n'existe pas deja dans le tableau",
+                                type: "error",
+                                timer: 3000
+                            });
+                        },
+                        'beforeSend': function() {
+                            $('#modal-role button.add').prop('disabled', true);
+                            $('#modal-role button.add i').removeClass('hidden');
+                        },
+                        'complete': function() {
+                            $('#modal-role button.add').prop('disabled', false);
+                            $('#modal-role button.add i').addClass('hidden');
+                        }
+                    });
+                });
+
+                //click sur fermer
+                $('#modal-role button.close_btn').click( function() {
+                    table_user.ajax.reload();
+                });
             });
 
+            //click sur le bouton du tableau role
+            $('#table-role').on('click', ".remove", function () {
+                var idUser = $('#id_user').val();
+                var role;
+                var row = jQuery(this).closest('tr');
+
+                var i = 0;
+                row.find("td").each(function (cellIndex) {
+                    if (i === 0) {
+                        role = $(this).html();
+                    }
+                    i++;
+                });
+
+                swal({
+                    title: "Attention !",
+                    text: "Voulez-vous vraiment Supprimer cet élément ? ",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Oui",
+                    cancelButtonText: "Non",
+                    closeOnConfirm: false
+                }, function () {
+
+                    $.ajax({
+                        'type': 'POST',
+                        'url': Routing.generate('remove_role', {'user': idUser}),
+                        'dataType': 'JSON',
+                        'data': {
+                            role: role
+                        },
+                        'success': function (result) {
+                            if (result.data === true) {
+                                swal.close();
+                                $(row).remove();
+                                loadRoleSorted(idUser);
+                                table_role.ajax.reload();
+                            } else {
+                                swal("Erreur!", "Erreur", "error");
+                            }
+                        },
+                        'error': function () {
+                            swal("Erreur!", "Erreur", "error");
+                        },
+                        'beforeSend': function() {
+                            $('.sweet-alert button.confirm').html("<i class=\"fa fa-spinner fa-spin\"></i> Oui");
+                        },
+                        'complete': function() {
+                            $('.sweet-alert button.confirm').html("Oui");
+                        }
+                    });
+                });
+            });
 
         });
     </script>

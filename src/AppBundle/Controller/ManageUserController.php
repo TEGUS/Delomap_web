@@ -31,6 +31,17 @@ class ManageUserController extends Controller
     }
 
     /**
+     * @Route("/manage/roles", name="index_manage_role")
+     */
+    public function indexRolesAction()
+    {
+        $allRoles = $this->getRepository('Role')->findAll();
+        return $this->render('AppBundle:manage-user:role.html.twig', [
+            'roles' => $allRoles
+        ]);
+    }
+
+    /**
      * @Route("/api/datatable/users", options = { "expose" = true }, name="list_datatable_users")
      */
     public function listDatatableUsersAction()
@@ -140,10 +151,9 @@ class ManageUserController extends Controller
 
             $temp[] = $sample_data != 'ROLE_USER' ?
                 '
-                <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
-                <span class="space-button"></span>
-                '
-                :
+                    <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+                    <span class="space-button"></span>
+                ' :
                 '';
 
             $datas[] = $temp;
@@ -154,6 +164,67 @@ class ManageUserController extends Controller
             "recordsTotal" => count($datas),
             "recordsFiltered" => count($datas),
             "data" => $datas
+        ]);
+    }
+
+    /**
+     * @Route("/api/sort/roles/user/{user}", options = { "expose" = true }, name="all_roles_sorted")
+     */
+    public function allRolesSortedAction(User $user)
+    {
+        $userRoles = $user->getRoles();
+        $allRoles = $this->getRepository('Role')->findAll();
+
+        $temp = [];
+
+        foreach ($allRoles as $R) {
+            $bool = false;
+            foreach ($userRoles as $ur) {
+                if ($R->getLibelle() == $ur) {
+                    $bool = true;
+                }
+            }
+            if (!$bool) {
+                array_push($temp, $R->getLibelle());
+            }
+        }
+
+        return new JsonResponse([
+            "data" => $temp
+        ]);
+    }
+
+    /**
+     * @Route("/api/user/{user}/add/role", options = { "expose" = true }, name="add_role")
+     */
+    public function addRoleAction(Request $request, User $user)
+    {
+        $role = $request->request->get('role');
+        $user->addRole($role);
+
+        $em = $this->getEm();
+        $em->merge($user);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true
+        ]);
+    }
+
+    /**
+     * @Route("/api/user/{user}/remove/role", options = { "expose" = true }, name="remove_role")
+     */
+    public function removeRoleAction(Request $request, User $user)
+    {
+        $role = $request->request->get('role');
+        $user->removeRole($role);
+
+        $em = $this->getEm();
+        $em->merge($user);
+        $em->flush();
+
+        return new JsonResponse([
+            "data" => true
         ]);
     }
 

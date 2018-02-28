@@ -87,8 +87,8 @@ class DocumentController extends Controller
                 "projet" => $projet->getId()
             ]);
             $bool = true;
-            foreach($list_docs_projet as $p) {
-                if($p->getFichierSigne() == null) {
+            foreach ($list_docs_projet as $p) {
+                if ($p->getFichierSigne() == null) {
                     $bool = false;
                     return;
                 }
@@ -143,20 +143,22 @@ class DocumentController extends Controller
         $datas = [];
 
         foreach ($documents as $sample_data) {
+            $fichierSigne = $sample_data->getFichierSigne();
+            $options = '
+                <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
+                <span class="space-button"></span>
+            ';
+
             $temp = [];
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getProjet()->getLibelle();
             $temp[] = $sample_data->getDag()->getLibelle();
             $temp[] = $this->my_get_date($sample_data->getDateSignature());
             $temp[] = $this->my_get_date($sample_data->getDateUpload());
-//            $temp[] = $sample_data->getFichier()->getNom();
-            $temp[] = '
-                <!--<a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
-                <span class="space-button"></span>-->
-                <a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a>
-                <span class="space-button"></span>
-                <a href="#" class="view" title="Visualiser le document"><i class="fa fa-eye fa-lg"></i></a>
-            ';
+            $temp[] = $fichierSigne != null ? $options . '
+                <a href="#" class="view '.$sample_data->getId().'" title="Visualiser le document"><i class="fa fa-eye fa-lg"></i></a>
+                ' :
+                $options;
 
             $datas[] = $temp;
         }
@@ -271,9 +273,14 @@ class DocumentController extends Controller
     {
         $doc = $this->getRepository()->findById($document);
 
+        $fichierSigne = $doc[0]->getFichierSigne();
+        if ($fichierSigne != null) {
+            $data = $fichierSigne->getNom();
+        } else {
+            $data = null;
+        }
         return new JsonResponse([
-            "data" => $doc[0]->getFichier()->getNom()
-            //"data" => $document->getFichier()->getNom(),
+            "data" => $data
         ]);
     }
 

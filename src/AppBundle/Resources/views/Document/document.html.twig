@@ -205,21 +205,21 @@
                     'dataType': 'JSON',
                     'data': {},
                     'success': function (result) {
-//                        console.log(Routing.getBaseUrl() + '/uploads/docs/' + result.data);
-                        if (result.data) {
+                        if (result.data != null) {
                             var data = result.data;
-                            {#var url = '{{ asset('uploads/docs/') }}';#}
                             window.open(Routing.getBaseUrl().split('/app_dev.php')[0] + '/uploads/docs/' + data, '_blank');
+                        } else {
+                            swal("Erreur!", "Pas de fichier signé pour l'instant!", "error");
                         }
                     },
                     'error': function () {
                         swal("Erreur!", "Erreur lors du chargement du fichier", "error");
                     },
                     'beforeSend': function () {
-                        $('a.view').html("<i class=\"fa fa-spinner fa-spin\"></i>");
+                        $('a.'+id).html("<i class=\"fa fa-spinner fa-spin\"></i>");
                     },
                     'complete': function () {
-                        $('a.view').html("<i class=\"fa fa-eye fa-lg\"></i>");
+                        $('a.'+id).html("<i class=\"fa fa-eye fa-lg\"></i>");
                     }
                 });
             });
