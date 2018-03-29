@@ -13,8 +13,8 @@ class ContractantRepository extends \Doctrine\ORM\EntityRepository
     public function listAll($type = 'acteur')
     {
         $qb = $this->createQueryBuilder('c')
-                ->where('c.type = :type')
-                ->setParameter('type', $type)
+                ->where('c.typeContractant = :typeContractant')
+                ->setParameter('typeContractant', $type)
             ->getQuery();
 
         return $qb->getResult();

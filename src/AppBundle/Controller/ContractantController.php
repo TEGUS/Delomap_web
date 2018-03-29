@@ -68,7 +68,7 @@ class ContractantController extends Controller
     }
 
     /**
-     * @Route("/api/administrations", options = { "expose" = true }, name="list_administration")
+         * @Route("/api/administrations", options = { "expose" = true }, name="list_administration")
      */
     public function listAdministrationsAction()
     {
@@ -106,11 +106,13 @@ class ContractantController extends Controller
         $email = $request->request->get('email');
         $nom = $request->request->get('nom');
         $tel = $request->request->get('tel');
+        $type = $request->request->get('type');
 
         $contractant = new Contractant();
         $contractant->setEmail($email);
         $contractant->setNom($nom);
         $contractant->setTel($tel);
+        $contractant->setTypeContractant($type);
 
         $em = $this->getEm();
         $em->persist($contractant);
