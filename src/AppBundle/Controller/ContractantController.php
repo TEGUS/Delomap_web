@@ -11,11 +11,19 @@ use Symfony\Component\HttpFoundation\Request;
 class ContractantController extends Controller
 {
     /**
-     * @Route("/contractant", name="index_contractant")
+     * @Route("/administrations", name="index_list_administrations")
      */
-    public function indexContractantsAction()
+    public function indexAdministrationsAction()
     {
-        return $this->render('AppBundle:Contractant:contractant.html.twig');
+        return $this->render('AppBundle:Contractant:administrations.html.twig');
+    }
+
+    /**
+     * @Route("/acteurs", name="index_list_acteurs")
+     */
+    public function indexActeursAction()
+    {
+        return $this->render('AppBundle:Contractant:acteurs.html.twig');
     }
 
     public function getRepository($entity = 'Contractant')
@@ -58,11 +66,11 @@ class ContractantController extends Controller
             "data" => $datas
         ]);
     }
-    
+
     /**
      * @Route("/api/administrations", options = { "expose" = true }, name="list_administration")
      */
-public function listAdministrationsAction()
+    public function listAdministrationsAction()
     {
         $contractants = $this->getRepository()->listAll('administration');
         $datas = [];
@@ -96,9 +104,9 @@ public function listAdministrationsAction()
     public function addContractantAction(Request $request)
     {
         $email = $request->request->get('email');
-        $nom= $request->request->get('nom');
-        $tel= $request->request->get('tel');
-        
+        $nom = $request->request->get('nom');
+        $tel = $request->request->get('tel');
+
         $contractant = new Contractant();
         $contractant->setEmail($email);
         $contractant->setNom($nom);
@@ -118,11 +126,11 @@ public function listAdministrationsAction()
      */
     public function updateContractantAction(Request $request, Contractant $contractant)
     {
-       /** $id = $request->request->get('id');*/
+        /** $id = $request->request->get('id');*/
         $email = $request->request->get('email');
         $nom = $request->request->get('nom');
         $tel = $request->request->get('tel');
-        
+
         /**$contractant->setId($id);*/
         $contractant->setEmail($email);
         $contractant->setNom($nom);

@@ -11,8 +11,40 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-        public function indexAction()
+    public function indexAction()
     {
         return $this->render('AppBundle::index.html.twig');
+    }
+
+    /**
+     * @Route("/work/team", name="team")
+     */
+    public function teamAction()
+    {
+        $team = [
+            [
+                'nom' => 'TEGUIA KOUAM Aurélien',
+                'bio' => '',
+                'email' => 'tegaurelien@hotmail.fr'
+            ],
+            [
+                'nom' => 'TEGUIA KOUAM Aurélien',
+                'bio' => '',
+                'email' => 'tegaurelien@hotmail.fr'
+            ],
+            [
+                'nom' => 'TEGUIA KOUAM Aurélien',
+                'bio' => '',
+                'email' => 'tegaurelien@hotmail.fr'
+            ],
+            [
+                'nom' => 'TEGUIA KOUAM Aurélien',
+                'bio' => '',
+                'email' => 'tegaurelien@hotmail.fr'
+            ]
+        ];
+        return $this->render('AppBundle::team.html.twig', [
+            'team' => $team
+        ]);
     }
 }

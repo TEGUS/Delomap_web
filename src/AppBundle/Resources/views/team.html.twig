@@ -1,0 +1,48 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>
+                    TEAM@Delomap
+                </h2>
+            </div>
+
+            <!-- Team -->
+            <div id="block-table-user" class="row clearfix">
+                {% for member in team %}
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <div class="col-xs-8">
+                                    <h2>{{ member.nom }}</h2>
+                                    <h4>({{ member.email }})</h4>
+                                </div>
+                            </div>
+                            <div class="body" style="text-align: justify; font-size: 17px;">
+                                <div class="row container-fluid">
+                                    <div class="col-xs-10 col-xs-offset-1">
+                                        <div class="row">Bio. {{ member.bio }}</div>
+                                        <div class="row">Email. {{ member.email }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- #END# Team -->
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(function () {
+        });
+    </script>
+{% endblock %}

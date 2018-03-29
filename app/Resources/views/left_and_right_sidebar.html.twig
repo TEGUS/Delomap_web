@@ -112,17 +112,17 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li {% if app.request.get('_route') == 'index_list_administrations' or  app.request.get('_route') == 'index_list_acteurs'%} class="active"{% endif %}>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">domain</i>
                         <span>ADMINISTRATIONS ET ACTEURS</span>
                     </a>
                     <ul class="ml-menu">
-                        <li>
-                            <a href="pages/forms/basic-form-elements.html">Liste des administration</a>
+                        <li{% if app.request.get('_route') == 'index_list_administrations' %} class="active"{% endif %}>
+                            <a href="{{ path('index_list_administrations') }}">Administrations</a>
                         </li>
-                        <li>
-                            <a href="pages/forms/advanced-form-elements.html">Liste des acteurs</a>
+                        <li{% if app.request.get('_route') == 'index_list_acteurs' %} class="active"{% endif %}>
+                            <a href="{{ path('index_list_acteurs') }}">Acteurs</a>
                         </li>
                     </ul>
                 </li>
@@ -148,7 +148,7 @@
         <!-- Footer -->
         <div class="legal">
             <div class="copyright">
-                &copy; 2018 <a href="javascript:void(0);">Delomap Team</a>.
+                <a href="{{ path('team') }}">&copy;</a>  2018 <a href="#">Delomap Team</a>.
             </div>
         </div>
         <!-- #Footer -->
