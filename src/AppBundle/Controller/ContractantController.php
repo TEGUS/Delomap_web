@@ -47,8 +47,8 @@ class ContractantController extends Controller
         foreach ($contractants as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
-            $temp[] = $sample_data->getEmail();
             $temp[] = $sample_data->getNom();
+            $temp[] = $sample_data->getEmail();
             $temp[] = $sample_data->getTel();
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
@@ -78,8 +78,8 @@ class ContractantController extends Controller
         foreach ($contractants as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
-            $temp[] = $sample_data->getEmail();
             $temp[] = $sample_data->getNom();
+            $temp[] = $sample_data->getEmail();
             $temp[] = $sample_data->getTel();
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>

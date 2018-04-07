@@ -24,7 +24,7 @@ class TDRSpecificController extends Controller
     /**
      * @Route("/api/projet/{projet}/tdr_specifics_specifics", options = { "expose" = true }, name="list_tdr_specific_of_projet")
      */
-    public function listProjetCCTPSpecificAction($projet)
+    public function listProjetTDRSpecificAction($projet)
     {
         $tdr_specifics_specifics = $this->getRepository()->listAllByProjet($projet);
         $datas = [];
@@ -33,8 +33,11 @@ class TDRSpecificController extends Controller
             $temp = [];
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getService();
-//            $temp[] = $sample_data->getFichier()->getNom();
-//            $temp[] = $this->my_get_date($sample_data->getDateCreation());
+            $temp[] = '
+            <a href="'.$this->container->get('assets.packages')->getUrl("uploads/docs/".$sample_data->getFichier()->getNom()).'" title="Télécharger">'.$sample_data->getFichier()->getNom().'</a>
+            ';
+            $temp[] = '';
+            //$temp[] = $this->my_get_date($sample_data->getDateCreation());
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>

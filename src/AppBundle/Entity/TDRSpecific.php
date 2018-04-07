@@ -50,7 +50,7 @@ class TDRSpecific
     private $projet;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"}, inversedBy="tdrSpecific")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Fichier", cascade={"persist", "remove"})
      */
     private $fichier;
 
