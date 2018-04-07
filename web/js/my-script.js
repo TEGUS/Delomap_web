@@ -806,7 +806,7 @@ $(function () {
                     str += '<a href="'+Routing.getBaseUrl()+'/new/document/signe/'+result.data[key][0]+'" type="button" class="btn btn-success btn-circle waves-effect waves-circle waves-float remove" title="Charger le document signé"><i class="material-icons">file_upload</i></a>';
                     if (doc_signe != "") {
                         str += '<span class="space-button2"></span>';
-                        str += '<a href="mailto:user@example.com?subject=Transfert%20des%20docs&body=bien%20vouloir%20accuser%20reception%20de%20ces%20documents" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float send" title="Envoyer mail"><i class="material-icons">send</i></a>';
+                        str += '<a href="#" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float send" title="Envoyer mail"><i class="material-icons">send</i></a>';
                     }
                     str += '</td></tr>';
                 }
@@ -1206,4 +1206,60 @@ $(function () {
     //*************************************************
     // Fin de gestion des acteurs
     //*************************************************
+
+
+
+    //*************************************************
+    // Fin d'envoi des docs
+    //*************************************************
+    //
+    $('#table-gestion-docs').on('click', '.send', function(event) {
+        $('#modal-send-mail').modal('show');
+
+        var doc = "";
+
+        var row = jQuery(this).closest('tr');
+
+        var i = 0;
+        row.find("td").each(function (cellIndex) {
+            if (i === 5) {
+                doc = $(this).html();
+            }
+            i++;
+        });
+console.log(doc);
+        $('#form-send-mail liste_docs tbody').html("<tr><td>"+doc+"</td></tr>");
+
+        $.ajax({
+            url: Routing.generate('list_administration'),
+            dataType: "JSON",
+            success: function(return_datas) {
+
+                var select_option = '';
+                var rets = return_datas.data;
+                for (ret in rets) {
+                    select_option += '<option val="'+rets[ret][2]+'">'+rets[ret][1]+'</option>';
+                }
+
+                $('#list_administrations_send_mail').html(select_option);
+                $('#list_administrations_send_mail').selectpicker('refresh');
+            },
+            error: function(err) {
+                $('#list_administrations_send_mail').html('');
+            }
+        })
+    });
+
+    $('#modal-send-mail').on('click', 'button.close_btn', function(event) {
+        $('#modal-send-mail').modal('hide');
+    })
+
+    $('#modal-send-mail').on('click', 'button.send', function(event) {
+        window.open('mailto:user@example.com?subject=Transfert%20des%20docs&body=bien%20vouloir%20accuser%20reception%20de%20ces%20documents', '_blank');
+    })
+
+    //*************************************************
+    // Fin de gestion d'envoi de docs
+    //*************************************************
+
 });

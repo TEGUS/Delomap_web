@@ -224,7 +224,6 @@
                         </div>
                         <div class="body">
                             <form id="form-add-proc-projet" class="form-horizontal">
-                                <fieldset>
                                 <input type="text" name="id" id="id_projet_form_proc" class="hidden" >
                                 <div class="row clearfix">
                                     <div class="col-sm-4 col-xs-5 form-control-label">
@@ -316,6 +315,52 @@
                 </div>
             </div>
             <!-- #END# Gestion des documents -->
+
+            <!-- Envoi des documents -->
+            <div class="modal fade" id="modal-send-mail" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Envoi des documents</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <form id="form-send-mail" class="form-horizontal">
+                                <input type="text" name="id" id="id_projet_form_send_mail" class="hidden" >
+                                <input type="text" name="attachments" id="attachments" class="hidden" >
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="tp">Administration destinataire </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select id="list_administrations_send_mail" name="administrations" class="form-control show-tick" data-live-search="true">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="liste_docs">
+                                    <thead>
+                                        <tr>
+                                            <th>Liste des documents</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary waves-effect send">Envoyer</button>
+                            <button type="button" class="btn btn-link waves-effect close_btn">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Envoi des documents -->
+
         </div>
     </section>
 {% endblock %}
