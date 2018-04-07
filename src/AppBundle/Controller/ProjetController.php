@@ -286,7 +286,9 @@ class ProjetController extends Controller {
         $form = $this->createForm(CCTPSpecificType::class, $cctp);
 
         if ($projet != null) {
-            $projet->setStatutProccessus(2);
+            if ($projet->getStatutProccessus() < 2) {
+                $projet->setStatutProccessus(2);
+            }
             $cctp->setProjet($projet);
             $form = $this->createForm(CCTPSpecificTypeWithoutProjet::class, $cctp);
         }
@@ -321,9 +323,10 @@ class ProjetController extends Controller {
         $form = $this->createForm(TDRSpecificType::class, $tdr);
 
         if ($projet != null) {
-            $projet->setStatutProccessus(2);
+            if ($projet->getStatutProccessus() < 2) {
+                $projet->setStatutProccessus(2);
+            }
             $tdr->setProjet($projet);
-
             $form = $this->createForm(TDRSpecificTypeWithoutProjet::class, $tdr);
         }
 
