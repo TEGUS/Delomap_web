@@ -33,11 +33,14 @@ class TDRSpecificController extends Controller
             $temp = [];
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getService();
-            $temp[] = '
-            <a href="'.$this->container->get('assets.packages')->getUrl("uploads/docs/".$sample_data->getFichier()->getNom()).'" title="Télécharger">'.$sample_data->getFichier()->getNom().'</a>
-            ';
-            $temp[] = '';
-            //$temp[] = $this->my_get_date($sample_data->getDateCreation());
+            if ($sample_data->getFichier()) {
+                $temp[] = '
+                <a href="'.$this->container->get('assets.packages')->getUrl("uploads/docs/".$sample_data->getFichier()->getNom()).'" title="Télécharger">'.$sample_data->getFichier()->getNom().'</a>
+                ';
+            } else {
+                $temp[] = '';
+            }
+            $temp[] = $this->my_get_date($sample_data->getDateCreation());
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
                 <span class="space-button"></span>
@@ -121,5 +124,10 @@ class TDRSpecificController extends Controller
         return new JsonResponse([
             "data" => true,
         ]);
+    }
+
+    private function my_get_date($date)
+    {
+        return $date === null ? null : $date->format('Y-m-d');
     }
 }
