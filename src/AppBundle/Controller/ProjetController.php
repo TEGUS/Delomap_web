@@ -376,7 +376,7 @@ class ProjetController extends Controller {
             $buttons .= '
             <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float proc" title="Ajouter une procedure"><i class="material-icons">timeline</i></a>
             <span class="space-button2"></span>';
-        } else if ($statut == 3) {
+        } else if ($statut == 3 || $statut == 4) {
             $buttons .= '
             <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float docs" title="Gestion des documents"><i class="material-icons">description</i></a>
             <span class="space-button2"></span>';
