@@ -1205,7 +1205,7 @@ $(function () {
 
 
     //*************************************************
-    // Fin d'envoi des docs
+    // Gestion d'envoi des docs
     //*************************************************
     //
     $('#table-gestion-docs').on('click', '.send', function (event) {
@@ -1217,13 +1217,19 @@ $(function () {
 
         var i = 0;
         row.find("td").each(function (cellIndex) {
+            if (i === 0) {
+                $('#id_projet_form_send_mail').val($(this).text());
+            }
             if (i === 5) {
-                doc = $(this).html();
+                doc = $(this).children("a").attr("href");
             }
             i++;
         });
-        console.log(doc);
-        $('#form-send-mail liste_docs tbody').html("<tr><td>" + doc + "</td></tr>");
+
+        var d = '<a href="'+doc+'">'+doc.replace('../uploads/docs/', '')+'</a>';
+
+        //console.log(doc);
+        $('#form-send-mail .liste_docs tbody').html("<tr><td>" + d + "</td></tr>");
 
         $.ajax({
             url: Routing.generate('list_administration'),
@@ -1242,16 +1248,112 @@ $(function () {
             error: function (err) {
                 $('#list_administrations_send_mail').html('');
             }
-        })
+        });
+        $.ajax({
+            url: Routing.generate('list_acteur'),
+            dataType: "JSON",
+            success: function (return_datas) {
+
+                var select_option = '';
+                var rets = return_datas.data;
+                for (ret in rets) {
+                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                }
+
+                $('#list_acteurs_send_mail').html(select_option);
+                $('#list_acteurs_send_mail').selectpicker('refresh');
+            },
+            error: function (err) {
+                $('#list_acteurs_send_mail').html('');
+            }
+        });
+
+        $('#form-send-mail input[name="objet"]').val('');
+        $('#form-send-mail textarea[name="message"]').val('');
+
+    });
+    $('#block-gestion-docs').on('click', 'button.sendmultiple', function (event) {
+        $('#modal-send-mail').modal('show');
+
+        var i = [];
+        var docs = [];
+        $('#table-gestion-docs tbody').find("tr").each(function(cellIndex) {
+            var take_this = false;
+            $(this).find("td").each(function (ci) {
+                if (ci === 2 && $(this).text() == "Prêt") {
+                    take_this = true;
+                }
+            });
+            if (take_this) {
+                $(this).find("td").each(function (ci) {
+                    if (ci === 0) {
+                        i.push($(this).text());
+                    }
+                    if (ci === 5) {
+                        docs.push($(this).children("a").attr("href"));
+                    }
+                });
+            }
+        });
+
+        $('#id_projet_form_send_mail').val(i);
+
+        var table_doc = "";
+        for (i in docs) {
+            table_doc += '<tr><td><a href="'+docs[i]+'">'+docs[i].replace('../uploads/docs/', '')+'</a></td></tr>';
+        }
+
+        $('#form-send-mail .liste_docs tbody').html(table_doc);
+
+        $.ajax({
+            url: Routing.generate('list_administration'),
+            dataType: "JSON",
+            success: function (return_datas) {
+
+                var select_option = '';
+                var rets = return_datas.data;
+                for (ret in rets) {
+                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                }
+
+                $('#list_administrations_send_mail').html(select_option);
+                $('#list_administrations_send_mail').selectpicker('refresh');
+            },
+            error: function (err) {
+                $('#list_administrations_send_mail').html('');
+            }
+        });
+        $.ajax({
+            url: Routing.generate('list_acteur'),
+            dataType: "JSON",
+            success: function (return_datas) {
+
+                var select_option = '';
+                var rets = return_datas.data;
+                for (ret in rets) {
+                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                }
+
+                $('#list_acteurs_send_mail').html(select_option);
+                $('#list_acteurs_send_mail').selectpicker('refresh');
+            },
+            error: function (err) {
+                $('#list_acteurs_send_mail').html('');
+            }
+        });
+
+        $('#form-send-mail input[name="objet"]').val('');
+        $('#form-send-mail textarea[name="message"]').val('');
+        
     });
 
     $('#modal-send-mail').on('click', 'button.close_btn', function (event) {
         $('#modal-send-mail').modal('hide');
-    })
-
+    });
+/*
     $('#modal-send-mail').on('click', 'button.send', function (event) {
         window.open('mailto:user@example.com?subject=Transfert%20des%20docs&body=bien%20vouloir%20accuser%20reception%20de%20ces%20documents', '_blank');
-    })
+    });*/
 
     //*************************************************
     // Fin de gestion d'envoi de docs
