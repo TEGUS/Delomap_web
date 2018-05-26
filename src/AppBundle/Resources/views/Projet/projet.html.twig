@@ -306,7 +306,7 @@
                             </div>
                             <div class="row clearfix">
                                 <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                                    <button type="button" class="btn btn-primary m-t-15 waves-effect save"><i class="fa fa-spinner fa-spin hidden"></i> Envoyer mail</button>
+                                    <button type="button" class="btn btn-primary m-t-15 waves-effect sendmultiple"><i class="fa fa-spinner fa-spin hidden"></i> Envoyer mail</button>
                                     <button type="button" class="btn btn-default m-t-15 waves-effect cancel">Retour</button>
                                 </div>
                             </div>
@@ -320,42 +320,82 @@
             <div class="modal fade" id="modal-send-mail" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Envoi des documents</h4>
-                        </div>
-                        <div class="modal-body">
-
-                            <form id="form-send-mail" class="form-horizontal">
+                        <form id="form-send-mail" class="form-horizontal" action="{{ asset('test/test.php') }}" method="post">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Envoi des documents</h4>
+                            </div>
+                            <div class="modal-body">
                                 <input type="text" name="id" id="id_projet_form_send_mail" class="hidden" >
                                 <input type="text" name="attachments" id="attachments" class="hidden" >
                                 <div class="row clearfix">
                                     <div class="col-sm-4 col-xs-5 form-control-label">
-                                        <label for="tp">Administration destinataire </label>
+                                        <label for="tp">Administrations destinatrices </label>
                                     </div>
                                     <div class="col-sm-8 col-xs-7">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <select id="list_administrations_send_mail" name="administrations" class="form-control show-tick" data-live-search="true">
+                                                <select id="list_administrations_send_mail" name="administrations[]" class="form-control show-tick" data-live-search="true" multiple>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <table class="liste_docs">
-                                    <thead>
-                                        <tr>
-                                            <th>Liste des documents</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary waves-effect send">Envoyer</button>
-                            <button type="button" class="btn btn-link waves-effect close_btn">Fermer</button>
-                        </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="tp">Acteurs </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select id="list_acteurs_send_mail" name="acteurs[]" class="form-control show-tick" data-live-search="true" multiple>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="tp">Liste des documents </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <table class="liste_docs">
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="tp">Objet </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="objet" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4 col-xs-5 form-control-label">
+                                        <label for="tp">Message </label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <textarea name="message" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary waves-effect send" value="Envoyer">
+                                <button type="button" class="btn btn-link waves-effect close_btn">Fermer</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
