@@ -119,8 +119,11 @@
                     </a>
                     <ul class="ml-menu">
                         <li>
-                            <a href="pages/forms/basic-form-elements.html">Liste des administration</a>
+                            {#<a href="pages/forms/basic-form-elements.html">Liste des administration</a>#}
+                            <li{% if app.request.get('_route') == 'index_contractant' %} class="active"{% endif %}>
+                            <a href="{{ path('index_contractant') }}">Liste des administrations</a>
                         </li>
+                        
                         <li>
                             <a href="pages/forms/advanced-form-elements.html">Liste des acteurs</a>
                         </li>
