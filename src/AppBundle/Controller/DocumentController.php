@@ -90,7 +90,7 @@ class DocumentController extends Controller
             foreach ($list_docs_projet as $p) {
                 if ($p->getFichierSigne() == null) {
                     $bool = false;
-                    return;
+                    break;
                 }
             }
             if ($bool) {

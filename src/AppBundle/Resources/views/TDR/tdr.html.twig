@@ -100,7 +100,7 @@
                 <div class="container-fluid">
                     <div class="block-header">
                         <h2>
-                            Liste des CCTP du projet [ {{ projet.libelle }} ]
+                            Liste des TDR du projet [ {{ projet.libelle }} ]
                         </h2>
                     </div>
                     <!-- Table des TDR -->
@@ -109,7 +109,7 @@
                             <div class="card">
                                 <div class="header">
                                     <h2 class="col-xs-4">
-                                        Liste des CCTP
+                                        Liste des TDR
                                     </h2>
                                 </div>
                                 <div class="body">
@@ -157,7 +157,7 @@
 
             table_tdr_Sp = $('#table-tdr').DataTable({
                 "language": {
-                    "url": "../plugins/jquery-datatable/i18n/French.json",
+                    "url": "{{ asset('plugins/jquery-datatable/i18n/French.json') }}",
                     buttons: {
                         copy: 'Copier',
                         print: 'Imprimer'
@@ -174,7 +174,7 @@
                 ]
             });
 
-            table_tdr_Sp.ajax.reload();
+            //table_tdr_Sp.ajax.reload();
         });
     </script>
 {% endblock %}

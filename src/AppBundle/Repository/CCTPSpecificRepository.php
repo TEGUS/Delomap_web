@@ -26,6 +26,6 @@ class CCTPSpecificRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('id', $id_projet)
             ->getQuery();
 
-        return $qb->getArrayResult();
+        return $qb->getResult();
     }
 }

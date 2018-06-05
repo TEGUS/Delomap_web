@@ -74,9 +74,19 @@ class ProjetController extends Controller {
             $temp[] = $sample_data->getObservation();
             $temp[] = $sample_data->getContractant();
             $temp[] = $sample_data->getUser()->getUsername();
-            $temp[] = $sample_data->getTp()->getId();
-            $temp[] = $sample_data->getTp()->getLibelle();
+            if ($sample_data->getTp()) {
+                $temp[] = $sample_data->getTp()->getId();
+                $temp[] = $sample_data->getTp()->getLibelle();
+            } else {
+                $temp[] = "";
+                $temp[] = "";
+            }
             $temp[] = $sample_data->getDateCreationEnBD();
+            if ($sample_data->getProc()) {
+                $temp[] = $sample_data->getProc()->getLibelle();
+            } else {
+                $temp[] = "";
+            }
             $temp[] = $this->format_status($sample_data->getStatutProccessus());
             $statut = $sample_data->getStatutProccessus();
             $profil = '';
@@ -104,10 +114,18 @@ class ProjetController extends Controller {
             $temp = [];
             $temp[] = $sample_data->getId();
             $temp[] = $sample_data->getLibelle();
-            $temp[] = $sample_data->getTp()->getLibelle();
+            if ($sample_data->getTp()) {
+                $temp[] = $sample_data->getTp()->getLibelle();
+            } else {
+                $temp[] = "";
+            }
             $temp[] = $sample_data->getMontant();
             $temp[] = $sample_data->getContractant();; // autorité contractante
-            $temp[] = $sample_data->getproc()->getLibelle();
+            if ($sample_data->getproc()) {
+                $temp[] = $sample_data->getproc()->getLibelle();
+            } else {
+                $temp[] = "";
+            }
             $temp[] = $this->my_get_date($sample_data->getDateLancement());
             $temp[] = $this->my_get_date($sample_data->getDateAttribution());
             $temp[] = $this->my_get_date($sample_data->getDateSignature());
@@ -268,7 +286,9 @@ class ProjetController extends Controller {
         $form = $this->createForm(CCTPSpecificType::class, $cctp);
 
         if ($projet != null) {
-            $projet->setStatutProccessus(2);
+            if ($projet->getStatutProccessus() < 2) {
+                $projet->setStatutProccessus(2);
+            }
             $cctp->setProjet($projet);
             $form = $this->createForm(CCTPSpecificTypeWithoutProjet::class, $cctp);
         }
@@ -303,9 +323,10 @@ class ProjetController extends Controller {
         $form = $this->createForm(TDRSpecificType::class, $tdr);
 
         if ($projet != null) {
-            $projet->setStatutProccessus(2);
+            if ($projet->getStatutProccessus() < 2) {
+                $projet->setStatutProccessus(2);
+            }
             $tdr->setProjet($projet);
-
             $form = $this->createForm(TDRSpecificTypeWithoutProjet::class, $tdr);
         }
 
@@ -353,16 +374,12 @@ class ProjetController extends Controller {
         if ($statut == 1) {
             $buttons .= '
             <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Modifier"><i class="material-icons">mode_edit</i></a>
-            <span class="space-button2"></span>
-            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float add-cctp" title="Ajouter CCTP"><i class="material-icons">add</i></a>
-            <span class="space-button2"></span>
-            <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float add-tdr" title="Ajouter TDR"><i class="material-icons">add_circle</i></a>
             <span class="space-button2"></span>';
         } else if ($statut == 2) {
             $buttons .= '
             <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float proc" title="Ajouter une procedure"><i class="material-icons">timeline</i></a>
             <span class="space-button2"></span>';
-        } else if ($statut == 3) {
+        } else if ($statut == 3 || $statut == 4) {
             $buttons .= '
             <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float docs" title="Gestion des documents"><i class="material-icons">description</i></a>
             <span class="space-button2"></span>';
@@ -373,6 +390,10 @@ class ProjetController extends Controller {
         <span class="space-button2"></span>'; */
 
         $buttons .= '
+        <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float add-cctp" title="Ajouter CCTP"><i class="material-icons">add</i></a>
+        <span class="space-button2"></span>
+        <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float add-tdr" title="Ajouter TDR"><i class="material-icons">add_circle</i></a>
+        <span class="space-button2"></span>
         <a type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float remove" title="Supprimer"><i class="material-icons">clear</i></a>
         ';
 

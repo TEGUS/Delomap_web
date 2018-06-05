@@ -1,5 +1,6 @@
 var table_tp;
 var table_projet;
+var table_acteurs;
 
 $(function () {
 
@@ -110,10 +111,9 @@ $(function () {
 
             $.ajax({
                 'type': 'POST',
-                'url': Routing.generate('delete_tp', { 'tp': id }),
+                'url': Routing.generate('delete_tp', {'tp': id}),
                 'dataType': 'JSON',
-                'data': {
-                },
+                'data': {},
                 'success': function (result) {
                     if (result.data) {
                         swal("Réussi!", "Type de prestation supprimée avec succès", "success");
@@ -137,7 +137,7 @@ $(function () {
     });
     //click sur le bouton ajouter procedure TP
     $('#table-type-prestation').on("click", ".add_proc", function () {
-        
+
         var id;
         var nom;
         var liste_procs;
@@ -147,22 +147,22 @@ $(function () {
         row.find("td").each(function (cellIndex) {
             if (i === 0) {
                 id = $(this).html();
-            } else if  (i === 1) {
+            } else if (i === 1) {
                 nom = $(this).html();
-            } else if(i === 3) {
+            } else if (i === 3) {
                 liste_procs = JSON.parse($(this).html());
             }
             i++;
         });
 
         var liste_procedures = "";
-        for(key in liste_procs) {
+        for (key in liste_procs) {
             var doc = liste_procs[key];
-            liste_procedures += '<tr><td>'+doc.id+'</td><td>'+doc.libelle+'</td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>';
+            liste_procedures += '<tr><td>' + doc.id + '</td><td>' + doc.libelle + '</td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>';
         }
         $('#table-prestation-procedure tbody').html(liste_procedures);
 
-        $('#modal-tp-proc h4').html('Liste des procédures ['+nom+']');
+        $('#modal-tp-proc h4').html('Liste des procédures [' + nom + ']');
 
         $('#modal-tp-proc').modal('show');
 
@@ -170,7 +170,7 @@ $(function () {
             'type': 'POST',
             'url': Routing.generate('find_all_procs'),
             'dataType': 'JSON',
-            'success': function(result) {
+            'success': function (result) {
 
                 var procedures = "";
                 //console.log(result);
@@ -178,29 +178,29 @@ $(function () {
                     var proc = result.data[key];
                     procedures += '<option value="' + proc.id + '">' + proc.libelle + '</option>';
                 }
-                
+
                 $('#list_procs').html(procedures);
                 $('#list_procs').selectpicker('refresh');
 
                 //click sur ajout procedure
-                $('#modal-tp-proc button.add').click( function() {
-                    console.log('entree');
+                $('#modal-tp-proc button.add').click(function () {
+                    //console.log('entree');
                     var idtp = id;
                     var idproc = $('#list_procs').val();
-                    var nomproc = $("#list_procs option:selected" ).text();
-                    
+                    var nomproc = $("#list_procs option:selected").text();
+
                     $.ajax({
                         'type': 'POST',
-                        'url': Routing.generate('update_proc_add_tp', { 'proc': idproc }),
+                        'url': Routing.generate('update_proc_add_tp', {'proc': idproc}),
                         'data': {
                             tp: idtp
                         },
                         'dataType': 'JSON',
-                        'success': function(result) {
+                        'success': function (result) {
                             //
-                    console.log('oui');
+                            //console.log('oui');
                             if (result.data === true) {
-                                $('#table-prestation-procedure tbody').append('<tr><td>'+idproc+'</td><td>'+nomproc+'</td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>');
+                                $('#table-prestation-procedure tbody').append('<tr><td>' + idproc + '</td><td>' + nomproc + '</td><td><a href="#" class="remove" title="Supprimer"><i class="fa fa-times fa-lg fa-red"></i></a></td></tr>');
                             } else {
                                 swal({
                                     title: "Erreur!",
@@ -210,36 +210,36 @@ $(function () {
                                 });
                             }
                         },
-                        'error': function() {
+                        'error': function () {
                             //
-                    console.log('non');
+                            //console.log('non');
                             swal({
                                 title: "Erreur!",
                                 text: "Verifiez si la procedure n'existe pas deja dans le tableau",
                                 type: "error",
                                 timer: 3000
-                             });
+                            });
                         },
-                        'beforeSend': function() {
+                        'beforeSend': function () {
                             $('#modal-tp-proc button.add').prop('disabled', true);
                             $('#modal-tp-proc button.add i').removeClass('hidden');
                         },
-                        'complete': function() {
+                        'complete': function () {
                             $('#modal-tp-proc button.add').prop('disabled', false);
                             $('#modal-tp-proc button.add i').addClass('hidden');
                         }
                     });
                 });
-    
+
                 //click sur le bouton du tableau document
                 $('#table-prestation-procedure .remove').click(function () {
                     //console.log('ici');
-            
+
                     var idtp = id;
                     var idproc;
-            
+
                     var row = jQuery(this).closest('tr');
-            
+
                     var i = 0;
                     row.find("td").each(function (cellIndex) {
                         if (i === 0) {
@@ -247,7 +247,7 @@ $(function () {
                         }
                         i++;
                     });
-            
+
                     swal({
                         title: "Attention !",
                         text: "Voulez-vous vraiment Supprimer cet élément ? ",
@@ -258,10 +258,10 @@ $(function () {
                         cancelButtonText: "Non",
                         closeOnConfirm: false
                     }, function () {
-            
+
                         $.ajax({
                             'type': 'POST',
-                            'url': Routing.generate('update_proc_remove_tp', { 'proc': idproc }),
+                            'url': Routing.generate('update_proc_remove_tp', {'proc': idproc}),
                             'dataType': 'JSON',
                             'data': {
                                 tp: idtp
@@ -277,18 +277,18 @@ $(function () {
                             'error': function () {
                                 swal("Erreur!", "Erreur", "error");
                             },
-                            'beforeSend': function() {
+                            'beforeSend': function () {
                                 $('.sweet-alert button.confirm').html("<i class=\"fa fa-spinner fa-spin\"></i> Oui");
                             },
-                            'complete': function() {
+                            'complete': function () {
                                 $('.sweet-alert button.confirm').html("Oui");
                             }
                         });
                     });
                 });
             },
-            'error': function(xhr, status, error) {
-                var err = eval(xhr.responseText );
+            'error': function (xhr, status, error) {
+                var err = eval(xhr.responseText);
                 console.log(err);
                 console.log(error);
             }
@@ -297,7 +297,7 @@ $(function () {
     });
 
     //fermeture du modal d'ajout de la procedure au type de prestation
-    $('#modal-tp-proc .close_btn').click( function() {
+    $('#modal-tp-proc .close_btn').click(function () {
         table_tp.ajax.reload();
         $('#modal-tp-proc').modal('hide');
     });
@@ -328,7 +328,7 @@ $(function () {
             var msg_echec = "";
             if (id) {
                 //console.log('modification')
-                url = Routing.generate('update_tp', { 'tp': id });
+                url = Routing.generate('update_tp', {'tp': id});
                 msg_reussite = "Type de prestation modifiée avec succès";
                 msg_echec = "Problème de modification du nouveau type de prestation";
             } else {
@@ -377,13 +377,15 @@ $(function () {
             nom: "required",
             date_lanc: "required",
             date_attr: "required",
-            cout: "required"
+            cout: "required",
+            tp: "required"
         },
         messages: {
             nom: "Veuillez entrer un nom",
             date_lanc: "Veuillez entrer la date de lancement du projet",
             date_attr: "Veuillez entrer la date d'attribution du projet",
-            cout: "Veuillez entrer le coût du projet"
+            cout: "Veuillez entrer le coût du projet",
+            tp: "Veuillez sélectionner un type de prestation"
         }
     });
 
@@ -444,9 +446,9 @@ $(function () {
             var msg_echec = "";
             if (id) {
                 //console.log('modification')
-                url = Routing.generate('update_projet', { 'projet': id });
+                url = Routing.generate('update_projet', {'projet': id});
                 msg_reussite = "Projet modifié avec succes";
-                msg_echec = "Problème de modification du nouveau projet";
+                msg_echec = "Problème de modification du projet";
             } else {
                 //console.log('enregistrement')
                 url = Routing.generate('add_projet');
@@ -600,10 +602,9 @@ $(function () {
 
             $.ajax({
                 'type': 'POST',
-                'url': Routing.generate('delete_projet', { 'projet': id }),
+                'url': Routing.generate('delete_projet', {'projet': id}),
                 'dataType': 'JSON',
-                'data': {
-                },
+                'data': {},
                 'success': function (result) {
                     if (result.data) {
                         swal("Réussi!", "Projet supprimé avec succès", "success");
@@ -650,7 +651,7 @@ $(function () {
 
         $.ajax({
             'type': 'POST',
-            'url': Routing.generate('find_all_procs_by_tp', { 'tp': tp }),
+            'url': Routing.generate('find_all_procs_by_tp', {'tp': tp}),
             'dataType': 'JSON',
             'success': function (result) {
                 //console.log(result);
@@ -678,11 +679,11 @@ $(function () {
     $('#form-add-proc-projet .save').click(function () {
 
         var id = $('#id_projet_form_proc').val();
-        
-        var url = Routing.generate('update_projet_choose_proc', { 'projet': id });
+
+        var url = Routing.generate('update_projet_choose_proc', {'projet': id});
         var msg_reussite = "Ajout de procedure réussie";
         var msg_echec = "Problème de l'ajout de la procedure";
-        
+
         $.ajax({
             'type': 'POST',
             'url': url,
@@ -759,58 +760,60 @@ $(function () {
             }
             i++;
         });
-        
+
         $('#block-gestion-docs h2 span').html(nom);
         $('#id_projet_pour_doc').val(id);
 
         $.ajax({
             type: "POST",
-            url: Routing.generate('list_documents_projet', { 'projet': id }),
+            url: Routing.generate('list_documents_projet', {'projet': id}),
             dataType: "JSON",
-            success: function(result) {
+            success: function (result) {
                 //console.log(result);
                 var idproj_pour_doc = id;
-                
+
                 var str = "";
                 for (key in result.data) {
                     str += '<tr>';
-                    str += '<td>'+result.data[key][0]+'</td>';
-                    str += '<td>'+result.data[key][1]+'</td>';
+                    str += '<td>' + result.data[key][0] + '</td>';
+                    str += '<td>' + result.data[key][1] + '</td>';
                     var statut = '<span class="label label-danger">en attente</span>';
                     if (result.data[key][8] != null) {
                         statut = '<span class="label label-success">Prêt</span>';
                     }
-                    str += '<td>'+statut+'</td>';
-                    str += '<td><a  type="button" class="btn btn-default waves-effect" href="../uploads/docs/'+result.data[key][2]+'" title="Enregistré le '+result.data[key][5]+'" target="_blank"><i class="material-icons">file_download</i> <b>Télécharger</b></a></td>';
+                    str += '<td>' + statut + '</td>';
+                    str += '<td><a  type="button" class="btn btn-default waves-effect" href="../uploads/docs/' + result.data[key][2] + '" title="Enregistré le ' + result.data[key][5] + '" target="_blank"><i class="material-icons">file_download</i> <b>Télécharger</b></a></td>';
                     var doc_modif = "";
                     if (result.data[key][7] != null) {
-                        doc_modif += '<a type="button" class="btn btn-default waves-effect" href="../uploads/docs/'+result.data[key][7]+'" target="_blank"><i class="material-icons">file_download</i> <b>Télécharger</b></a>';
+                        doc_modif += '<a type="button" class="btn btn-default waves-effect" href="../uploads/docs/' + result.data[key][7] + '" target="_blank"><i class="material-icons">file_download</i> <b>Télécharger</b></a>';
                     }
                     var doc_signe = "";
                     if (result.data[key][8] != null) {
-                        doc_signe += '<a type="button" class="btn btn-default waves-effect" href="../uploads/docs/'+result.data[key][8]+'" title="Signature enregistrée le '+result.data[key][3]+'" target="_blank"><i class="material-icons">file_download</i> <b>Télécharger</b></a>';
+                        doc_signe += '<a type="button" class="btn btn-default waves-effect" href="../uploads/docs/' + result.data[key][8] + '" title="Signature enregistrée le ' + result.data[key][3] + '" target="_blank"><i class="material-icons">file_download</i> <b>Télécharger</b></a>';
                     }
                     var date_sign = "";
                     if (result.data[key][3] != null) {
                         date_sign += result.data[key][3];
                     }
-                    str += '<td>'+doc_modif+'</td>';
-                    str += '<td>'+doc_signe+'</td>';
-                    str += '<td>'+date_sign+'</td>';
+                    str += '<td>' + doc_modif + '</td>';
+                    str += '<td>' + doc_signe + '</td>';
+                    str += '<td>' + date_sign + '</td>';
                     str += '<td>';
-                    str += '<a href="'+Routing.getBaseUrl()+'/new/document/modifie/'+result.data[key][0]+'" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Charger le document modifié"><i class="material-icons">file_upload</i></a>';
+                    str += '<a href="' + Routing.getBaseUrl() + '/new/document/modifie/' + result.data[key][0] + '" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float edit" title="Charger le document modifié"><i class="material-icons">file_upload</i></a>';
                     str += '<span class="space-button2"></span>';
-                    str += '<a href="'+Routing.getBaseUrl()+'/new/document/signe/'+result.data[key][0]+'" type="button" class="btn btn-success btn-circle waves-effect waves-circle waves-float remove" title="Charger le document signé"><i class="material-icons">file_upload</i></a>';
-                    str += '<span class="space-button2"></span>';
-                    str += '<a href="mailto:user@example.com?subject=Transfert%20des%20docs&body=bien%20vouloir%20accuser%20reception%20de%20ces%20documents" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float send" title="Envoyer mail"><i class="material-icons">send</i></a>';
+                    str += '<a href="' + Routing.getBaseUrl() + '/new/document/signe/' + result.data[key][0] + '" type="button" class="btn btn-success btn-circle waves-effect waves-circle waves-float remove" title="Charger le document signé"><i class="material-icons">file_upload</i></a>';
+                    if (doc_signe != "") {
+                        str += '<span class="space-button2"></span>';
+                        str += '<a href="#" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float send" title="Envoyer mail"><i class="material-icons">send</i></a>';
+                    }
                     str += '</td></tr>';
                 }
                 $('#table-gestion-docs tbody').html(str);
             },
-            error: function() {
+            error: function () {
                 $('#table-gestion-docs tbody').html('');
             },
-            beforeSend: function() {
+            beforeSend: function () {
                 $('#table-gestion-docs tbody').html('<tr><td colspan="7">Chargement en cours...</td></tr>');
             }
         });
@@ -819,8 +822,541 @@ $(function () {
         $('#block-table-projet').addClass('hidden');
     });
     //fermer la fenêtre de gestion des documents du projets
-    $('#block-gestion-docs button.cancel').click(function() {
+    $('#block-gestion-docs button.cancel').click(function () {
         $('#block-gestion-docs').addClass('hidden');
         $('#block-table-projet').removeClass('hidden');
     });
+
+
+    //*************************************************
+    // Gestion des administations
+    //*************************************************
+
+    //chargement du datatable administrations
+    if ($('#table-administrations').length) {
+        table_administrations = $('#table-administrations').DataTable({
+            "language": {
+                "url": "../plugins/jquery-datatable/i18n/French.json",
+                buttons: {
+                    copy: 'Copier',
+                    print: 'Imprimer'
+                }
+            },
+            "ajax": {
+                "url": Routing.generate('list_administration'),
+                "type": "POST"
+            },
+            dom: 'Bfrtip',
+            responsive: true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "class": "hide_me"
+                }
+            ]
+        });
+    }
+
+    //click sur le bouton nouvelle administration
+    $('#block-table-administrations .button-new').click(function () {
+
+        $('#id_administration').val('');
+        $('#form-administration input.nom').val('');
+        $('#form-administration input.email').val('');
+        $('#form-administration input.telephone').val('');
+
+        $('#block-table-administrations').addClass('hidden');
+        $('#block-form-administrations').removeClass('hidden');
+
+        $('#block-form-administrations .header h2').html('Nouvelle Administration');
+    });
+
+    //click sur le bouton editer projet
+    $('#table-administrations').on("click", ".edit", function () {
+
+        var row = jQuery(this).closest('tr');
+
+        var i = 0;
+        row.find("td").each(function (cellIndex) {
+            if (i === 0) {
+                $('#id_administration').val($(this).text());
+            } else if (i === 1) {
+                $('#form-administration input.nom').val($(this).text());
+            } else if (i === 2) {
+                $('#form-administration input.email').val($(this).text());
+            } else if (i === 3) {
+                $('#form-administration input.telephone').val($(this).text());
+            }
+            i++;
+        });
+
+        $('#block-table-administrations').addClass('hidden');
+        $('#block-form-administrations').removeClass('hidden');
+
+        $('#block-form-administrations .header h2').html('Modifier l\'administration');
+    });
+
+    //Supprimer une administration
+    $('#table-administrations').on("click", ".remove", function () {
+        var id;
+
+        var row = jQuery(this).closest('tr');
+
+        var i = 0;
+        row.find("td").each(function (cellIndex) {
+            if (i === 0) {
+                id = $(this).text();
+            }
+            i++;
+        });
+
+        swal({
+            title: "Attention !",
+            text: "Voulez-vous vraiment Supprimer cette administration ? ",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Oui",
+            cancelButtonText: "Non",
+            closeOnConfirm: false
+        }, function () {
+
+            $.ajax({
+                'type': 'POST',
+                'url': Routing.generate('delete_contractant', {'contractant': id}),
+                'dataType': 'JSON',
+                'data': {},
+                'success': function (result) {
+                    if (result.data) {
+                        swal("Réussi!", "Administration supprimée avec succès", "success");
+
+                        table_administrations.ajax.reload();
+                    } else {
+                        swal("Erreur!", "Erreur lors de la suppression de l'administration", "error");
+                    }
+                },
+                'error': function () {
+                    swal("Erreur!", "Erreur, veuillez contacter l'administrateur", "error");
+                },
+                'beforeSend': function () {
+                    $('.sweet-alert button.confirm').html("<i class=\"fa fa-spinner fa-spin\"></i> Oui");
+                },
+                'complete': function () {
+                    $('.sweet-alert button.confirm').html("Oui");
+                }
+            });
+        });
+    });
+
+    //Annuler fenetre de nouvelle administration
+    $('#form-administration .cancel').click(function () {
+        $('#block-form-administrations').addClass('hidden');
+        $('#block-table-administrations').removeClass('hidden');
+    });
+
+    //Enregistrer administration
+    $('#form-administration .save').click(function () {
+        if ($("#form-administration").valid()) {
+            var id = $('#id_administration').val();
+            var url = "";
+            var msg_reussite = "";
+            var msg_echec = "";
+            if (id) {
+                //console.log('modification')
+                url = Routing.generate('update_contractant', {'contractant': id});
+                msg_reussite = "Administration modifiée avec succès";
+                msg_echec = "Problème de modification de l'administration";
+            } else {
+                //console.log('enregistrement')
+                url = Routing.generate('add_contractant');
+                msg_reussite = "Nouvelle administration enregistrée avec succès";
+                msg_echec = "Problème d'enregistrement de l'administration";
+            }
+
+            $.ajax({
+                'type': 'POST',
+                'url': url,
+                'data': {
+                    nom: $('#form-administration input.nom').val(),
+                    email: $('#form-administration input.email').val(),
+                    tel: $('#form-administration input.telephone').val(),
+                    type: 'administration',
+                },
+                'dataType': 'JSON',
+                'success': function (result) {
+                    if (result.data) {
+                        $('#block-form-administrations').addClass('hidden');
+                        $('#block-table-administrations').removeClass('hidden');
+
+                        swal("Réussi!", msg_reussite, "success");
+
+                        table_administrations.ajax.reload();
+                    } else {
+                        swal("Erreur!", msg_echec, "error");
+                    }
+                },
+                'error': function () {
+                    swal("Erreur!", "Veuillez contacter un administrateur", "error");
+                },
+                'beforeSend': function () {
+                    $('#block-form-administrations .save i').removeClass('hidden');
+                },
+                'complete': function () {
+                    $('#block-form-administrations .save i').addClass('hidden');
+                }
+            });
+        }
+    });
+
+    //*************************************************
+    // Fin de gestion des administations
+    //*************************************************
+
+
+    //*************************************************
+    // Gestion des acteurs
+    //*************************************************
+
+    //chargement du datatable acteurs
+    if ($('#table-acteurs').length) {
+        table_acteurs = $('#table-acteurs').DataTable({
+            "language": {
+                "url": "../plugins/jquery-datatable/i18n/French.json",
+                buttons: {
+                    copy: 'Copier',
+                    print: 'Imprimer'
+                }
+            },
+            "ajax": {
+                "url": Routing.generate('list_acteur'),
+                "type": "POST"
+            },
+            dom: 'Bfrtip',
+            responsive: true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "class": "hide_me"
+                }
+            ]
+        });
+    }
+
+    //click sur le bouton nouvelle acteur
+    $('#block-table-acteurs .button-new').click(function () {
+
+        $('#id_acteur').val('');
+        $('#form-acteur input.nom').val('');
+        $('#form-acteur input.email').val('');
+        $('#form-acteur input.telephone').val('');
+
+        $('#block-table-acteurs').addClass('hidden');
+        $('#block-form-acteurs').removeClass('hidden');
+
+        $('#block-form-acteurs .header h2').html('Nouvel Acteur');
+    });
+
+    //click sur le bouton editer projet
+    $('#table-acteurs').on("click", ".edit", function () {
+
+        var row = jQuery(this).closest('tr');
+
+        var i = 0;
+        row.find("td").each(function (cellIndex) {
+            if (i === 0) {
+                $('#id_acteur').val($(this).text());
+            } else if (i === 1) {
+                $('#form-acteur input.nom').val($(this).text());
+            } else if (i === 2) {
+                $('#form-acteur input.email').val($(this).text());
+            } else if (i === 3) {
+                $('#form-acteur input.telephone').val($(this).text());
+            }
+            i++;
+        });
+
+        $('#block-table-acteurs').addClass('hidden');
+        $('#block-form-acteurs').removeClass('hidden');
+
+        $('#block-form-acteurs .header h2').html('Modifier l\'acteur');
+    });
+
+    //Supprimer une acteur
+    $('#table-acteurs').on("click", ".remove", function () {
+        var id;
+
+        var row = jQuery(this).closest('tr');
+
+        var i = 0;
+        row.find("td").each(function (cellIndex) {
+            if (i === 0) {
+                id = $(this).text();
+            }
+            i++;
+        });
+
+        swal({
+            title: "Attention !",
+            text: "Voulez-vous vraiment Supprimer cet acteur ? ",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Oui",
+            cancelButtonText: "Non",
+            closeOnConfirm: false
+        }, function () {
+
+            $.ajax({
+                'type': 'POST',
+                'url': Routing.generate('delete_contractant', {'contractant': id}),
+                'dataType': 'JSON',
+                'data': {},
+                'success': function (result) {
+                    if (result.data) {
+                        swal("Réussi!", "Acteur supprimé avec succès", "success");
+
+                        table_acteurs.ajax.reload();
+                    } else {
+                        swal("Erreur!", "Erreur lors de la suppression de l'acteur", "error");
+                    }
+                },
+                'error': function () {
+                    swal("Erreur!", "Erreur, veuillez contacter l'administrateur", "error");
+                },
+                'beforeSend': function () {
+                    $('.sweet-alert button.confirm').html("<i class=\"fa fa-spinner fa-spin\"></i> Oui");
+                },
+                'complete': function () {
+                    $('.sweet-alert button.confirm').html("Oui");
+                }
+            });
+        });
+    });
+
+    //Annuler fenetre de nouvelle acteur
+    $('#form-acteur .cancel').click(function () {
+        $('#block-form-acteurs').addClass('hidden');
+        $('#block-table-acteurs').removeClass('hidden');
+    });
+
+    //Enregistrer acteur
+    $('#form-acteur .save').click(function () {
+        if ($("#form-acteur").valid()) {
+            var id = $('#id_acteur').val();
+            var url = "";
+            var msg_reussite = "";
+            var msg_echec = "";
+            if (id) {
+                //console.log('modification')
+                url = Routing.generate('update_contractant', {'contractant': id});
+                msg_reussite = "Acteur modifié avec succès";
+                msg_echec = "Problème de modification de l'acteur";
+            } else {
+                //console.log('enregistrement')
+                url = Routing.generate('add_contractant');
+                msg_reussite = "Nouvel acteur enregistré avec succès";
+                msg_echec = "Problème d'enregistrement de l'acteur";
+            }
+
+            $.ajax({
+                'type': 'POST',
+                'url': url,
+                'data': {
+                    nom: $('#form-acteur input.nom').val(),
+                    email: $('#form-acteur input.email').val(),
+                    tel: $('#form-acteur input.telephone').val(),
+                    type: 'acteur',
+                },
+                'dataType': 'JSON',
+                'success': function (result) {
+                    if (result.data) {
+                        $('#block-form-acteurs').addClass('hidden');
+                        $('#block-table-acteurs').removeClass('hidden');
+
+                        swal("Réussi!", msg_reussite, "success");
+
+                        table_acteurs.ajax.reload();
+                    } else {
+                        swal("Erreur!", msg_echec, "error");
+                    }
+                },
+                'error': function () {
+                    swal("Erreur!", "Veuillez contacter un administrateur", "error");
+                },
+                'beforeSend': function () {
+                    $('#block-form-acteurs .save i').removeClass('hidden');
+                },
+                'complete': function () {
+                    $('#block-form-acteurs .save i').addClass('hidden');
+                }
+            });
+        }
+    });
+
+    //*************************************************
+    // Fin de gestion des acteurs
+    //*************************************************
+
+
+    //*************************************************
+    // Gestion d'envoi des docs
+    //*************************************************
+    //
+    $('#table-gestion-docs').on('click', '.send', function (event) {
+        $('#modal-send-mail').modal('show');
+
+        var doc = "";
+
+        var row = jQuery(this).closest('tr');
+
+        var i = 0;
+        row.find("td").each(function (cellIndex) {
+            if (i === 0) {
+                $('#id_projet_form_send_mail').val($(this).text());
+            }
+            if (i === 5) {
+                doc = $(this).children("a").attr("href");
+            }
+            i++;
+        });
+
+        var d = '<a href="'+doc+'">'+doc.replace('../uploads/docs/', '')+'</a>';
+
+        //console.log(doc);
+        $('#form-send-mail .liste_docs tbody').html("<tr><td>" + d + "</td></tr>");
+
+        $.ajax({
+            url: Routing.generate('list_administration'),
+            dataType: "JSON",
+            success: function (return_datas) {
+
+                var select_option = '';
+                var rets = return_datas.data;
+                for (ret in rets) {
+                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                }
+
+                $('#list_administrations_send_mail').html(select_option);
+                $('#list_administrations_send_mail').selectpicker('refresh');
+            },
+            error: function (err) {
+                $('#list_administrations_send_mail').html('');
+            }
+        });
+        $.ajax({
+            url: Routing.generate('list_acteur'),
+            dataType: "JSON",
+            success: function (return_datas) {
+
+                var select_option = '';
+                var rets = return_datas.data;
+                for (ret in rets) {
+                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                }
+
+                $('#list_acteurs_send_mail').html(select_option);
+                $('#list_acteurs_send_mail').selectpicker('refresh');
+            },
+            error: function (err) {
+                $('#list_acteurs_send_mail').html('');
+            }
+        });
+
+        $('#form-send-mail input[name="objet"]').val('');
+        $('#form-send-mail textarea[name="message"]').val('');
+
+    });
+    $('#block-gestion-docs').on('click', 'button.sendmultiple', function (event) {
+        $('#modal-send-mail').modal('show');
+
+        var i = [];
+        var docs = [];
+        $('#table-gestion-docs tbody').find("tr").each(function(cellIndex) {
+            var take_this = false;
+            $(this).find("td").each(function (ci) {
+                if (ci === 2 && $(this).text() == "Prêt") {
+                    take_this = true;
+                }
+            });
+            if (take_this) {
+                $(this).find("td").each(function (ci) {
+                    if (ci === 0) {
+                        i.push($(this).text());
+                    }
+                    if (ci === 5) {
+                        docs.push($(this).children("a").attr("href"));
+                    }
+                });
+            }
+        });
+
+        $('#id_projet_form_send_mail').val(i);
+
+        var table_doc = "";
+        for (i in docs) {
+            table_doc += '<tr><td><a href="'+docs[i]+'">'+docs[i].replace('../uploads/docs/', '')+'</a></td></tr>';
+        }
+
+        $('#form-send-mail .liste_docs tbody').html(table_doc);
+
+        $.ajax({
+            url: Routing.generate('list_administration'),
+            dataType: "JSON",
+            success: function (return_datas) {
+
+                var select_option = '';
+                var rets = return_datas.data;
+                for (ret in rets) {
+                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                }
+
+                $('#list_administrations_send_mail').html(select_option);
+                $('#list_administrations_send_mail').selectpicker('refresh');
+            },
+            error: function (err) {
+                $('#list_administrations_send_mail').html('');
+            }
+        });
+        $.ajax({
+            url: Routing.generate('list_acteur'),
+            dataType: "JSON",
+            success: function (return_datas) {
+
+                var select_option = '';
+                var rets = return_datas.data;
+                for (ret in rets) {
+                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                }
+
+                $('#list_acteurs_send_mail').html(select_option);
+                $('#list_acteurs_send_mail').selectpicker('refresh');
+            },
+            error: function (err) {
+                $('#list_acteurs_send_mail').html('');
+            }
+        });
+
+        $('#form-send-mail input[name="objet"]').val('');
+        $('#form-send-mail textarea[name="message"]').val('');
+        
+    });
+
+    $('#modal-send-mail').on('click', 'button.close_btn', function (event) {
+        $('#modal-send-mail').modal('hide');
+    });
+/*
+    $('#modal-send-mail').on('click', 'button.send', function (event) {
+        window.open('mailto:user@example.com?subject=Transfert%20des%20docs&body=bien%20vouloir%20accuser%20reception%20de%20ces%20documents', '_blank');
+    });*/
+
+    //*************************************************
+    // Fin de gestion d'envoi de docs
+    //*************************************************
+
 });

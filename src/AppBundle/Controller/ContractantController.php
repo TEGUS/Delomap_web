@@ -11,11 +11,19 @@ use Symfony\Component\HttpFoundation\Request;
 class ContractantController extends Controller
 {
     /**
-     * @Route("/contractant", name="index_contractant")
+     * @Route("/administrations", name="index_list_administrations")
      */
-    public function indexContractantsAction()
+    public function indexAdministrationsAction()
     {
-        return $this->render('AppBundle:Contractant:contractant.html.twig');
+        return $this->render('AppBundle:Contractant:administrations.html.twig');
+    }
+
+    /**
+     * @Route("/acteurs", name="index_list_acteurs")
+     */
+    public function indexActeursAction()
+    {
+        return $this->render('AppBundle:Contractant:acteurs.html.twig');
     }
 
     public function getRepository($entity = 'Contractant')
@@ -39,8 +47,8 @@ class ContractantController extends Controller
         foreach ($contractants as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
-            $temp[] = $sample_data->getEmail();
             $temp[] = $sample_data->getNom();
+            $temp[] = $sample_data->getEmail();
             $temp[] = $sample_data->getTel();
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
@@ -58,11 +66,11 @@ class ContractantController extends Controller
             "data" => $datas
         ]);
     }
-    
+
     /**
-     * @Route("/api/administrations", options = { "expose" = true }, name="list_administration")
+         * @Route("/api/administrations", options = { "expose" = true }, name="list_administration")
      */
-public function listAdministrationsAction()
+    public function listAdministrationsAction()
     {
         $contractants = $this->getRepository()->listAll('administration');
         $datas = [];
@@ -70,8 +78,8 @@ public function listAdministrationsAction()
         foreach ($contractants as $sample_data) {
             $temp = [];
             $temp[] = $sample_data->getId();
-            $temp[] = $sample_data->getEmail();
             $temp[] = $sample_data->getNom();
+            $temp[] = $sample_data->getEmail();
             $temp[] = $sample_data->getTel();
             $temp[] = '
                 <a href="#" class="edit" title="Modifier"><i class="fa fa-edit fa-lg fa-primary"></i></a>
@@ -96,13 +104,15 @@ public function listAdministrationsAction()
     public function addContractantAction(Request $request)
     {
         $email = $request->request->get('email');
-        $nom= $request->request->get('nom');
-        $tel= $request->request->get('tel');
-        
+        $nom = $request->request->get('nom');
+        $tel = $request->request->get('tel');
+        $type = $request->request->get('type');
+
         $contractant = new Contractant();
         $contractant->setEmail($email);
         $contractant->setNom($nom);
         $contractant->setTel($tel);
+        $contractant->setTypeContractant($type);
 
         $em = $this->getEm();
         $em->persist($contractant);
@@ -118,11 +128,11 @@ public function listAdministrationsAction()
      */
     public function updateContractantAction(Request $request, Contractant $contractant)
     {
-       /** $id = $request->request->get('id');*/
+        /** $id = $request->request->get('id');*/
         $email = $request->request->get('email');
         $nom = $request->request->get('nom');
         $tel = $request->request->get('tel');
-        
+
         /**$contractant->setId($id);*/
         $contractant->setEmail($email);
         $contractant->setNom($nom);

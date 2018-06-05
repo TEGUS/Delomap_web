@@ -260,6 +260,12 @@
                 responsive: true,
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [0, 4],
+                        "class": "hide_me"
+                    }
                 ]
             });
 
