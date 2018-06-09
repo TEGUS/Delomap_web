@@ -11,3 +11,4 @@ parameters:
     mailer_password: symfony111
     secret: 00ThisTokenIsNotSoSecretChangeIt00
     app.path.docs: /uploads/docs
+    email.from: '%mailer_user%'
