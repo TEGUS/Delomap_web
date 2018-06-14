@@ -26,9 +26,9 @@ class MailingController extends Controller
             ->setTo($to)
             ->setBody(trim($content) == '' ? 'Via DELOMAP App' : trim($content));
 
-//        foreach ($files as $file) {
-//            $message->attach(\Swift_Attachment::fromPath($file));
-//        }
+        foreach ($files as $file) {
+            $message->attach(\Swift_Attachment::fromPath($file));
+        }
 
         $result = $this->get('mailer')->send($message) ? true : false;
 
