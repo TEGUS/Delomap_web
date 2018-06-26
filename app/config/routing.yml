@@ -28,3 +28,8 @@ fos_user_change_password:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+coresphere_console:
+    prefix: /admin
+    resource: "@CoreSphereConsoleBundle/Resources/config/routing.yml"
+    type: extra

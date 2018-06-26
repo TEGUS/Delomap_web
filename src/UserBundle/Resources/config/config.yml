@@ -13,16 +13,16 @@ fos_user:
             enabled: true
             template:   FOSUserBundle:Registration:email.txt.twig
             from_email:
-                address: symcassus@gmail.com
+                address: '%mailer_user%'
                 sender_name: SymfonyAppTest_NoReply
     resetting:
         email:
             template:   FOSUserBundle:Resetting:email.txt.twig
             from_email:
-                address: symcassus@gmail.com
+                address: '%mailer_user%'
                 sender_name: SymfonyAppTest_NoReply
     from_email:
-        address: symcassus@gmail.com
+        address: '%mailer_user%'
         sender_name: SymfonyAppTest_NoReply
 
 #pugx_multi_user

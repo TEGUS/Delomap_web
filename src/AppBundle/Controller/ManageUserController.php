@@ -23,7 +23,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * @Route("/manage/user", name="index_manage_user")
+     * @Route("/admin/manage/user", name="index_manage_user")
      */
     public function indexAction()
     {
@@ -31,7 +31,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * @Route("/manage/roles", name="index_manage_role")
+     * @Route("/admin/manage/roles", name="index_manage_role")
      */
     public function indexRolesAction()
     {
