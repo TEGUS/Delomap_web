@@ -26,13 +26,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+#        main_console:
+#            pattern: ^/_console
+#            anonymous: true
+
         main_login:
             pattern: ^/login$
             anonymous: true
 
         main:
             pattern: ^/
-            anonymous:    true
+            anonymous:  false
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager

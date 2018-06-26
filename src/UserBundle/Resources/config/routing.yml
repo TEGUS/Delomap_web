@@ -1,6 +1,6 @@
-user_homepage:
-    path:     /nn
-    defaults: { _controller: UserBundle:Default:index }
+#user_homepage:
+#    path:     /nn
+#    defaults: { _controller: UserBundle:Default:index }
 
 admin_registration:
     path:  /register/admin

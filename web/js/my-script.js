@@ -2,6 +2,9 @@ var table_tp;
 var table_projet;
 var table_acteurs;
 
+//Documents à envoyer par mail
+var docs_to_send = [];
+
 $(function () {
 
     if ($('.datepicker').length) {
@@ -1209,6 +1212,7 @@ $(function () {
     //*************************************************
     //
     $('#table-gestion-docs').on('click', '.send', function (event) {
+        docs_to_send = [];
         $('#modal-send-mail').modal('show');
 
         var doc = "";
@@ -1226,7 +1230,8 @@ $(function () {
             i++;
         });
 
-        var d = '<a href="'+doc+'">'+doc.replace('../uploads/docs/', '')+'</a>';
+        docs_to_send.push(doc.replace('../', ''));
+        var d = '<a href="' + doc + '">' + doc.replace('../uploads/docs/', '') + '</a>';
 
         //console.log(doc);
         $('#form-send-mail .liste_docs tbody').html("<tr><td>" + d + "</td></tr>");
@@ -1239,7 +1244,7 @@ $(function () {
                 var select_option = '';
                 var rets = return_datas.data;
                 for (ret in rets) {
-                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                    select_option += '<option value="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
                 }
 
                 $('#list_administrations_send_mail').html(select_option);
@@ -1257,7 +1262,7 @@ $(function () {
                 var select_option = '';
                 var rets = return_datas.data;
                 for (ret in rets) {
-                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                    select_option += '<option value="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
                 }
 
                 $('#list_acteurs_send_mail').html(select_option);
@@ -1273,11 +1278,12 @@ $(function () {
 
     });
     $('#block-gestion-docs').on('click', 'button.sendmultiple', function (event) {
+        docs_to_send = [];
         $('#modal-send-mail').modal('show');
 
         var i = [];
         var docs = [];
-        $('#table-gestion-docs tbody').find("tr").each(function(cellIndex) {
+        $('#table-gestion-docs tbody').find("tr").each(function (cellIndex) {
             var take_this = false;
             $(this).find("td").each(function (ci) {
                 if (ci === 2 && $(this).text() == "Prêt") {
@@ -1300,7 +1306,8 @@ $(function () {
 
         var table_doc = "";
         for (i in docs) {
-            table_doc += '<tr><td><a href="'+docs[i]+'">'+docs[i].replace('../uploads/docs/', '')+'</a></td></tr>';
+            docs_to_send.push(docs[i].replace('../', ''));
+            table_doc += '<tr><td><a href="' + docs[i] + '">' + docs[i].replace('../uploads/docs/', '') + '</a></td></tr>';
         }
 
         $('#form-send-mail .liste_docs tbody').html(table_doc);
@@ -1309,13 +1316,11 @@ $(function () {
             url: Routing.generate('list_administration'),
             dataType: "JSON",
             success: function (return_datas) {
-
                 var select_option = '';
                 var rets = return_datas.data;
                 for (ret in rets) {
-                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                    select_option += '<option value="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
                 }
-
                 $('#list_administrations_send_mail').html(select_option);
                 $('#list_administrations_send_mail').selectpicker('refresh');
             },
@@ -1331,7 +1336,7 @@ $(function () {
                 var select_option = '';
                 var rets = return_datas.data;
                 for (ret in rets) {
-                    select_option += '<option val="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
+                    select_option += '<option value="' + rets[ret][2] + '">' + rets[ret][1] + '</option>';
                 }
 
                 $('#list_acteurs_send_mail').html(select_option);
@@ -1344,16 +1349,16 @@ $(function () {
 
         $('#form-send-mail input[name="objet"]').val('');
         $('#form-send-mail textarea[name="message"]').val('');
-        
+
     });
 
     $('#modal-send-mail').on('click', 'button.close_btn', function (event) {
         $('#modal-send-mail').modal('hide');
     });
-/*
-    $('#modal-send-mail').on('click', 'button.send', function (event) {
-        window.open('mailto:user@example.com?subject=Transfert%20des%20docs&body=bien%20vouloir%20accuser%20reception%20de%20ces%20documents', '_blank');
-    });*/
+    /*
+        $('#modal-send-mail').on('click', 'button.send', function (event) {
+            window.open('mailto:user@example.com?subject=Transfert%20des%20docs&body=bien%20vouloir%20accuser%20reception%20de%20ces%20documents', '_blank');
+        });*/
 
     //*************************************************
     // Fin de gestion d'envoi de docs
